@@ -2,7 +2,7 @@
 
 ## General Information
 
-- Course: CPNT-262 - Web Client & Server Prog.
+- Course: CPNT-265
 - Contributors:
   - [Dustin Shulz](https://github.com/cowtowndusty)
   - [Vitaly Gins](https://github.com/gvitaly87)
