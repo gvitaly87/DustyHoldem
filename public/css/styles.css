@@ -84,3 +84,8 @@ html, body, .grid-container {
   left: 0;
   color: gold;
 }
+
+.logo {
+  max-width: 7%;
+  height: auto;
+}
