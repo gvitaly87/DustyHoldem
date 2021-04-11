@@ -59,11 +59,7 @@ btnCreate.addEventListener("click", () => {
 /***************Raise****************/
 const btnRaise = document.getElementById("raise");
 btnRaise.addEventListener("click", () => {
-  const raise = document.getElementById("raiseAmount");
-  //const chips = document.querySelector(".player>.chip-count");
-
-  let raiseAmount = parseInt(raise.value);
-  //let chipsCount = parseInt(chips.innerText);
+  let raiseAmount = parseInt(document.getElementById("raiseAmount").value);
 
   //checks for fake bets
   if (raiseAmount <= 0) return;
@@ -135,9 +131,7 @@ ws.onmessage = (message) => {
       const gamePot = document.querySelector(".game-pot");
       gamePot.innerText = game.table.pot;
       const playerTurn = document.querySelector(".player-turn");
-      playerTurn.innerText = `It is ${
-        game.clients[game.table.turn].username
-      }'s Turn`;
+      playerTurn.innerText = `It is 's Turn`;
     });
   }
 

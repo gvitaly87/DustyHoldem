@@ -7,6 +7,7 @@ const path = require("path");
 
 const getUniqueID = require("./lib/getUniqueID");
 const getSeat = require("./lib/getSeat");
+const setQue = require("./lib/setQue");
 const respondAllClients = require("./lib/respondAllClients");
 
 // Express
@@ -36,15 +37,18 @@ wsServer.on("request", (req) => {
     if (res.method === "create") {
       const clientId = res.clientId;
       const gameId = getUniqueID();
+      // TODO: slim down game object, so only essential information is exchanged each round
       games[gameId] = {
         id: gameId,
         clients: [],
         table: {
           pot: 0,
-          round: 0, // preflop, flop, turn, river
-          turn: 0,
+          round: 0, // 0-new hand 1-preflop, 2-flop, 3-turn, 4-river
+          hand: 0,
+          playerToAct: 0,
           dealer: 0,
           roundRaise: 0,
+          seatsQue: [],
           seats: [],
           clients: [], // or keep client info in seats(this array is so that other players don't know each other's cards);
         },
@@ -78,6 +82,8 @@ wsServer.on("request", (req) => {
       // TODO: switch to passing the table instead of all the clients
       game.table.seats[seat] = {
         empty: false,
+        newToTable: true,
+        folded: false,
         clientId,
         seat,
         username,
@@ -92,7 +98,11 @@ wsServer.on("request", (req) => {
       });
 
       //start the game
-      if (game.clients.length >= 3) updateGameState();
+      if (game.clients.length >= 3) {
+        game.table = setQue(game.table);
+        console.log(game.table.seatsQue);
+        updateGameState();
+      }
 
       const payLoad = {
         method: "join",
@@ -111,9 +121,9 @@ wsServer.on("request", (req) => {
       game.clients.forEach((client) => {
         if (client.clientId === clientId) client.chipCount -= raiseAmount;
       });
-      game.table.turn += 1;
-      game.table.turn =
-        game.table.turn >= game.clients.length ? 0 : game.table.turn;
+      // game.table.turn += 1;
+      // game.table.turn =
+      // game.table.turn >= game.clients.length ? 0 : game.table.turn;
       updateGameState();
     }
   });
