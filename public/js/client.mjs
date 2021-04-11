@@ -61,14 +61,33 @@ btnFold.addEventListener("click", () => {
 /***************Check****************/
 const btnCheck = document.getElementById("check");
 btnCreate.addEventListener("click", () => {
-  if (playerSeat !== game.table.playerToAct) return;
+  // Check if its the player turn, and that the current player's bet is equivalent to the rounds bet.
+  if (
+    playerSeat !== game.table.playerToAct ||
+    game.table.seats[playerSeat].bets[game.table.round] !==
+      game.table.roundRaise
+  )
+    return;
   const payLoad = {
     method: "check",
     clientId,
     gameId,
   };
+  ws.send(JSON.stringify(payLoad));
 });
 
+/***************Call****************/
+const btnCall = document.getElementById("call");
+btnCall.addEventListener("click", () => {
+  if (playerSeat !== game.table.playerToAct) return;
+  const payLoad = {
+    method: "call",
+    clientId,
+    gameId,
+    playerSeat,
+  };
+  ws.send(JSON.stringify(payLoad));
+});
 /***************Raise****************/
 const btnRaise = document.getElementById("raise");
 btnRaise.addEventListener("click", () => {
@@ -113,51 +132,56 @@ ws.onmessage = (message) => {
     roundBet = game.table.roundRaise;
     while (divPlayers.firstChild) divPlayers.removeChild(divPlayers.firstChild);
 
-    game.clients.forEach((client) => {
-      const player = document.createElement("div");
-      // Distinguishes between player and other users
-      if (client.clientId === clientId) {
-        player.classList.add("player");
-        playerChips = client.chipCount;
-        playerSeat = client.seat;
-      } else {
-        player.classList.add("opponent");
+    game.table.seats.forEach((seat) => {
+      if (!seat.empty) {
+        const player = document.createElement("div");
+        // Distinguishes between player and other users
+        if (seat.clientId === clientId) {
+          player.classList.add("player");
+          playerChips = seat.chipCount;
+          playerSeat = seat.seat;
+          playerRoundBet = seat.bets[game.table.round];
+        } else {
+          player.classList.add("opponent");
+        }
+
+        player.innerText = "Name:";
+
+        const username = document.createElement("span");
+        username.classList.add("username");
+        username.innerText = seat.username;
+        player.appendChild(username);
+
+        player.innerHTML += " Chips:";
+
+        const chipCount = document.createElement("span");
+        chipCount.classList.add("chip-count");
+        chipCount.innerText = seat.chipCount;
+        player.appendChild(chipCount);
+
+        player.innerHTML += ` Seat: ${seat.seat}`;
+
+        divPlayers.appendChild(player);
       }
-
-      player.innerText = "Name:";
-
-      const username = document.createElement("span");
-      username.classList.add("username");
-      username.innerText = client.username;
-      player.appendChild(username);
-
-      player.innerHTML += " Chips:";
-
-      const chipCount = document.createElement("span");
-      chipCount.classList.add("chip-count");
-      chipCount.innerText = client.chipCount;
-      player.appendChild(chipCount);
-
-      player.innerHTML += ` Seat: ${client.seat}`;
-
-      divPlayers.appendChild(player);
-
-      const gameStage = document.querySelector(".game-stage");
-      gameStage.innerText = {
-        0: "Dealing Cards...",
-        1: "Pre-flop",
-        2: "Flop",
-        3: "Turn",
-        4: "River",
-        5: "Showdown",
-      }[game.table.round];
-      const gamePot = document.querySelector(".game-pot");
-      gamePot.innerText = game.table.pot;
-      const playerTurn = document.querySelector(".player-turn");
-      const currentTurnPlayerName =
-        game.table.seats[game.table.playerToAct].username;
-      playerTurn.innerText = `It is ${currentTurnPlayerName}'s Turn`;
     });
+    const gameStage = document.querySelector(".game-stage");
+    gameStage.innerText = {
+      0: "Dealing Cards...",
+      1: "Pre-flop",
+      2: "Flop",
+      3: "Turn",
+      4: "River",
+      5: "Showdown",
+    }[game.table.round];
+    const gamePot = document.querySelector(".game-pot");
+    gamePot.innerText = game.table.pot;
+    const playerTurn = document.querySelector(".player-turn");
+    const currentTurnPlayerName =
+      game.table.seats[game.table.playerToAct].username;
+    playerTurn.innerText = `It is ${currentTurnPlayerName}'s Turn`;
+
+    const amountToCall = game.table.roundRaise - playerRoundBet;
+    btnCall.innerText = `Call (${amountToCall})`;
   }
 
   //A new player joins

@@ -46,11 +46,13 @@ wsServer.on("request", (req) => {
           pot: 0,
           round: 0, // 0-new hand 1-pre-flop, 2-flop, 3-turn, 4-river
           hand: 0,
+          sbValue: 50,
+          bbValue: 100,
           playerToAct: null,
           dealer: null,
           smallBlind: null,
           bigBlind: null,
-          roundRaise: 0,
+          roundRaise: 100,
           seatsQue: [],
           seats: [],
           clients: [], // or keep client info in seats(this array is so that other players don't know each other's cards);
@@ -90,9 +92,10 @@ wsServer.on("request", (req) => {
         actionRequired: false,
         clientId,
         seat,
+        clientsIndex: clients.length,
         username,
         chipCount,
-        bets: [0, 0, 0, 0],
+        bets: [0, 0, 0, 0, 0],
       };
       game.clients.push({
         clientId,
@@ -115,6 +118,7 @@ wsServer.on("request", (req) => {
 
       respondAllClients(clients, game, payLoad);
     }
+    /***************Fold****************/
     if (res.method === "fold") {
       const { clientId, gameId, playerSeat } = res;
       const game = games[gameId];
@@ -129,21 +133,53 @@ wsServer.on("request", (req) => {
       game.table.playerToAct = nextToAct(game.table);
       console.log(game.table.playerToAct);
       game.table = setQue(game.table);
+
       updateGameState();
     }
 
-    if (res.method === "raise") {
-      const { clientId, gameId, raiseAmount } = res;
+    /***************Check****************/
+    if (res.method === "check") {
+      const { clientId, gameId, playerSeat } = res;
       const game = games[gameId];
 
-      game.table.roundRaise += raiseAmount;
-      game.table.pot += raiseAmount;
-      // TODO: update forEach to use seat number
-      game.clients.forEach((client) => {
-        if (client.clientId === clientId) client.chipCount -= raiseAmount;
-      });
       game.table.playerToAct = nextToAct(game.table);
-      console.log(game.table.playerToAct);
+    }
+    /***************Call*****************/
+    if (res.method === "call") {
+      const { clientId, gameId, playerSeat } = res;
+      const game = games[gameId];
+
+      if (game.table.seats[playerSeat].clientId === clientId) {
+        let amountToCall =
+          game.table.roundRaise -
+          game.table.seats[playerSeat].bets[game.table.round];
+        if (game.table.seats[playerSeat].chipCount < amountToCall) {
+          amountToCall = game.table.seats[playerSeat].chipCount;
+        }
+        game.table.seats[playerSeat].chipCount -= amountToCall;
+        game.table.seats[playerSeat].bets[game.table.round] += amountToCall;
+        game.table.seats[playerSeat].actionRequired = false;
+        game.table.pot += amountToCall;
+        game.table.playerToAct = nextToAct(game.table);
+      }
+    }
+    /***************Raise****************/
+    if (res.method === "raise") {
+      const { clientId, gameId, playerSeat, raiseAmount } = res;
+      const game = games[gameId];
+
+      if (game.table.seats[playerSeat].clientId === clientId) {
+        game.table.seats[playerSeat].chipCount -= raiseAmount;
+        game.table.seats[playerSeat].bets[game.table.round] += raiseAmount;
+        game.table.roundRaise += raiseAmount;
+        game.table.pot += raiseAmount;
+        game.table.playerToAct = nextToAct(game.table);
+      }
+      // else {
+      //   game.table.seats.forEach((seat) => {
+      //     if (seat.clientId === clientId) seat.chipCount -= raiseAmount;
+      //   });
+      // }
       updateGameState();
     }
   });
