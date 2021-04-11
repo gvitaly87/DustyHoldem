@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/js/client.mjs" type="module"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Hold'em Game</h1>
+    <p>Player id: <span id="playerId"></span></p>
+    <p>Game id: <span id="gameId"></span></p>
+    <label for="username">Name:</label>
+    <input type="text" id="username" value="guest" />
+    <button id="btnCreate">New Game</button>
+    <button id="btnJoin">Join Game</button>
+    <label for="txtGameId">Game id:</label>
+    <input type="text" id="txtGameId" />
+    <div id="divPlayers"></div>
+    <div id="divBoard">
+      <h2 class="player-turn"></h2>
+      <h2 class="game-pot"></h2>
+    </div>
+    <div id="actions">
+      <button id="fold">Fold</button>
+      <button id="check">Check</button>
+      <button id="call">Call</button>
+      <!-- TODO: replace with JS -->
+      <input
+        id="raiseAmount"
+        type="Number"
+        min="100"
+        max="5000"
+        step="100"
+        value="100"
+      />
+      <button id="raise">Raise</button>
+    </div>
+  </body>
+</html>
