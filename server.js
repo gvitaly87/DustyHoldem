@@ -7,7 +7,8 @@ const path = require("path");
 
 const getUniqueID = require("./lib/getUniqueID");
 const getSeat = require("./lib/getSeat");
-const setQue = require("./lib/setQue");
+const { setQue } = require("./lib/setQue");
+const nextToAct = require("./lib/nextToAct");
 const respondAllClients = require("./lib/respondAllClients");
 
 // Express
@@ -125,6 +126,8 @@ wsServer.on("request", (req) => {
           if (seat.clientId === clientId) seat.folded = true;
         });
       }
+      game.table.playerToAct = nextToAct(game.table);
+      console.log(game.table.playerToAct);
       game.table = setQue(game.table);
       updateGameState();
     }
@@ -139,10 +142,8 @@ wsServer.on("request", (req) => {
       game.clients.forEach((client) => {
         if (client.clientId === clientId) client.chipCount -= raiseAmount;
       });
-
-      // game.table.turn += 1;
-      // game.table.turn =
-      // game.table.turn >= game.clients.length ? 0 : game.table.turn;
+      game.table.playerToAct = nextToAct(game.table);
+      console.log(game.table.playerToAct);
       updateGameState();
     }
   });

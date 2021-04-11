@@ -108,7 +108,7 @@ ws.onmessage = (message) => {
 
   //updated game state from server
   if (res.method === "update") {
-    const game = res.game;
+    game = res.game;
     const clientId = document.querySelector("#playerId").innerText;
     roundBet = game.table.roundRaise;
     while (divPlayers.firstChild) divPlayers.removeChild(divPlayers.firstChild);
