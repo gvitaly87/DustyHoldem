@@ -2,12 +2,12 @@
 let clientId = null;
 let gameId = null;
 
-let gamePot = 0;
 let roundBet = 0;
 
 let playerRoundBet = 0;
 let playerChips = null;
 let playerSeat = null;
+let game = {};
 
 let ws = new WebSocket("ws://localhost:9090");
 
@@ -45,10 +45,21 @@ btnCreate.addEventListener("click", () => {
   ws.send(JSON.stringify(payLoad));
 });
 
+/***************Fold****************/
+const btnFold = document.getElementById("fold");
+btnFold.addEventListener("click", () => {
+  const payLoad = {
+    method: "fold",
+    clientId,
+    gameId,
+    playerSeat,
+  };
+  ws.send(JSON.stringify(payLoad));
+});
+
 /***************Check****************/
 const btnCheck = document.getElementById("check");
 btnCreate.addEventListener("click", () => {
-  if (roundBet > playerRoundBet) return;
   const payLoad = {
     method: "check",
     clientId,
@@ -128,6 +139,15 @@ ws.onmessage = (message) => {
 
       divPlayers.appendChild(player);
 
+      const gameStage = document.querySelector(".game-stage");
+      gameStage.innerText = {
+        0: "Dealing Cards...",
+        1: "Pre-flop",
+        2: "Flop",
+        3: "Turn",
+        4: "River",
+        5: "Showdown",
+      }[game.table.round];
       const gamePot = document.querySelector(".game-pot");
       gamePot.innerText = game.table.pot;
       const playerTurn = document.querySelector(".player-turn");
@@ -137,7 +157,7 @@ ws.onmessage = (message) => {
 
   //A new player joins
   if (res.method === "join") {
-    const game = res.game;
+    game = res.game;
     const clientId = document.querySelector("#playerId").innerText;
 
     while (divPlayers.firstChild) divPlayers.removeChild(divPlayers.firstChild);
@@ -167,5 +187,19 @@ ws.onmessage = (message) => {
 
       divPlayers.appendChild(player);
     });
+
+    const gameStage = document.querySelector(".game-stage");
+    gameStage.innerText = {
+      0: "Dealing Cards...",
+      1: "Pre-flop",
+      2: "Flop",
+      3: "Turn",
+      4: "River",
+      5: "Showdown",
+    }[game.table.round];
+    const gamePot = document.querySelector(".game-pot");
+    gamePot.innerText = game.table.pot;
+    const playerTurn = document.querySelector(".player-turn");
+    playerTurn.innerText = `It is 's Turn`;
   }
 };

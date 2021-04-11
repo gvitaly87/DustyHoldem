@@ -43,7 +43,7 @@ wsServer.on("request", (req) => {
         clients: [],
         table: {
           pot: 0,
-          round: 0, // 0-new hand 1-preflop, 2-flop, 3-turn, 4-river
+          round: 0, // 0-new hand 1-pre-flop, 2-flop, 3-turn, 4-river
           hand: 0,
           playerToAct: 0,
           dealer: 0,
@@ -111,6 +111,20 @@ wsServer.on("request", (req) => {
 
       respondAllClients(clients, game, payLoad);
     }
+    if (res.method === "fold") {
+      const { clientId, gameId, playerSeat } = res;
+      const game = games[gameId];
+      // Check that the id of the player in the seat corresponds to sit provided otherwise searches the seat by id
+      if (game.table.seats[playerSeat].clientId === clientId) {
+        game.table.seats[playerSeat].folded = true;
+      } else {
+        game.table.seats.forEach((seat) => {
+          if (seat.clientId === clientId) seat.folded = true;
+        });
+      }
+      game.table = setQue(game.table);
+      updateGameState();
+    }
 
     if (res.method === "raise") {
       const { clientId, gameId, raiseAmount } = res;
@@ -121,6 +135,7 @@ wsServer.on("request", (req) => {
       game.clients.forEach((client) => {
         if (client.clientId === clientId) client.chipCount -= raiseAmount;
       });
+
       // game.table.turn += 1;
       // game.table.turn =
       // game.table.turn >= game.clients.length ? 0 : game.table.turn;
