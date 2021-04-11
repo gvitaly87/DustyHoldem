@@ -1,7 +1,8 @@
 html, body, .grid-container { 
   height: 100%;
   margin: 0;
-  background-image: url(../images/purple-1438670.jpg);
+  background-image: url(../images/purple-paper.jpg);
+  background-size: contain;
 }
 
 .grid-container {
@@ -72,7 +73,7 @@ html, body, .grid-container {
 
 /* delete me */
 .grid-container * {
-  border: 1px solid white;
+  border: 1px solid gold;
   position: relative;
 }
 
@@ -81,5 +82,5 @@ html, body, .grid-container {
   position: absolute;
   top: 0;
   left: 0;
-  color: white;
+  color: gold;
 }
