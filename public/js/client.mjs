@@ -48,6 +48,7 @@ btnCreate.addEventListener("click", () => {
 /***************Fold****************/
 const btnFold = document.getElementById("fold");
 btnFold.addEventListener("click", () => {
+  if (playerSeat !== game.table.playerToAct) return;
   const payLoad = {
     method: "fold",
     clientId,
@@ -60,6 +61,7 @@ btnFold.addEventListener("click", () => {
 /***************Check****************/
 const btnCheck = document.getElementById("check");
 btnCreate.addEventListener("click", () => {
+  if (playerSeat !== game.table.playerToAct) return;
   const payLoad = {
     method: "check",
     clientId,
@@ -73,7 +75,7 @@ btnRaise.addEventListener("click", () => {
   let raiseAmount = parseInt(document.getElementById("raiseAmount").value);
 
   //checks for fake bets
-  if (raiseAmount <= 0) return;
+  if (raiseAmount <= 0 || playerSeat !== game.table.playerToAct) return;
 
   // You can't bet more chips than you have
   raiseAmount = raiseAmount < playerChips ? raiseAmount : playerChips;
@@ -82,6 +84,7 @@ btnRaise.addEventListener("click", () => {
     method: "raise",
     gameId,
     clientId,
+    playerSeat,
     raiseAmount,
   };
 

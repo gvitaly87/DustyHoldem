@@ -45,8 +45,10 @@ wsServer.on("request", (req) => {
           pot: 0,
           round: 0, // 0-new hand 1-pre-flop, 2-flop, 3-turn, 4-river
           hand: 0,
-          playerToAct: 0,
-          dealer: 0,
+          playerToAct: null,
+          dealer: null,
+          smallBlind: null,
+          bigBlind: null,
           roundRaise: 0,
           seatsQue: [],
           seats: [],
@@ -84,6 +86,7 @@ wsServer.on("request", (req) => {
         empty: false,
         newToTable: true,
         folded: false,
+        actionRequired: false,
         clientId,
         seat,
         username,
@@ -132,6 +135,7 @@ wsServer.on("request", (req) => {
 
       game.table.roundRaise += raiseAmount;
       game.table.pot += raiseAmount;
+      // TODO: update forEach to use seat number
       game.clients.forEach((client) => {
         if (client.clientId === clientId) client.chipCount -= raiseAmount;
       });
