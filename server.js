@@ -107,7 +107,6 @@ wsServer.on("request", (req) => {
       //start the game
       if (game.clients.length >= 3) {
         game.table = setQue(game.table);
-        console.log(game.table.seatsQue);
         updateGameState();
       }
 
@@ -117,6 +116,7 @@ wsServer.on("request", (req) => {
       };
 
       respondAllClients(clients, game, payLoad);
+      updateGameState();
     }
     /***************Fold****************/
     if (res.method === "fold") {
@@ -141,8 +141,14 @@ wsServer.on("request", (req) => {
     if (res.method === "check") {
       const { clientId, gameId, playerSeat } = res;
       const game = games[gameId];
-
-      game.table.playerToAct = nextToAct(game.table);
+      if (
+        game.table.seats[playerSeat].bets[game.table.round] ===
+        game.table.roundRaise
+      ) {
+        game.table.seats[playerSeat].actionRequired = false;
+        game.table.playerToAct = nextToAct(game.table);
+      }
+      updateGameState();
     }
     /***************Call*****************/
     if (res.method === "call") {
@@ -174,6 +180,11 @@ wsServer.on("request", (req) => {
         game.table.roundRaise += raiseAmount;
         game.table.pot += raiseAmount;
         game.table.playerToAct = nextToAct(game.table);
+        game.table.seats.forEach((seat) => {
+          if (seat.seat !== playerSeat && !seat.folded && !seat.empty) {
+            seat.actionRequired = true;
+          }
+        });
       }
       // else {
       //   game.table.seats.forEach((seat) => {

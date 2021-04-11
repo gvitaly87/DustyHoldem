@@ -60,7 +60,7 @@ btnFold.addEventListener("click", () => {
 
 /***************Check****************/
 const btnCheck = document.getElementById("check");
-btnCreate.addEventListener("click", () => {
+btnCheck.addEventListener("click", () => {
   // Check if its the player turn, and that the current player's bet is equivalent to the rounds bet.
   if (
     playerSeat !== game.table.playerToAct ||
@@ -72,6 +72,7 @@ btnCreate.addEventListener("click", () => {
     method: "check",
     clientId,
     gameId,
+    playerSeat,
   };
   ws.send(JSON.stringify(payLoad));
 });
@@ -187,6 +188,8 @@ ws.onmessage = (message) => {
   //A new player joins
   if (res.method === "join") {
     game = res.game;
+    gameId = res.game.id;
+    document.querySelector("#gameId").innerText = gameId;
     const clientId = document.querySelector("#playerId").innerText;
 
     while (divPlayers.firstChild) divPlayers.removeChild(divPlayers.firstChild);
