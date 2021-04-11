@@ -154,7 +154,9 @@ ws.onmessage = (message) => {
       const gamePot = document.querySelector(".game-pot");
       gamePot.innerText = game.table.pot;
       const playerTurn = document.querySelector(".player-turn");
-      playerTurn.innerText = `It is 's Turn`;
+      const currentTurnPlayerName =
+        game.table.seats[game.table.playerToAct].username;
+      playerTurn.innerText = `It is ${currentTurnPlayerName}'s Turn`;
     });
   }
 
@@ -202,7 +204,5 @@ ws.onmessage = (message) => {
     }[game.table.round];
     const gamePot = document.querySelector(".game-pot");
     gamePot.innerText = game.table.pot;
-    const playerTurn = document.querySelector(".player-turn");
-    playerTurn.innerText = `It is 's Turn`;
   }
 };
