@@ -7,6 +7,7 @@ let roundBet = 0;
 let playerRoundBet = 0;
 let playerChips = null;
 let playerSeat = null;
+let playerHand = [];
 let game = {};
 
 let ws = new WebSocket("ws://localhost:9090");
@@ -183,6 +184,22 @@ ws.onmessage = (message) => {
 
     const amountToCall = game.table.roundRaise - playerRoundBet;
     btnCall.innerText = `Call (${amountToCall})`;
+    if (game.table.round === 1 && !game.table.seats[playerSeat].newToTable) {
+      const handPlaceHolder = document.getElementById("hand");
+      handPlaceHolder.innerHTML = `
+        <h3>Hand:</h3>
+        <span class="card">${game.table.seats[playerSeat].hand[0].value}${game.table.seats[playerSeat].hand[0].suit}</span> 
+        <span class="card">${game.table.seats[playerSeat].hand[1].value}${game.table.seats[playerSeat].hand[1].suit}</span>
+      `;
+    }
+    if (game.table.round > 1) {
+      const tableCards = document.querySelector(".table-cards");
+      let cardsHTML = "";
+      game.table.cards.forEach((card) => {
+        cardsHTML += `<span class="card">${card.value}${card.suit}</span> `;
+      });
+      tableCards.innerHTML = cardsHTML;
+    }
   }
 
   //A new player joins

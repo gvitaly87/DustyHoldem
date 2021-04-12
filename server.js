@@ -11,6 +11,7 @@ const { setQue } = require("./lib/setQue");
 const nextToAct = require("./lib/nextToAct");
 const updateRound = require("./lib/updateRound");
 const respondAllClients = require("./lib/respondAllClients");
+const Deck = require("./lib/deck");
 
 // Express
 app.use(express.static(path.join(__dirname, "./public")));
@@ -49,6 +50,7 @@ wsServer.on("request", (req) => {
           hand: 0,
           sbValue: 50,
           bbValue: 100,
+          cards: [],
           playerToAct: null,
           dealer: null,
           smallBlind: null,
@@ -56,7 +58,6 @@ wsServer.on("request", (req) => {
           roundRaise: 100,
           seatsQue: [],
           seats: [],
-          clients: [], // or keep client info in seats(this array is so that other players don't know each other's cards);
         },
       };
       // Set all seats to empty
@@ -96,6 +97,7 @@ wsServer.on("request", (req) => {
         clientsIndex: clients.length,
         username,
         chipCount,
+        hand: [],
         bets: [0, 0, 0, 0, 0],
       };
       game.clients.push({
@@ -107,7 +109,8 @@ wsServer.on("request", (req) => {
 
       //start the game
       if (game.clients.length >= 3) {
-        game.table = setQue(game.table);
+        game.deck = new Deck();
+        game.table = setQue(game.table, game.deck);
         updateGameState();
       }
 
@@ -131,10 +134,10 @@ wsServer.on("request", (req) => {
           if (seat.clientId === clientId) seat.folded = true;
         });
       }
-      game.table = setQue(game.table);
+      game.table = setQue(game.table, game.deck);
 
       // game.table.playerToAct = nextToAct(game.table);
-      game.table = updateRound(game.table, playerSeat);
+      game.table = updateRound(game.table, playerSeat, game.deck);
       updateGameState();
     }
 
@@ -148,7 +151,7 @@ wsServer.on("request", (req) => {
       ) {
         game.table.seats[playerSeat].actionRequired = false;
         // game.table.playerToAct = nextToAct(game.table);
-        game.table = updateRound(game.table, playerSeat);
+        game.table = updateRound(game.table, playerSeat, game.deck);
       }
       updateGameState();
     }
@@ -169,7 +172,7 @@ wsServer.on("request", (req) => {
         game.table.seats[playerSeat].actionRequired = false;
         game.table.pot += amountToCall;
         // game.table.playerToAct = nextToAct(game.table);
-        game.table = updateRound(game.table, playerSeat);
+        game.table = updateRound(game.table, playerSeat, game.deck);
         updateGameState();
       }
     }
@@ -189,17 +192,8 @@ wsServer.on("request", (req) => {
           console.log(que, playerSeat);
           if (que !== playerSeat) game.table.seats[que].actionRequired = true;
         });
-        // game.table.seats.forEach((seat) => {
-        //   if (seat.seat !== playerSeat && !seat.folded && !seat.empty) {
-        //     seat.actionRequired = true;
-        //   }
-        // });
       }
-      // else {
-      //   game.table.seats.forEach((seat) => {
-      //     if (seat.clientId === clientId) seat.chipCount -= raiseAmount;
-      //   });
-      // }
+
       updateGameState();
     }
   });
