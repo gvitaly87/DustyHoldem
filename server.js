@@ -9,6 +9,7 @@ const getUniqueID = require("./lib/getUniqueID");
 const getSeat = require("./lib/getSeat");
 const { setQue } = require("./lib/setQue");
 const nextToAct = require("./lib/nextToAct");
+const updateRound = require("./lib/updateRound");
 const respondAllClients = require("./lib/respondAllClients");
 
 // Express
@@ -133,7 +134,7 @@ wsServer.on("request", (req) => {
       game.table.playerToAct = nextToAct(game.table);
       console.log(game.table.playerToAct);
       game.table = setQue(game.table);
-
+      game.table = updateRound(game.table, playerSeat);
       updateGameState();
     }
 
@@ -148,13 +149,14 @@ wsServer.on("request", (req) => {
         game.table.seats[playerSeat].actionRequired = false;
         game.table.playerToAct = nextToAct(game.table);
       }
+      game.table = updateRound(game.table, playerSeat);
       updateGameState();
     }
     /***************Call*****************/
     if (res.method === "call") {
       const { clientId, gameId, playerSeat } = res;
       const game = games[gameId];
-
+      // Check if the player's seat hasn't been tempered with
       if (game.table.seats[playerSeat].clientId === clientId) {
         let amountToCall =
           game.table.roundRaise -
@@ -167,6 +169,8 @@ wsServer.on("request", (req) => {
         game.table.seats[playerSeat].actionRequired = false;
         game.table.pot += amountToCall;
         game.table.playerToAct = nextToAct(game.table);
+        game.table = updateRound(game.table, playerSeat);
+        updateGameState();
       }
     }
     /***************Raise****************/
