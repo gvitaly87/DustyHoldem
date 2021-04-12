@@ -8,13 +8,15 @@ html, body, .grid-container {
 .grid-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 0.25fr 1fr 0.25fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 0.25fr 1fr 0.4fr 1fr 0.4fr 1fr 0.4fr 1fr 1fr 0.25fr 0.5fr;
+  grid-template-rows: 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 0.1fr 1fr 0.5fr 0.5fr;
   gap: 0px 0px;
 }
 
-.player-1 { grid-area: 3 / 3 / 4 / 4; }
+.nav-bar { grid-area: 1 / 1 / 2 / 10; }
 
 .player-2 { grid-area: 3 / 5 / 4 / 6; }
+
+.player-1 { grid-area: 3 / 3 / 4 / 4; }
 
 .player-3 { grid-area: 3 / 7 / 4 / 8; }
 
@@ -22,37 +24,9 @@ html, body, .grid-container {
 
 .player-5 { grid-area: 7 / 8 / 8 / 9; }
 
-.poker-table {
-  display: grid;
-  background: url(../images/table.png);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
-  grid-template-columns: 0.5fr 0.75fr 0.75fr 0.5fr 0.5fr 0.5fr;
-  grid-template-rows: 0.35fr 0.5fr 1fr 0.5fr 0.35fr;
-  gap: 0px 0px;
-  grid-template-areas:
-    ". . . . . ."
-    ". status-msg status-msg status-msg status-msg ."
-    ". flop flop turn river ."
-    ". winner-msg winner-msg winner-msg winner-msg ."
-    ". . . . . .";
-  grid-area: 4 / 3 / 9 / 8;
-}
-
-.flop { grid-area: flop; }
-
-.turn { grid-area: turn; }
-
-.river { grid-area: river; }
-
-.winner-msg { grid-area: winner-msg; }
-
-.status-msg { grid-area: status-msg; }
+.player-7 { grid-area: 9 / 5 / 10 / 6; }
 
 .player-6 { grid-area: 9 / 7 / 10 / 8; }
-
-.player-7 { grid-area: 9 / 5 / 10 / 6; }
 
 .player-8 { grid-area: 9 / 3 / 10 / 4; }
 
@@ -60,18 +34,46 @@ html, body, .grid-container {
 
 .player-10 { grid-area: 5 / 2 / 6 / 3; }
 
-.nav-bar { grid-area: 1 / 1 / 2 / 10; }
+.action-bar { grid-area: 11 / 1 / 12 / 10; }
 
-.action-bar { grid-area: 10 / 1 / 11 / 10; }
+.footer { grid-area: 13 / 1 / 14 / 10; }
 
-.footer { grid-area: 12 / 1 / 13 / 10; }
+.poker-table {
+  display: grid;
+  background: url(../images/table.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  grid-template-columns: 0.5fr 0.3fr 1fr 1fr 1fr 0.3fr 0.5fr;
+  grid-template-rows: 1.4fr 0.5fr 1fr 2fr 1fr 0.5fr 1.4fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    ". . . . . . ."
+    ". . total-pot total-pot total-pot . ."
+    ". . status-msg status-msg status-msg . ."
+    ". . cards-section cards-section cards-section . ."
+    ". . winner-msg winner-msg winner-msg . ."
+    ". . player-turn player-turn player-turn . ."
+    ". . . . . . .";
+  grid-area: 3 / 2 / 10 / 9;
+}
 
-.total-pot { grid-area: 4 / 5 / 5 / 6; }
+.total-pot { grid-area: total-pot; }
 
-.player-turn { grid-area: 8 / 5 / 9 / 6; }
+.status-msg { grid-area: status-msg; }
 
+.cards-section { grid-area: cards-section; }
 
-/* delete me */
+.winner-msg { grid-area: winner-msg; }
+
+.player-turn { grid-area: player-turn; }
+
+.logo {
+  max-width: 5%;
+  height: auto;
+}
+
+/* DELETE BELOW */
 .grid-container * {
   border: 1px solid gold;
   position: relative;
@@ -85,7 +87,3 @@ html, body, .grid-container {
   color: gold;
 }
 
-.logo {
-  max-width: 7%;
-  height: auto;
-}
