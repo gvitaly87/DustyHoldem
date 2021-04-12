@@ -131,9 +131,9 @@ wsServer.on("request", (req) => {
           if (seat.clientId === clientId) seat.folded = true;
         });
       }
-      game.table.playerToAct = nextToAct(game.table);
-      console.log(game.table.playerToAct);
       game.table = setQue(game.table);
+
+      // game.table.playerToAct = nextToAct(game.table);
       game.table = updateRound(game.table, playerSeat);
       updateGameState();
     }
@@ -147,9 +147,9 @@ wsServer.on("request", (req) => {
         game.table.roundRaise
       ) {
         game.table.seats[playerSeat].actionRequired = false;
-        game.table.playerToAct = nextToAct(game.table);
+        // game.table.playerToAct = nextToAct(game.table);
+        game.table = updateRound(game.table, playerSeat);
       }
-      game.table = updateRound(game.table, playerSeat);
       updateGameState();
     }
     /***************Call*****************/
@@ -168,7 +168,7 @@ wsServer.on("request", (req) => {
         game.table.seats[playerSeat].bets[game.table.round] += amountToCall;
         game.table.seats[playerSeat].actionRequired = false;
         game.table.pot += amountToCall;
-        game.table.playerToAct = nextToAct(game.table);
+        // game.table.playerToAct = nextToAct(game.table);
         game.table = updateRound(game.table, playerSeat);
         updateGameState();
       }
@@ -184,11 +184,16 @@ wsServer.on("request", (req) => {
         game.table.roundRaise += raiseAmount;
         game.table.pot += raiseAmount;
         game.table.playerToAct = nextToAct(game.table);
-        game.table.seats.forEach((seat) => {
-          if (seat.seat !== playerSeat && !seat.folded && !seat.empty) {
-            seat.actionRequired = true;
-          }
+        game.table.seats[playerSeat].actionRequired = false;
+        game.table.seatsQue.forEach((que) => {
+          console.log(que, playerSeat);
+          if (que !== playerSeat) game.table.seats[que].actionRequired = true;
         });
+        // game.table.seats.forEach((seat) => {
+        //   if (seat.seat !== playerSeat && !seat.folded && !seat.empty) {
+        //     seat.actionRequired = true;
+        //   }
+        // });
       }
       // else {
       //   game.table.seats.forEach((seat) => {
