@@ -108,9 +108,10 @@ wsServer.on("request", (req) => {
       });
 
       //start the game
-      if (game.clients.length >= 3) {
-        game.deck = new Deck();
-        game.table = setQue(game.table, game.deck);
+      if (game.clients.length >= 3 && game.table.round === 0) {
+        let { table, deck } = setQue(game.table, game.deck);
+        game.table = table;
+        game.deck = deck;
         updateGameState();
       }
 
@@ -134,10 +135,15 @@ wsServer.on("request", (req) => {
           if (seat.clientId === clientId) seat.folded = true;
         });
       }
-      game.table = setQue(game.table, game.deck);
+      let tableObj = setQue(game.table, game.deck);
+      game.table = tableObj.table;
+      game.deck = tableObj.deck;
 
       // game.table.playerToAct = nextToAct(game.table);
-      game.table = updateRound(game.table, playerSeat, game.deck);
+
+      tableObj = updateRound(game.table, playerSeat, game.deck);
+      game.table = tableObj.table;
+      game.deck = tableObj.deck;
       updateGameState();
     }
 
@@ -151,7 +157,9 @@ wsServer.on("request", (req) => {
       ) {
         game.table.seats[playerSeat].actionRequired = false;
         // game.table.playerToAct = nextToAct(game.table);
-        game.table = updateRound(game.table, playerSeat, game.deck);
+        let tableObj = updateRound(game.table, playerSeat, game.deck);
+        game.table = tableObj.table;
+        game.deck = tableObj.deck;
       }
       updateGameState();
     }
@@ -172,7 +180,9 @@ wsServer.on("request", (req) => {
         game.table.seats[playerSeat].actionRequired = false;
         game.table.pot += amountToCall;
         // game.table.playerToAct = nextToAct(game.table);
-        game.table = updateRound(game.table, playerSeat, game.deck);
+        let { table, deck } = updateRound(game.table, playerSeat, game.deck);
+        game.table = table;
+        game.deck = deck;
         updateGameState();
       }
     }

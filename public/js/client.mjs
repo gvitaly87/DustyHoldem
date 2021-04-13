@@ -184,6 +184,13 @@ ws.onmessage = (message) => {
 
     const amountToCall = game.table.roundRaise - playerRoundBet;
     btnCall.innerText = `Call (${amountToCall})`;
+    if (amountToCall === 0) {
+      btnCall.classList.add("hidden");
+      if ((btnCheck.className = "hidden")) btnCheck.classList.remove("hidden");
+    } else {
+      btnCheck.classList.add("hidden");
+      if (btnCall.className === "hidden") btnCall.classList.remove("hidden");
+    }
     if (game.table.round === 0) {
       const handPlaceHolder = document.getElementById("hand");
       handPlaceHolder.innerHTML = "";
