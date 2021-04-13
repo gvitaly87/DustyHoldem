@@ -3,32 +3,54 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="/js/client.mjs" type="module"></script>
+    <script src="../public/js/client.mjs" type="module"></script>
   <title>VGDS' Poker World</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="../public/css/styles.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
 </head>
 <body>
 <!-- partial:index.partial.html -->
 <div class="grid-container">
-  <div class="nav-bar"><img class="logo" src="/DustyHoldem/public/images/vgds-temp-resized.png"></div>
-  <div class="player-2"></div>
-  <div class="player-1"></div>
-  <div class="player-3"></div>
-  <div class="player-4"></div>
-  <div class="player-5"></div>
-  <div class="player-7"></div>
-  <div class="player-6"></div>
-  <div class="player-8"></div>
-  <div class="player-9"></div>
-  <div class="player-10"></div>
-  <div class="action-bar"></div>
-  <div class="footer"></div>
+  <div class="nav-bar"><img class="logo" src="../public/images/vgds-temp-resized.png">Player id: <span id="playerId"></span>
+    Game id: <span id="gameId"></span>
+    <label for="username">Name:</label>
+    <input type="text" id="username" value="guest" />
+    <button id="btnCreate">New Game</button>
+    <button id="btnJoin">Join Game</button>
+    <label for="txtGameId">Game id:</label>
+    <input type="text" id="txtGameId" /></div>
+  <div class="player-2"><div class="p-container"><div class="p-container"><img src="../public/images/icons/test.png" class="p-icons"></div></div></div>
+  <div class="player-1"><div class="p-container"><img src="../public/images/icons/test.png" class="p-icons"></div></div>
+  <div class="player-3"><div class="p-container"><img src="../public/images/icons/test.png" class="p-icons"></div></div>
+  <div class="player-4"><div class="p-container"><img src="../public/images/icons/test.png" class="p-icons p-align"></div></div>
+  <div class="player-5"><div class="p-container"><img src="../public/images/icons/test.png" class="p-icons p-align"></div></div>
+  <div class="player-7"><div class="p-container"><img src="../public/images/icons/test.png" class="p-icons"></div></div>
+  <div class="player-6"><div class="p-container"><img src="../public/images/icons/test.png" class="p-icons"></div></div>
+  <div class="player-8"><div class="p-container"><img src="../public/images/icons/test.png" class="p-icons"></div></div>
+  <div class="player-9"><div class="p-container"><img src="../public/images/icons/test.png" class="p-icons"></div></div>
+  <div class="player-10"><div class="p-container"><img src="../public/images/icons/test.png" class="p-icons"></div></div>
+  <div class="action-bar"><div id="actions">
+    <button id="fold">Fold</button>
+    <button id="check">Check</button>
+    <button id="call">Call</button>
+    <!-- TODO: replace with JS -->
+    <input
+      id="raiseAmount"
+      type="Number"
+      min="100"
+      max="5000"
+      step="100"
+      value="100"
+    />
+    <button id="raise">Raise</button>
+  </div></div>
+  <div class="footer">&copy; 2021 Vistin Development</div>
   <div class="poker-table">
     <div class="total-pot"></div>
-    <div class="status-msg"></div>
-    <div class="cards-section"></div>
+    <div class="status-msg"><div class="game-stage"></div></div>
+    <div class="cards-section"><div class="table-cards"></div></div>
     <div class="winner-msg"></div>
-    <div class="player-turn"></div>
+    <div class="player-turn"><div class="player-turn"></div></div>
   </div>
 </div>
 <!-- partial -->

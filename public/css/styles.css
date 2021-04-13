@@ -1,3 +1,17 @@
+@import url('https://fonts.googleapis.com/css?family=Cabin|Roboto:400,700|Roboto+Condensed:400,700');
+
+/* Font */
+body {
+  font-family: 'Cabin', sans-serif;
+  color: gold;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: 700;
+  color: gold;
+}
+
 html, body, .grid-container { 
   height: 100%;
   margin: 0;
@@ -73,17 +87,31 @@ html, body, .grid-container {
   height: auto;
 }
 
+.p-container {
+  display: flex;
+}
+
+.p-icons {
+  max-width: 42%;
+  height: auto;
+  z-index: 999;
+}
+
+.p-align {
+  
+}
+
 /* DELETE BELOW */
 .grid-container * {
   border: 1px solid gold;
   position: relative;
 }
 
-.grid-container *:after {
+/* .grid-container *:after {
   content:attr(class);
   position: absolute;
   top: 0;
   left: 0;
   color: gold;
-}
+} */
 
