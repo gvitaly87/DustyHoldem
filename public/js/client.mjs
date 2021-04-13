@@ -184,13 +184,23 @@ ws.onmessage = (message) => {
 
     const amountToCall = game.table.roundRaise - playerRoundBet;
     btnCall.innerText = `Call (${amountToCall})`;
-    if (game.table.round === 1 && !game.table.seats[playerSeat].newToTable) {
+    if (game.table.round === 0) {
       const handPlaceHolder = document.getElementById("hand");
-      handPlaceHolder.innerHTML = `
-        <h3>Hand:</h3>
-        <span class="card">${game.table.seats[playerSeat].hand[0].value}${game.table.seats[playerSeat].hand[0].suit}</span> 
-        <span class="card">${game.table.seats[playerSeat].hand[1].value}${game.table.seats[playerSeat].hand[1].suit}</span>
-      `;
+      handPlaceHolder.innerHTML = "";
+      const tableCards = document.querySelector(".table-cards");
+      tableCards.innerHTML = "";
+    }
+    if (game.table.round === 1) {
+      const tableCards = document.querySelector(".table-cards");
+      tableCards.innerHTML = "";
+      if (!game.table.seats[playerSeat].newToTable) {
+        const handPlaceHolder = document.getElementById("hand");
+        handPlaceHolder.innerHTML = `
+          <h3>Hand:</h3>
+          <span class="card">${game.table.seats[playerSeat].hand[0].value}${game.table.seats[playerSeat].hand[0].suit}</span> 
+          <span class="card">${game.table.seats[playerSeat].hand[1].value}${game.table.seats[playerSeat].hand[1].suit}</span>
+        `;
+      }
     }
     if (game.table.round > 1) {
       const tableCards = document.querySelector(".table-cards");
