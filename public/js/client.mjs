@@ -90,10 +90,21 @@ btnCall.addEventListener("click", () => {
   };
   ws.send(JSON.stringify(payLoad));
 });
+
+const raiseAmountField = document.getElementById("raiseAmount");
+const raiseAmountSlider = document.getElementById("raiseRange");
+
+raiseAmountField.addEventListener("change", () => {
+  raiseAmountSlider.value = raiseAmountField.value;
+});
+
+raiseAmountSlider.addEventListener("change", () => {
+  raiseAmountField.value = raiseAmountSlider.value;
+});
 /***************Raise****************/
 const btnRaise = document.getElementById("raise");
 btnRaise.addEventListener("click", () => {
-  let raiseAmount = parseInt(document.getElementById("raiseAmount").value);
+  let raiseAmount = parseInt(raiseAmountField.value);
 
   //checks for fake bets
   if (raiseAmount <= 0 || playerSeat !== game.table.playerToAct) return;
