@@ -94,13 +94,14 @@ btnCall.addEventListener("click", () => {
 const raiseAmountField = document.getElementById("raiseAmount");
 const raiseAmountSlider = document.getElementById("raiseRange");
 
-raiseAmountField.addEventListener("change", () => {
+raiseAmountField.addEventListener("input", () => {
   raiseAmountSlider.value = raiseAmountField.value;
 });
 
-raiseAmountSlider.addEventListener("change", () => {
+raiseAmountSlider.addEventListener("input", () => {
   raiseAmountField.value = raiseAmountSlider.value;
 });
+
 /***************Raise****************/
 const btnRaise = document.getElementById("raise");
 btnRaise.addEventListener("click", () => {
