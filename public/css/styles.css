@@ -4,13 +4,20 @@
 body {
   font-family: 'Cabin', sans-serif;
   color: gold;
+  font-size: clamp(0.875rem, 1.5vw, 1.2rem);
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Roboto Condensed', sans-serif;
   font-weight: 700;
   color: gold;
+  font-size: clamp(1rem, 2.5vw, 2rem);
 }
+
+h1 {
+  font-size: clamp(1.2rem, 2.5vw, 2.5rem);
+}
+
 
 html, body, .grid-container { 
   height: 100%;
@@ -65,31 +72,56 @@ html, body, .grid-container {
     ". . . . . . ."
     ". . total-pot total-pot total-pot . ."
     ". . status-msg status-msg status-msg . ."
-    ". . cards-section cards-section cards-section . ."
+    ". . table-cards table-cards table-cards . ."
     ". . winner-msg winner-msg winner-msg . ."
     ". . player-turn player-turn player-turn . ."
     ". . . . . . .";
   grid-area: 3 / 2 / 10 / 9;
 }
 
-.total-pot { grid-area: total-pot; }
+.total-pot {
+  grid-area: total-pot;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-.status-msg { grid-area: status-msg; }
+.status-msg {
+  grid-area: status-msg;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-.cards-section { grid-area: cards-section; }
+.table-cards {
+  grid-area: table-cards;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-.winner-msg { grid-area: winner-msg; }
+.winner-msg {
+  grid-area: winner-msg;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-.player-turn { grid-area: player-turn; }
+.player-turn {
+  grid-area: player-turn;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .logo {
   max-width: 5%;
   height: auto;
 }
 
-.p-container {
+/* .p-container {
   display: flex;
-}
+} */
 
 .p-icons {
   max-width: 42%;
@@ -97,13 +129,45 @@ html, body, .grid-container {
   z-index: 999;
 }
 
-.p-align {
-  
+.nav-bar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.action-bar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.p9, .p10 {
+  float: right;
+}
+
+button {
+  background-color: green;
+  color: gold;
+  border-color: gold;
+  font-size: clamp ;
+  font-size: clamp(1rem, 2.5vw, 2rem);
+  border-radius: .75rem;
+}
+
+button:hover {
+  background-color: purple;
+  transition-duration: 0.5s;
 }
 
 /* DELETE BELOW */
 .grid-container * {
-  border: 1px solid gold;
+  /* border: 1px solid gold; */
   position: relative;
 }
 
