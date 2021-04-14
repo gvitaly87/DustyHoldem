@@ -155,6 +155,22 @@ ws.onmessage = (message) => {
           playerChips = seat.chipCount;
           playerSeat = seat.seat;
           playerRoundBet = seat.bets[game.table.round];
+          // Updating sliders
+          // If someone made a bet this round
+          if (roundBet) {
+            raiseAmountSlider.min = roundBet - seat.bets[game.table.round];
+            raiseAmountField.min = roundBet - seat.bets[game.table.round];
+            // If the bet is larger than the bet value that was set, and less than the player's chip count
+            if (
+              raiseAmountField.value < roundBet - seat.bets[game.table.round] &&
+              roundBet - seat.bets[game.table.round] > seat.chipCount
+            ) {
+              raiseAmountSlider.value = roundBet - seat.bets[game.table.round];
+              raiseAmountField.value = roundBet - seat.bets[game.table.round];
+            }
+          }
+          raiseAmountSlider.max = seat.chipCount;
+          raiseAmountField.max = seat.chipCount;
         } else {
           player.classList.add("opponent");
         }

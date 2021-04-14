@@ -234,5 +234,5 @@ function updateGameState() {
     respondAllClients(clients, game, payLoad);
   }
 
-  setTimeout(updateGameState, 500);
+  // setTimeout(updateGameState, 500);
 }
