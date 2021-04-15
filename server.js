@@ -249,6 +249,7 @@ function updateGameState() {
       method: "update",
       game: game,
     };
+    console.log("updating game status");
     respondAllClients(clients, game, payLoad);
   }
 }

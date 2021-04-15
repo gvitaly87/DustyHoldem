@@ -81,6 +81,22 @@
   transform: rotate(180deg);
 }
 
+/***** Vitaly Rules *****/
 .hidden {
   display: none;
+}
+
+.table-cards {
+  display: flex;
+  height: 7rem;
+  flex-grow: 0;
+}
+#hand {
+  display: flex;
+  height: 7rem;
+  flex-grow: 0;
+}
+.card {
+  width: 5rem;
+  margin: 0 1rem;
 }

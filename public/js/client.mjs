@@ -19,9 +19,12 @@ const divPlayers = document.getElementById("divPlayers");
 //wiring events
 const btnJoin = document.getElementById("btnJoin");
 const txtGameId = document.getElementById("txtGameId");
+const btnCopyId = document.getElementById("btnCopyId");
 
 // Join game listener
 btnJoin.addEventListener("click", () => {
+  btnCopyId.classList.remove("hidden");
+
   let username = document.getElementById("username").value;
   if (gameId === null) gameId = txtGameId.value;
 
@@ -38,6 +41,7 @@ btnJoin.addEventListener("click", () => {
 // Create a new game listener
 const btnCreate = document.getElementById("btnCreate");
 btnCreate.addEventListener("click", () => {
+  btnCopyId.classList.remove("hidden");
   let username = document.getElementById("username").value;
   const payLoad = {
     method: "create",
@@ -46,6 +50,21 @@ btnCreate.addEventListener("click", () => {
   };
 
   ws.send(JSON.stringify(payLoad));
+});
+/************Copy Game ID************/
+btnCopyId.addEventListener("click", () => {
+  const textToCopy = document.getElementById("gameId").innerText;
+
+  const myTemporaryInputElement = document.createElement("input");
+  myTemporaryInputElement.type = "text";
+  myTemporaryInputElement.value = textToCopy;
+
+  document.body.appendChild(myTemporaryInputElement);
+
+  myTemporaryInputElement.select();
+  document.execCommand("Copy");
+
+  document.body.removeChild(myTemporaryInputElement);
 });
 
 /***************Fold****************/
@@ -145,6 +164,7 @@ ws.onmessage = (message) => {
   if (res.method === "update") {
     game = res.game;
     const clientId = document.querySelector("#playerId").innerText;
+    document.querySelector("#gameId").innerText = gameId;
     roundBet = game.table.roundRaise;
     while (divPlayers.firstChild) divPlayers.removeChild(divPlayers.firstChild);
 
@@ -202,6 +222,8 @@ ws.onmessage = (message) => {
         if (seat.seat === game.table.smallBlind) specialStatus += " SB";
         if (seat.seat === game.table.bigBlind) specialStatus += " BB";
         if (seat.seat === game.table.dealer) specialStatus += " DEALER";
+        if (seat.folded) specialStatus += " Folded";
+        if (seat.newToTable && !seat.empty) specialStatus = " Just joined";
 
         player.innerHTML += specialStatus;
 
@@ -309,7 +331,4 @@ ws.onmessage = (message) => {
     const gamePot = document.querySelector(".game-pot");
     gamePot.innerText = game.table.pot;
   }
-  const gameLog = document.getElementById("game-log");
-  if (game.table.gameLog)
-    gameLog.innerHTML += `<div class="msg dealer-msg">Dealer: ${game.table.gameLog}</div>`;
 };
