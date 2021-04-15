@@ -224,21 +224,21 @@ html, body, .grid-container {
 button {
   margin: 1rem;
   background-color: #008000;
-  color: rebeccapurple;
-  border-color: #fffb00;
+  color: white;
+  border-color: white;
   font-size: clamp ;
   font-size: clamp(0.7rem, 2.5vw, 1.2rem);
   border-radius: .5rem;
-  background-image: linear-gradient(to right, #008000, #02ac02, #fffb00, #ffd900);
-  box-shadow: 0 4px 15px 0 rgba(126, 52, 161, 0.75);
+  background-image: linear-gradient(to right, #120053, #021cac, #006eff, #00a2ff);
+  box-shadow: 0 4px 15px 0 rgba(0, 128, 0, 0.63);
 }
 
 button:hover {
-  /* background-position: 100% 0;
+  background-position: 100% 0;
   moz-transition: all .4s ease-in-out;
   -o-transition: all .4s ease-in-out;
   -webkit-transition: all .4s ease-in-out;
-  transition: all .4s ease-in-out; */
+  transition: all .4s ease-in-out;
   background-color: purple;
   transition-duration: 0.5s;
 }
