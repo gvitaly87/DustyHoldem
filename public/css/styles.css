@@ -3,14 +3,14 @@
 /* Font */
 body {
   font-family: 'Cabin', sans-serif;
-  color: gold;
+  color: white;
   /* font-size: clamp(1rem, 2.5vw, 1.5rem); */
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Roboto Condensed', sans-serif;
   font-weight: 700;
-  color: gold;
+  color: white;
   font-size: clamp(1rem, 2.5vw, 2rem);
 }
 
@@ -26,8 +26,9 @@ h1 {
 html, body, .grid-container { 
   height: 100%;
   margin: 0;
-  background-image: url(../images/purple-paper.jpg);
-  background-size: contain;
+  background-color: rgba(0, 0, 0, 0.486);
+  /* background-image: url(../images/purple-paper.jpg);
+  background-size: contain; */
 }
 
 .grid-container {
@@ -186,10 +187,21 @@ html, body, .grid-container {
 }
 
 .action-bar {
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
+border: 1px solid white;
 }
+
+#divPlayers {
+  border-bottom: 1px solid white;
+}
+
+.game-info {
+  border: 1px solid white;
+}
+
+label {
+  margin: 0.25rem 0.5rem 0.25rem 0.5rem;
+}
+
 
 .footer {
   display: flex;
@@ -245,7 +257,7 @@ button:hover {
 
 /* DELETE BELOW */
 .grid-container * {
-  border: 1px solid gold;
+  /* border: 1px solid gold; */
   position: relative;
 }
 
