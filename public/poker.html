@@ -12,38 +12,56 @@
 <!-- partial:index.partial.html -->
 <div class="grid-container">
   <div class="nav-bar"><img class="logo" src="/images/vgds-temp-resized.png"><div>
+    
     <label for="username">Name:</label>
     <input type="text" id="username" value="Guest" /></div>
+
     <button id="btnCreate">New Game</button>
     <button id="btnJoin">Join Game</button>
     <div><label for="txtGameId">Game ID:</label>
     <input type="text" id="txtGameId" /></div></div>
-  <div class="player-2"><div class="p-container"><div class="p-container"><img src="/images/icons/test.png" class="p-icons"></div></div></div>
-  <div class="player-1"><div class="p-container"><img src="/images/icons/test.png" class="p-icons"></div></div>
-  <div class="player-3"><div class="p-container"><img src="/images/icons/test.png" class="p-icons"></div></div>
-  <div class="player-4"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p-align"></div></div>
-  <div class="player-5"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p-align"></div></div>
-  <div class="player-7"><div class="p-container"><img src="/images/icons/test.png" class="p-icons"></div></div>
+
+  <div class="player-2"><div class="p-container"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p2"></div></div></div>
+
+  <div class="player-1"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p1"></div></div>
+
+  <div class="player-3"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p3"></div></div>
+
+  <div class="player-4"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p4"></div></div>
+
+  <div class="player-5"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p5"></div></div>
+
+  <div class="player-7"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p7"></div></div>
+
   <div class="player-6"><div class="p-container"><img src="/images/icons/test.png" class="p-icons"></div></div>
-  <div class="player-8"><div class="p-container"><img src="/images/icons/test.png" class="p-icons"></div></div>
+
+  <div class="player-8"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p8"></div></div>
+
   <div class="player-9"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p9"></div></div>
+
   <div class="player-10"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p10"></div></div>
-  <div class="action-bar"><div id="actions">
+
+    <div class="action-bar" id="actions">
     <button id="fold">Fold</button>
     <button id="check">Check</button>
     <button id="call">Call</button>
-    <!-- TODO: replace with JS -->
+    
+    <div class=bet-slider>
     <input
-      id="raiseAmount"
-      type="Number"
-      min="100"
-      max="5000"
-      step="100"
-      value="100"
-    />
-    <button id="raise">Raise</button>
-  </div></div>
+    id="raiseAmount"
+    type="Number"
+    min="100"
+    max="5000"
+    step="50"
+    value="100"
+  />
+  <input type="range" id="raiseRange" min="100" max="5000" value="100" />
+  </div>
+  <button id="raise">Bet</button>
+</div>
+  
   <div class="footer">&copy; 2021 Vistin Development</div>
+
   <div class="poker-table">
     <div class="total-pot">total</div>
     <div class="status-msg"><div class="game-stage">game stage</div></div>
@@ -51,8 +69,6 @@
     <div class="winner-msg">winner winner chicken dinner</div>
     <div class="player-turn">player turn</div>
   </div>
-</div>
-<!-- partial -->
-  
+</div>  
 </body>
 </html>
