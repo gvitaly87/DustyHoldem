@@ -205,10 +205,6 @@ html, body, .grid-container {
   float: right;
 }
 
-/* .p2 {
-  justify-self: center;
-} */
-
 #username {
   font-size: clamp(1rem, 2.5vw, 1.5rem);
 }
@@ -225,21 +221,16 @@ html, body, .grid-container {
   margin-left: 1rem;
 }
 
-/* .bet-slider {
-  display: flex;
-  flex-wrap: wrap;
-} */
-
 button {
   margin: 1rem;
-  background-color: green;
-  color: gold;
-  border-color: gold;
+  background-color: #008000;
+  color: rebeccapurple;
+  border-color: #fffb00;
   font-size: clamp ;
   font-size: clamp(0.7rem, 2.5vw, 1.2rem);
   border-radius: .5rem;
-  /* background-image: linear-gradient(to right, #6253e1, #852D91, #A3A1FF, #F24645);
-  box-shadow: 0 4px 15px 0 rgba(126, 52, 161, 0.75); */
+  background-image: linear-gradient(to right, #008000, #02ac02, #fffb00, #ffd900);
+  box-shadow: 0 4px 15px 0 rgba(126, 52, 161, 0.75);
 }
 
 button:hover {

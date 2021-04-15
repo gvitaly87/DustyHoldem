@@ -157,15 +157,18 @@
   <div class="game-info">
     <div class="hidden">Player ID: <span id="playerId"></span></div>
     <div>
-    <label for="username">Player Name:</label>
+    <label for="username">Enter your player name here:</label>
     <input type="text" id="username" value="Guest" />
-    <div><label for="txtGameId">Enter Game ID (Join Game In Progress):</label>
+
+    <div><label for="txtGameId">Enter a game ID to join a game in progress:</label>
     <input type="text" id="txtGameId" /></div>
 
-    <button id="btnJoin">Join an existing game</button>
-    Game ID: <span id="gameId"></span
-      ><button id="btnCopyId" class="hidden">Copy</button>
+    <div><button id="btnJoin">Join Game</button></div>
+
+    <div>
       <button id="btnCreate">Create New Game</button>
+    Game ID: <span id="gameId"></span
+      ></div><button id="btnCopyId" class="hidden">Copy</button>
     </div>
     <div id="divPlayers"></div>
   </div>
