@@ -95,7 +95,6 @@ wsServer.on("request", (req) => {
         //sorry max players reach
         return;
       }
-      game.table.gameLog = `${username} joined the game with ${chipCount} chips`;
       const seat = getSeat(game.table.seats);
       // TODO: switch to passing the table instead of all the clients
       game.table.seats[seat] = {
@@ -118,21 +117,22 @@ wsServer.on("request", (req) => {
         seat,
       });
 
+      game.table.gameLog = `${username} joined the game with ${chipCount} chips`;
+
       //start the game
       if (game.clients.length >= 3 && game.table.round === 0) {
         let { table, deck } = setQue(game.table, game.deck);
         game.table = table;
         game.deck = deck;
-        // updateGameState();
+        updateGameState();
       }
 
       const payLoad = {
         method: "join",
         game: game,
       };
-
-      //respondAllClients(clients, game, payLoad);
-      updateGameState();
+      if (game.clients.length < 3 && game.table.round === 0)
+        respondAllClients(clients, game, payLoad);
     }
     /***************Fold****************/
     if (res.method === "fold") {
@@ -242,16 +242,13 @@ wsServer.on("request", (req) => {
 });
 
 function updateGameState() {
-  //{"gameid", fasdfsf}
+  // TODO: rewrite updateGameState to update game-state only for one game
   for (const g of Object.keys(games)) {
     const game = games[g];
     const payLoad = {
       method: "update",
       game: game,
     };
-
     respondAllClients(clients, game, payLoad);
   }
-
-  // setTimeout(updateGameState, 500);
 }

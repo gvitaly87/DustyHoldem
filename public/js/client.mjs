@@ -197,6 +197,14 @@ ws.onmessage = (message) => {
 
         player.innerHTML += ` Seat: ${seat.seat}`;
 
+        // Add a Dealer/blinds identifier
+        let specialStatus = "";
+        if (seat.seat === game.table.smallBlind) specialStatus += " SB";
+        if (seat.seat === game.table.bigBlind) specialStatus += " BB";
+        if (seat.seat === game.table.dealer) specialStatus += " DEALER";
+
+        player.innerHTML += specialStatus;
+
         divPlayers.appendChild(player);
       }
     });
