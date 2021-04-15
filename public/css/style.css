@@ -1,8 +1,10 @@
-*, *::after, *::before { 
+*,
+*::after,
+*::before {
   box-sizing: border-box;
 }
 
-body {
+/* body {
   margin: 0;
   display: grid;
   grid-template-columns: repeat(2, 4rem);
@@ -11,7 +13,7 @@ body {
   cursor: pointer;
   justify-content: center;
   padding-top: 1rem;
-}
+} */
 
 .deck {
   height: 100%;
@@ -21,7 +23,7 @@ body {
   justify-content: center;
   align-items: center;
   font-size: 3rem;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   color: white;
   user-select: none;
 }
@@ -46,7 +48,7 @@ body {
   height: 100%;
   width: 100%;
   border: 1px solid black;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -69,13 +71,13 @@ body {
 }
 
 .card::before {
-  top: .5rem;
-  left: .5rem
+  top: 0.5rem;
+  left: 0.5rem;
 }
 
 .card::after {
-  bottom: .5rem;
-  right: .5rem;
+  bottom: 0.5rem;
+  right: 0.5rem;
   transform: rotate(180deg);
 }
 

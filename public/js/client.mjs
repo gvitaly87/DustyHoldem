@@ -1,3 +1,5 @@
+import insertCard from "/js/insertCard.mjs";
+
 //HTML elements
 let clientId = null;
 let gameId = null;
@@ -234,18 +236,16 @@ ws.onmessage = (message) => {
       tableCards.innerHTML = "";
       if (!game.table.seats[playerSeat].newToTable) {
         const handPlaceHolder = document.getElementById("hand");
-        handPlaceHolder.innerHTML = `
-          <h3>Hand:</h3>
-          <span class="card">${game.table.seats[playerSeat].hand[0].value}${game.table.seats[playerSeat].hand[0].suit}</span> 
-          <span class="card">${game.table.seats[playerSeat].hand[1].value}${game.table.seats[playerSeat].hand[1].suit}</span>
-        `;
+        const firstCard = insertCard(game.table.seats[playerSeat].hand[0]);
+        const secondCard = insertCard(game.table.seats[playerSeat].hand[1]);
+        handPlaceHolder.innerHTML = firstCard + secondCard;
       }
     }
     if (game.table.round > 1) {
       const tableCards = document.querySelector(".table-cards");
       let cardsHTML = "";
       game.table.cards.forEach((card) => {
-        cardsHTML += `<span class="card">${card.value}${card.suit}</span> `;
+        cardsHTML += insertCard(card);
       });
       tableCards.innerHTML = cardsHTML;
     }
