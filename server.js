@@ -46,16 +46,27 @@ wsServer.on("request", (req) => {
         clients: [],
         table: {
           pot: 0,
-          round: 0, // 0-new hand 1-pre-flop, 2-flop, 3-turn, 4-river
-          hand: 0,
+          hand: 0, // Counter for hands played
+          /* Round keeps track of the rounds of betting for each hand
+           * 0 - let new players join game que
+           * 1 - pre-flop
+           * 2 - flop
+           * 3 - turn,
+           * 4 - river
+           * 5 - showdown
+           * */
+          round: 0,
+          gameLog: null,
+          /* Keep values for the big and small values in order to set them when the game initializes */
           sbValue: 50,
           bbValue: 100,
+          roundRaise: 100,
           cards: [],
+          /* Pointers to seat position of the dealer, blinds, and player to act */
           playerToAct: null,
           dealer: null,
           smallBlind: null,
           bigBlind: null,
-          roundRaise: 100,
           seatsQue: [],
           seats: [],
         },
@@ -84,7 +95,7 @@ wsServer.on("request", (req) => {
         //sorry max players reach
         return;
       }
-
+      game.table.gameLog = `${username} joined the game with ${chipCount} chips`;
       const seat = getSeat(game.table.seats);
       // TODO: switch to passing the table instead of all the clients
       game.table.seats[seat] = {
@@ -112,7 +123,7 @@ wsServer.on("request", (req) => {
         let { table, deck } = setQue(game.table, game.deck);
         game.table = table;
         game.deck = deck;
-        updateGameState();
+        // updateGameState();
       }
 
       const payLoad = {
@@ -120,7 +131,7 @@ wsServer.on("request", (req) => {
         game: game,
       };
 
-      respondAllClients(clients, game, payLoad);
+      //respondAllClients(clients, game, payLoad);
       updateGameState();
     }
     /***************Fold****************/
@@ -135,6 +146,8 @@ wsServer.on("request", (req) => {
           if (seat.clientId === clientId) seat.folded = true;
         });
       }
+      game.table.gameLog = `${game.table.seats[playerSeat].username} folds`;
+
       let tableObj = setQue(game.table, game.deck);
       game.table = tableObj.table;
       game.deck = tableObj.deck;
@@ -157,6 +170,7 @@ wsServer.on("request", (req) => {
       ) {
         game.table.seats[playerSeat].actionRequired = false;
         // game.table.playerToAct = nextToAct(game.table);
+        game.table.gameLog = `${game.table.seats[playerSeat].username} checks`;
         let tableObj = updateRound(game.table, playerSeat, game.deck);
         game.table = tableObj.table;
         game.deck = tableObj.deck;
@@ -172,8 +186,10 @@ wsServer.on("request", (req) => {
         let amountToCall =
           game.table.roundRaise -
           game.table.seats[playerSeat].bets[game.table.round];
+        game.table.gameLog = `${game.table.seats[playerSeat].username} calls ${amountToCall}`;
         if (game.table.seats[playerSeat].chipCount < amountToCall) {
           amountToCall = game.table.seats[playerSeat].chipCount;
+          game.table.gameLog = `${username} calls ${amountToCall} and is all in`;
         }
         game.table.seats[playerSeat].chipCount -= amountToCall;
         game.table.seats[playerSeat].bets[game.table.round] += amountToCall;
@@ -194,6 +210,9 @@ wsServer.on("request", (req) => {
       if (game.table.seats[playerSeat].clientId === clientId) {
         game.table.seats[playerSeat].chipCount -= raiseAmount;
         game.table.seats[playerSeat].bets[game.table.round] += raiseAmount;
+        game.table.gameLog = `${game.table.seats[playerSeat].username} bets ${raiseAmount}`;
+        if (game.table.seats[playerSeat].chipCount === 0)
+          game.table.gameLog += " and is all in";
         game.table.roundRaise += raiseAmount;
         game.table.pot += raiseAmount;
         game.table.playerToAct = nextToAct(game.table);

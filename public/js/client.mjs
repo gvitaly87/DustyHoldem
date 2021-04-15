@@ -249,6 +249,9 @@ ws.onmessage = (message) => {
       });
       tableCards.innerHTML = cardsHTML;
     }
+    const gameLog = document.getElementById("game-log");
+    if (game.table.gameLog)
+      gameLog.innerHTML += `<div class="msg dealer-msg">Dealer: ${game.table.gameLog}</div>`;
   }
 
   //A new player joins
@@ -298,4 +301,7 @@ ws.onmessage = (message) => {
     const gamePot = document.querySelector(".game-pot");
     gamePot.innerText = game.table.pot;
   }
+  const gameLog = document.getElementById("game-log");
+  if (game.table.gameLog)
+    gameLog.innerHTML += `<div class="msg dealer-msg">Dealer: ${game.table.gameLog}</div>`;
 };
