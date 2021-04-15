@@ -18,6 +18,10 @@ h1 {
   font-size: clamp(1.2rem, 2.5vw, 2.5rem);
 }
 
+.footer {
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
+}
+
 
 html, body, .grid-container { 
   height: 100%;
@@ -193,13 +197,13 @@ html, body, .grid-container {
   align-items: center;
 }
 
-/* .p9, .p10 {
+.p9, .p10 {
   float: right;
 }
 
-.p1, .p8 {
+.p3, .p6 {
   float: right;
-} */
+}
 
 /* .p2 {
   justify-self: center;
