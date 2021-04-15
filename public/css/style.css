@@ -100,3 +100,8 @@
   width: 5rem;
   margin: 0 1rem;
 }
+
+.log-winner {
+  font-weight: bold;
+  color: hsl(0, 70%, 25%);
+}

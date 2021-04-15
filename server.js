@@ -11,6 +11,7 @@ const { setQue } = require("./lib/setQue");
 const nextToAct = require("./lib/nextToAct");
 const updateRound = require("./lib/updateRound");
 const respondAllClients = require("./lib/respondAllClients");
+const setWinner = require("./lib/setWinner");
 const Deck = require("./lib/deck");
 
 // Express
@@ -152,7 +153,12 @@ wsServer.on("request", (req) => {
       game.table = tableObj.table;
       game.deck = tableObj.deck;
 
-      // game.table.playerToAct = nextToAct(game.table);
+      // if there's only one player left
+      // if (game.table.seatsQue.length === 1) {
+      //   tableObj = setWinner(game.table, game.deck, game.table.seatsQue[0]);
+      // } else {
+      //   tableObj = updateRound(game.table, playerSeat, game.deck);
+      // }
 
       tableObj = updateRound(game.table, playerSeat, game.deck);
       game.table = tableObj.table;
@@ -189,7 +195,7 @@ wsServer.on("request", (req) => {
         game.table.gameLog = `${game.table.seats[playerSeat].username} calls ${amountToCall}`;
         if (game.table.seats[playerSeat].chipCount < amountToCall) {
           amountToCall = game.table.seats[playerSeat].chipCount;
-          game.table.gameLog = `${username} calls ${amountToCall} and is all in`;
+          game.table.gameLog = `${game.table.seats[playerSeat].username} calls ${amountToCall} and is all in`;
         }
         game.table.seats[playerSeat].chipCount -= amountToCall;
         game.table.seats[playerSeat].bets[game.table.round] += amountToCall;
@@ -249,7 +255,6 @@ function updateGameState() {
       method: "update",
       game: game,
     };
-    console.log("updating game status");
     respondAllClients(clients, game, payLoad);
   }
 }
