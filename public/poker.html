@@ -9,19 +9,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
 </head>
 <body>
-<!-- partial:index.partial.html -->
-<div class="grid-container">
+
+<!-- <div class="grid-container">
   <div class="nav-bar"><img class="logo" src="/images/vgds-temp-resized.png"><div>
     
     <label for="username">Name:</label>
     <input type="text" id="username" value="Guest" /></div>
+    <p>Player ID: <span id="playerId"></span></p>
+    <p>Game ID: <span id="gameId"></span></p>
 
     <button id="btnCreate">New Game</button>
     <button id="btnJoin">Join Game</button>
     <div><label for="txtGameId">Game ID:</label>
     <input type="text" id="txtGameId" /></div></div>
 
-  <div class="player-2"><div class="p-container"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p2"></div></div></div>
+  <div class="player-2"><img src="/images/icons/test.png" class="p-icons p2"></div>
 
   <div class="player-1"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p1"></div></div>
 
@@ -31,7 +33,7 @@
 
   <div class="player-5"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p5"></div></div>
 
-  <div class="player-7"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p7"></div></div>
+  <div class="player-7"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p7"><div id="hand"></div></div></div>
 
   <div class="player-6"><div class="p-container"><img src="/images/icons/test.png" class="p-icons"></div></div>
 
@@ -39,9 +41,9 @@
 
   <div class="player-9"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p9"></div></div>
 
-  <div class="player-10"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p10"></div></div>
+  <div class="player-10"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p10"></div></div> -->
 
-    <div class="action-bar" id="actions">
+    <!-- <div class="action-bar actions" id="actions">
     <button id="fold">Fold</button>
     <button id="check">Check</button>
     <button id="call">Call</button>
@@ -58,17 +60,115 @@
   <input type="range" id="raiseRange" min="100" max="5000" value="100" />
   </div>
   <button id="raise">Bet</button>
-</div>
+</div> -->
   
-  <div class="footer">&copy; 2021 Vistin Development</div>
+  <!-- <div class="footer">&copy; 2021 Vistin Development</div> -->
+<!-- 
+  <div class="poker-table" id="divBoard">
 
-  <div class="poker-table">
-    <div class="total-pot">total</div>
-    <div class="status-msg"><div class="game-stage">game stage</div></div>
-    <div class="table-cards">These are the cards</div>
-    <div class="winner-msg">winner winner chicken dinner</div>
-    <div class="player-turn">player turn</div>
+    <div class="game-pot"></div>
+    
+    <div class="status-msg game-stage"></div>
+
+    <div class="table-cards"></div>
+
+    <div class="game-log"></div>
+    
+    <h3 class="player-turn"></h3>
+    
   </div>
-</div>  
+  <div id="divPlayers"></div>
+</div>
+ -->
+
+<div class="grid-container">
+  <div class="nav-bar"><img class="logo" src="/images/vgds-temp-resized.png">
+    <!-- <div>
+      <label for="username">Name:</label>
+      <input type="text" id="username" value="Guest" /></div>
+      <p>Player ID: <span id="playerId"></span></p>
+      <p>Game ID: <span id="gameId"></span></p>
+
+      <button id="btnCreate">New Game</button>
+      <button id="btnJoin">Join Game</button>
+     <div><label for="txtGameId">Game ID:</label>
+      <input type="text" id="txtGameId" />
+    </div> -->
+  </div>
+
+  <div class="player-2"><img src="/images/icons/test.png" class="p-icons p2"></div>
+
+  <div class="player-1"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p1"></div></div>
+
+  <div class="player-3"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p3"></div></div>
+
+  <div class="player-4"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p4"></div></div>
+
+  <div class="player-5"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p5"></div></div>
+
+  <div class="player-7"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p7"><div id="hand"></div></div></div>
+
+  <div class="player-6"><div class="p-container"><img src="/images/icons/test.png" class="p-icons"></div></div>
+
+  <div class="player-8"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p8"></div></div>
+
+  <div class="player-9"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p9"></div></div>
+
+  <div class="player-10"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p10"></div></div>
+
+  <div class="poker-table" id="divBoard">
+    <div class="table-cards"></div>
+    <div class="game-pot"></div>
+    <div class="game-stage"></div>
+    <div class="player-turn"></div>
+  </div>
+
+  <!-- <div class="action-bar actions" id="actions">
+    <button id="fold">Fold</button>
+    <button id="check">Check</button>
+    <button id="call">Call</button> -->
+    
+    
+
+  <div class="action-bar actions" id="actions">
+    <button class="check-btn" id="check">CHECK</button>
+    <button class="fold-btn" id="fold">FOLD</button>
+    <button class="call-btn" id="call">CALL</button>
+    <div class="bet-slider bet-btn">
+      <button id="raise">BET</button>
+      <input
+      id="raiseAmount"
+      type="Number"
+      min="100"
+      max="5000"
+      step="50"
+      value="100"
+    />
+    <input type="range" id="raiseRange" min="100" max="5000" value="100" />
+    
+  </div>
+    <button class="all-in-btn">ALL IN</button>
+  </div>
+  <div class="game-log">
+    <div class="game-log-txt" id="game-log"></div>
+    <div class="game-log-txt-type"></div>
+  </div>
+  <div class="footer">&copy; 2021 Vistin Development</div>
+  <div class="game-info">
+    <div class="hidden">Player ID: <span id="playerId"></span></div>
+    <div>
+    <label for="username">Player Name:</label>
+    <input type="text" id="username" value="Guest" />
+    <div><label for="txtGameId">Enter Game ID (Join Game In Progress):</label>
+    <input type="text" id="txtGameId" /></div>
+
+    <button id="btnJoin">Join Existing Game</button>
+    Game ID: <span id="gameId"></span
+      ><button id="btnCopyId" class="hidden">Copy</button>
+      <button id="btnCreate">Create New Game</button>
+    </div>
+    <div id="divPlayers"></div>
+  </div>
+</div>
 </body>
 </html>

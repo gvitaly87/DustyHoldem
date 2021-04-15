@@ -4,7 +4,7 @@
 body {
   font-family: 'Cabin', sans-serif;
   color: gold;
-  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  /* font-size: clamp(1rem, 2.5vw, 1.5rem); */
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -28,8 +28,8 @@ html, body, .grid-container {
 
 .grid-container {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 0.25fr 1fr 0.25fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 0.1fr 1fr 0.5fr 0.5fr;
+  grid-template-columns: 0.5fr 1fr 1fr 0.5fr 1fr 0.5fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 0.1fr 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 0.1fr 1.5fr 0.1fr 0.5fr;
   gap: 0px 0px;
 }
 
@@ -55,39 +55,84 @@ html, body, .grid-container {
 
 .player-10 { grid-area: 5 / 2 / 6 / 3; }
 
-.action-bar { grid-area: 11 / 1 / 12 / 10; }
-
-.footer { grid-area: 13 / 1 / 14 / 10; }
-
 .poker-table {
   display: grid;
-  background: url(../images/table.png);
-  background-repeat: no-repeat;
+  background-image: url(../images/table.png);
   background-size: contain;
+  background-repeat: no-repeat;
   background-position: center;
   grid-template-columns: 0.5fr 0.3fr 1fr 1fr 1fr 0.3fr 0.5fr;
   grid-template-rows: 1.4fr 0.5fr 1fr 2fr 1fr 0.5fr 1.4fr;
   gap: 0px 0px;
   grid-template-areas:
     ". . . . . . ."
-    ". . total-pot total-pot total-pot . ."
-    ". . status-msg status-msg status-msg . ."
+    ". . game-pot game-pot game-pot . ."
+    ". . game-stage game-stage game-stage . ."
     ". . table-cards table-cards table-cards . ."
-    ". . winner-msg winner-msg winner-msg . ."
     ". . player-turn player-turn player-turn . ."
+    ". . . . . . ."
     ". . . . . . .";
   grid-area: 3 / 2 / 10 / 9;
 }
 
-.total-pot {
-  grid-area: total-pot;
+.table-cards { grid-area: table-cards; }
+
+.game-pot { grid-area: game-pot; }
+
+.game-stage { grid-area: game-stage; }
+
+.player-turn { grid-area: player-turn; }
+
+.action-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    "check-btn call-btn all-in-btn"
+    "fold-btn bet-btn bet-btn";
+  grid-area: 11 / 5 / 12 / 10;
+}
+
+.check-btn { grid-area: check-btn; }
+
+.fold-btn { grid-area: fold-btn; }
+
+.call-btn { grid-area: call-btn; }
+
+.bet-btn { grid-area: bet-btn; }
+
+.all-in-btn { grid-area: all-in-btn; }
+
+.game-log {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 0.3fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    "game-log-txt game-log-txt game-log-txt"
+    "game-log-txt-type game-log-txt-type game-log-txt-type";
+  grid-area: 11 / 1 / 12 / 5;
+}
+
+.game-log-txt { grid-area: game-log-txt; }
+
+.game-log-txt-type { grid-area: game-log-txt-type; }
+
+.footer { grid-area: 13 / 1 / 14 / 10; }
+
+.game-info { grid-area: 3 / 9 / 10 / 10; }
+
+
+.game-pot {
+  grid-area: game-pot;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.status-msg {
-  grid-area: status-msg;
+.game-stage {
+  grid-area: game-stage;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -119,9 +164,10 @@ html, body, .grid-container {
   height: auto;
 }
 
-/* .p-container {
-  display: flex;
-} */
+.p2 {
+  display: grid;
+  justify-self: center;
+}
 
 .p-icons {
   max-width: 42%;
@@ -131,14 +177,14 @@ html, body, .grid-container {
 
 .nav-bar {
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
 }
 
 .action-bar {
-  display: flex;
+  /* display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
 }
 
 .footer {
@@ -155,9 +201,9 @@ html, body, .grid-container {
   float: right;
 } */
 
-.p2 {
+/* .p2 {
   justify-self: center;
-}
+} */
 
 #username {
   font-size: clamp(1rem, 2.5vw, 1.5rem);
@@ -181,13 +227,13 @@ html, body, .grid-container {
 } */
 
 button {
-  margin: 0rem 1rem 0rem 1rem;
+  margin: 1rem;
   background-color: green;
   color: gold;
   border-color: gold;
   font-size: clamp ;
-  font-size: clamp(1rem, 2.5vw, 2rem);
-  border-radius: .75rem;
+  font-size: clamp(0.7rem, 2.5vw, 1.2rem);
+  border-radius: .5rem;
   /* background-image: linear-gradient(to right, #6253e1, #852D91, #A3A1FF, #F24645);
   box-shadow: 0 4px 15px 0 rgba(126, 52, 161, 0.75); */
 }
@@ -216,3 +262,6 @@ button:hover {
   color: gold;
 } */
 
+.hidden {
+  display: none;
+}
