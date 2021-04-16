@@ -154,7 +154,7 @@ wsServer.on("request", (req) => {
       }
       game.table.gameLog = `${game.table.seats[playerSeat].username} folds`;
 
-      let tableObj = setQue(game.table, game.deck);
+      let tableObj = setQue(game.table, game.deck, true);
       game.table = tableObj.table;
       game.deck = tableObj.deck;
 
