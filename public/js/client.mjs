@@ -342,4 +342,9 @@ ws.onmessage = (message) => {
     const gamePot = document.querySelector(".game-pot");
     gamePot.innerText = game.table.pot;
   }
+  // Error message
+  if (res.method === "error") {
+    const errorContainer = document.querySelector(".error");
+    errorContainer.innerText = res.message;
+  }
 };

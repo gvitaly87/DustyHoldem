@@ -95,50 +95,59 @@ wsServer.on("request", (req) => {
     if (res.method === "join") {
       const { clientId, gameId, username } = res;
       const chipCount = res.chipCount || 5000;
-      const game = games[gameId];
+      // Check that the game exists
+      if (games[gameId] === undefined) {
+        const payLoad = {
+          method: "error",
+          status: 404,
+          message: "A game with that id can't be found",
+        };
+        clients[clientId].connection.send(JSON.stringify(payLoad));
+      } else {
+        const game = games[gameId];
+        if (game.clients.length >= 10) {
+          //sorry max players reach
+          return;
+        }
+        const seat = getSeat(game.table.seats);
+        // TODO: switch to passing the table instead of all the clients
+        game.table.seats[seat] = {
+          empty: false,
+          newToTable: true,
+          folded: false,
+          actionRequired: false,
+          clientId,
+          seat,
+          clientsIndex: clients.length,
+          username,
+          chipCount,
+          hand: [],
+          bets: [0, 0, 0, 0, 0],
+        };
+        game.clients.push({
+          clientId,
+          username,
+          chipCount,
+          seat,
+        });
 
-      if (game.clients.length >= 10) {
-        //sorry max players reach
-        return;
+        game.table.gameLog = `${username} joined the game with ${chipCount} chips`;
+
+        //start the game
+        if (game.clients.length >= 3 && game.table.round === 0) {
+          let { table, deck } = setQue(game.table, game.deck);
+          game.table = table;
+          game.deck = deck;
+          updateGameState();
+        }
+
+        const payLoad = {
+          method: "join",
+          game: game,
+        };
+        if (game.clients.length < 3 && game.table.round === 0)
+          respondAllClients(clients, game, payLoad);
       }
-      const seat = getSeat(game.table.seats);
-      // TODO: switch to passing the table instead of all the clients
-      game.table.seats[seat] = {
-        empty: false,
-        newToTable: true,
-        folded: false,
-        actionRequired: false,
-        clientId,
-        seat,
-        clientsIndex: clients.length,
-        username,
-        chipCount,
-        hand: [],
-        bets: [0, 0, 0, 0, 0],
-      };
-      game.clients.push({
-        clientId,
-        username,
-        chipCount,
-        seat,
-      });
-
-      game.table.gameLog = `${username} joined the game with ${chipCount} chips`;
-
-      //start the game
-      if (game.clients.length >= 3 && game.table.round === 0) {
-        let { table, deck } = setQue(game.table, game.deck);
-        game.table = table;
-        game.deck = deck;
-        updateGameState();
-      }
-
-      const payLoad = {
-        method: "join",
-        game: game,
-      };
-      if (game.clients.length < 3 && game.table.round === 0)
-        respondAllClients(clients, game, payLoad);
     }
     /***************Fold****************/
     if (res.method === "fold") {
