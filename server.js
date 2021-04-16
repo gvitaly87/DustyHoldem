@@ -1,3 +1,4 @@
+require("dotenv").config();
 const http = require("http");
 const websocketServer = require("websocket").server;
 
@@ -13,15 +14,19 @@ const updateRound = require("./lib/updateRound");
 const respondAllClients = require("./lib/respondAllClients");
 const setWinner = require("./lib/setWinner");
 const Deck = require("./lib/deck");
+const PORT = process.env.PORT || 3000;
 
 // Express
 app.use(express.static(path.join(__dirname, "./public")));
 
-app.listen(9091, () => console.log("Listening on http port 9091"));
-
 // WebSocket
-const httpServer = http.createServer();
-httpServer.listen(9090, () => console.log("Listening.. on 9090"));
+const httpServer = http.createServer(app);
+
+// Start a TCP server listening for connections on the given port and host
+httpServer.listen(PORT, () =>
+  console.log(`Server running at http://localhost:${PORT}/`)
+);
+
 //hashmap clients
 const clients = {};
 const games = {};

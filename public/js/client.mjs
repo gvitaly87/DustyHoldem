@@ -12,7 +12,8 @@ let playerSeat = null;
 let playerHand = [];
 let game = {};
 
-let ws = new WebSocket("ws://localhost:9090");
+const HOST = location.origin.replace(/^http/, "ws");
+let ws = new WebSocket(HOST);
 
 const divPlayers = document.getElementById("divPlayers");
 
