@@ -159,6 +159,16 @@ ws.onmessage = (message) => {
   if (res.method === "create") {
     gameId = res.game.id;
     document.querySelector("#gameId").innerText = gameId;
+    let username = document.getElementById("username").value;
+
+    const payLoad = {
+      method: "join",
+      clientId,
+      gameId,
+      username,
+    };
+
+    ws.send(JSON.stringify(payLoad));
   }
 
   //updated game state from server
