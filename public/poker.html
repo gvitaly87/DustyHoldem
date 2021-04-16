@@ -9,9 +9,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
 </head>
 <body>
+
+<!-- Navbar -->
 <div class="grid-container">
   <div class="nav-bar"><img class="logo" src="/images/vistin-logo.png">
   </div>
+
+  <!-- Player grid -->
 
   <div class="player-2"><img src="/images/icons/test.png" class="p-icons p2"></div>
 
@@ -33,19 +37,16 @@
 
   <div class="player-10"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p10"></div></div>
 
+  <!-- Poker table grid -->
+
   <div class="poker-table" id="divBoard">
     <div class="table-cards"></div>
     <div class="game-pot"></div>
     <div class="game-stage"></div>
     <div class="player-turn"></div>
   </div>
-
-  <!-- <div class="action-bar actions" id="actions">
-    <button id="fold">Fold</button>
-    <button id="check">Check</button>
-    <button id="call">Call</button> -->
-    
-    
+  
+  <!-- Action Bar -->
 
   <div class="action-bar actions" id="actions">
     <button class="check-btn" id="check">CHECK</button>
@@ -61,18 +62,25 @@
       step="50"
       value="100"
     />
-    <input type="range" id="raiseRange" min="100" max="5000" value="100" />
-    
+    <input type="range" id="raiseRange" min="100" max="5000" value="100" />  
   </div>
+
     <button class="all-in-btn">ALL IN</button>
   </div>
+
+  <!-- Game Log -->
+
   <div class="game-log">
     <div class="game-log-txt" id="game-log"></div>
     
     <input type="text" class="game-log-txt-type"></input>
   </div>
   
+  <!-- Footer -->
+
   <div class="footer">&copy; 2021 Vistin Development</div>
+
+  <!-- Game info & setup -->
 
   <div class="game-info">
     <div class="hidden">Player ID: <span id="playerId"></span></div>
