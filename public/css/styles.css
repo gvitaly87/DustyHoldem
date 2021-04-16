@@ -27,8 +27,8 @@ html, body, .grid-container {
   height: 100%;
   margin: 0;
   background-color: rgba(0, 0, 0, 0.486);
-  /* background-image: url(../images/purple-paper.jpg);
-  background-size: contain; */
+  background-image: url(../images/purple-paper.jpg);
+  background-size: cover;
 }
 
 .grid-container {
@@ -165,7 +165,7 @@ html, body, .grid-container {
 }
 
 .logo {
-  max-width: 5%;
+  max-width: 20%;
   height: auto;
 }
 
@@ -197,6 +197,19 @@ border: 1px solid white;
 .game-info {
   border: 1px solid white;
 }
+
+.game-log {
+  border-top: 1px 1px 1px 1px solid white;
+  border-bottom: black;
+  background-color: lightgray;
+  overflow-y: scroll;
+}
+
+.game-log-txt-type {
+  border: none;
+}
+
+
 
 label {
   margin: 0.25rem 0.5rem 0.25rem 0.5rem;
