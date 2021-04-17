@@ -4,102 +4,158 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="/js/client.mjs" type="module"></script>
-  <title>VGDS' Poker World</title>
-  <link rel="stylesheet" href="/css/styles.css">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-</head>
-<body>
+    <title>VGDS' Poker World</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <div class="grid-container">
+      <div class="nav-bar">
+        <img class="logo" src="/images/vistin-logo.png" />
+      </div>
 
-<!-- Navbar -->
-<div class="grid-container">
-  <div class="nav-bar"><img class="logo" src="/images/vistin-logo.png">
-  </div>
+      <!-- Player grid -->
 
-  <!-- Player grid -->
+      <div class="player-2">
+        <img src="/images/icons/test.png" class="p-icons p2" />
+      </div>
 
-  <div class="player-2"><img src="/images/icons/test.png" class="p-icons p2"></div>
+      <div class="player-1">
+        <div class="p-container">
+          <img src="/images/icons/test.png" class="p-icons p1" />
+        </div>
+      </div>
 
-  <div class="player-1"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p1"></div></div>
+      <div class="player-3">
+        <div class="p-container">
+          <img src="/images/icons/test.png" class="p-icons p3" />
+        </div>
+      </div>
 
-  <div class="player-3"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p3"></div></div>
+      <div class="player-4">
+        <div class="p-container">
+          <img src="/images/icons/test.png" class="p-icons p4" />
+        </div>
+      </div>
 
-  <div class="player-4"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p4"></div></div>
+      <div class="player-5">
+        <div class="p-container">
+          <img src="/images/icons/test.png" class="p-icons p5" />
+        </div>
+      </div>
 
-  <div class="player-5"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p5"></div></div>
+      <div class="player-7">
+        <div id="hand">
+          <img src="/images/icons/test.png" class="p-icons p7" />
+        </div>
+      </div>
 
-  <div class="player-7"><div id="hand"><img src="/images/icons/test.png" class="p-icons p7"></div></div>
+      <div class="player-6">
+        <div class="p-container">
+          <img src="/images/icons/test.png" class="p-icons p6" />
+        </div>
+      </div>
 
-  <div class="player-6"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p6"></div></div>
+      <div class="player-8">
+        <div class="p-container">
+          <img src="/images/icons/test.png" class="p-icons p8" />
+        </div>
+      </div>
 
-  <div class="player-8"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p8"></div></div>
+      <div class="player-9">
+        <div class="p-container">
+          <img src="/images/icons/test.png" class="p-icons p9" />
+        </div>
+      </div>
 
-  <div class="player-9"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p9"></div></div>
+      <div class="player-10">
+        <div class="p-container">
+          <img src="/images/icons/test.png" class="p-icons p10" />
+        </div>
+      </div>
 
-  <div class="player-10"><div class="p-container"><img src="/images/icons/test.png" class="p-icons p10"></div></div>
+      <!-- Poker table grid -->
 
-  <!-- Poker table grid -->
+      <div class="poker-table" id="divBoard">
+        <div class="table-cards"></div>
+        <div class="game-pot"></div>
+        <div class="game-stage"></div>
+        <div class="player-turn"></div>
+      </div>
 
-  <div class="poker-table" id="divBoard">
-    <div class="table-cards"></div>
-    <div class="game-pot"></div>
-    <div class="game-stage"></div>
-    <div class="player-turn"></div>
-  </div>
-  
-  <!-- Action Bar -->
+      <!-- Action Bar -->
 
-  <div class="action-bar actions" id="actions">
-    <button class="check-btn" id="check">CHECK</button>
-    <button class="fold-btn" id="fold">FOLD</button>
-    <button class="call-btn" id="call">CALL</button>
-    <div class="bet-slider bet-btn">
-      <button id="raise">BET</button>
-      <input
-      id="raiseAmount"
-      type="Number"
-      min="100"
-      max="5000"
-      step="50"
-      value="100"
-    />
-    <input type="range" id="raiseRange" min="100" max="5000" value="100" />  
-  </div>
+      <div class="action-bar actions" id="actions">
+        <button class="check-btn" id="check">CHECK</button>
+        <button class="fold-btn" id="fold">FOLD</button>
+        <button class="call-btn" id="call">CALL</button>
+        <button id="raise" class="bet-btn">BET</button>
+        <div class="bet-slider">
+          <input
+            type="range"
+            id="raiseRange"
+            min="100"
+            max="5000"
+            value="100"
+          />
+          <input
+            id="raiseAmount"
+            type="Number"
+            min="100"
+            max="5000"
+            step="50"
+            value="100"
+          />
+        </div>
 
-    <button class="all-in-btn">ALL IN</button>
-  </div>
+        <button class="all-in-btn">ALL IN</button>
+      </div>
 
-  <!-- Game Log -->
+      <!-- Game Log -->
 
-  <div class="game-log">
-    <div class="game-log-txt" id="game-log"></div>
-    
-    <input type="text" class="game-log-txt-type"></input>
-  </div>
-  
-  <!-- Footer -->
+      <div class="game-log">
+        <div class="game-log-txt" id="game-log"></div>
 
-  <div class="footer">&copy; 2021 Vistin Development</div>
+        <input type="text" id="chat-message" class="game-log-txt-type" />
+      </div>
 
-  <!-- Game info & setup -->
+      <!-- Footer -->
 
-  <div class="game-info">
-    <div class="hidden">Player ID: <span id="playerId"></span></div>
-    <div>
-    <label for="username">Enter your player's name here:</label>
-    <input type="text" id="username" value="Guest" />
+      <div class="footer"><footer>&copy; 2021 Vistin Development</footer></div>
 
-    <div><label for="txtGameId">Enter a game ID to join a game in progress:</label>
-    <input type="text" id="txtGameId" /></div>
+      <!-- Game info & setup -->
 
-    <div><button id="btnJoin">Join Game</button></div>
+      <div class="game-info">
+        <div class="hidden">Player ID: <span id="playerId"></span></div>
 
-    <div>
-      <button id="btnCreate">Create New Game</button>
-    Game ID: <span id="gameId"></span
-      ></div><button id="btnCopyId" class="hidden">Copy</button>
+        <div>
+          <label for="username">Enter your player's name here:</label>
+          <input type="text" id="username" value="Guest" />
+
+          <div>
+            <label for="txtGameId"
+              >Enter 'Game ID' to join a game in progress:</label
+            >
+            <input type="text" id="txtGameId" />
+          </div>
+
+          <div>
+            <button id="btnJoin">Join Game</button>
+          </div>
+
+          <div>
+            <button id="btnCreate">Create New Game</button>
+          </div>
+
+          Game ID: <span id="gameId"></span>
+
+          <div><button id="btnCopyId" class="hidden">Copy</button></div>
+
+          <div class="player-list">Player List:</div>
+          <div id="divPlayers"></div>
+        </div>
+      </div>
     </div>
-    <div id="divPlayers"></div>
-  </div>
-</div>
-</body>
+  </body>
 </html>
