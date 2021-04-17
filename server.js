@@ -122,6 +122,7 @@ wsServer.on("request", (req) => {
           newToTable: true,
           folded: false,
           actionRequired: false,
+          allIn: false,
           clientId,
           seat,
           clientsIndex: clients.length,
