@@ -50,6 +50,7 @@ wsServer.on("request", (req) => {
       games[gameId] = {
         id: gameId,
         clients: [],
+        hasStarted: false,
         table: {
           pot: 0,
           hand: 0, // Counter for hands played
@@ -106,7 +107,12 @@ wsServer.on("request", (req) => {
       } else {
         const game = games[gameId];
         if (game.clients.length >= 10) {
-          //sorry max players reach
+          const payLoad = {
+            method: "error",
+            status: "500",
+            message: "The game you want to join is already full",
+          };
+          clients[clientId].connection.send(JSON.stringify(payLoad));
           return;
         }
         const seat = getSeat(game.table.seats);
@@ -134,11 +140,16 @@ wsServer.on("request", (req) => {
         game.table.gameLog = `${username} joined the game with ${chipCount} chips`;
 
         //start the game
-        if (game.clients.length >= 3 && game.table.round === 0) {
+        if (game.clients.length >= 3 && !game.hasStarted) {
           let { table, deck } = setQue(game.table, game.deck);
+          game.hasStarted = true;
           game.table = table;
           game.deck = deck;
           updateGameState();
+        }
+
+        if (game.hasStarted) {
+          game.table.seats[seat].folded = true;
         }
 
         const payLoad = {
@@ -182,7 +193,6 @@ wsServer.on("request", (req) => {
         game.table.roundRaise
       ) {
         game.table.seats[playerSeat].actionRequired = false;
-        // game.table.playerToAct = nextToAct(game.table);
         game.table.gameLog = `${game.table.seats[playerSeat].username} checks`;
         let tableObj = updateRound(game.table, playerSeat, game.deck);
         game.table = tableObj.table;
