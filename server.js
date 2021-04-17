@@ -167,13 +167,6 @@ wsServer.on("request", (req) => {
       game.table = tableObj.table;
       game.deck = tableObj.deck;
 
-      // if there's only one player left
-      // if (game.table.seatsQue.length === 1) {
-      //   tableObj = setWinner(game.table, game.deck, game.table.seatsQue[0]);
-      // } else {
-      //   tableObj = updateRound(game.table, playerSeat, game.deck);
-      // }
-
       tableObj = updateRound(game.table, playerSeat, game.deck);
       game.table = tableObj.table;
       game.deck = tableObj.deck;
@@ -242,8 +235,28 @@ wsServer.on("request", (req) => {
           if (que !== playerSeat) game.table.seats[que].actionRequired = true;
         });
       }
-
       updateGameState();
+    }
+    /*****************Chat Message****************/
+    if (res.method === "chat") {
+      const { clientId, gameId, username, message } = res;
+
+      if (games[gameId] === undefined) {
+        const payLoad = {
+          method: "error",
+          status: 404,
+          message: "A game with that id can't be found",
+        };
+        clients[clientId].connection.send(JSON.stringify(payLoad));
+      } else {
+        const game = games[gameId];
+        const payLoad = {
+          method: "chat",
+          message,
+          username,
+        };
+        respondAllClients(clients, game, payLoad);
+      }
     }
   });
 

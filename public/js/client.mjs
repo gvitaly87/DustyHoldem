@@ -146,6 +146,22 @@ btnRaise.addEventListener("click", () => {
   ws.send(JSON.stringify(payLoad));
 });
 
+/***********Message************/
+const chatMessage = document.getElementById("chat-message");
+chatMessage.addEventListener("keyup", (e) => {
+  if (e.key === "Enter") {
+    const username = document.getElementById("username").value;
+    const payLoad = {
+      method: "chat",
+      gameId,
+      clientId,
+      username,
+      message: chatMessage.value,
+    };
+    ws.send(JSON.stringify(payLoad));
+  }
+});
+
 ws.onmessage = (message) => {
   //message.data
   const res = JSON.parse(message.data);
@@ -346,5 +362,9 @@ ws.onmessage = (message) => {
   if (res.method === "error") {
     const errorContainer = document.querySelector(".error");
     errorContainer.innerText = res.message;
+  }
+  if (res.method === "chat") {
+    const gameLog = document.getElementById("game-log");
+    gameLog.innerHTML += `<div class="msg player-msg">${res.username}: ${res.message}</div>`;
   }
 };
