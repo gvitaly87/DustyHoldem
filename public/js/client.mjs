@@ -158,6 +158,7 @@ chatMessage.addEventListener("keyup", (e) => {
       username,
       message: chatMessage.value,
     };
+    chatMessage.value = "";
     ws.send(JSON.stringify(payLoad));
   }
 });
