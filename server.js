@@ -12,8 +12,7 @@ const { setQue } = require("./lib/setQue");
 const nextToAct = require("./lib/nextToAct");
 const updateRound = require("./lib/updateRound");
 const respondAllClients = require("./lib/respondAllClients");
-const setWinner = require("./lib/setWinner");
-const Deck = require("./lib/deck");
+
 const PORT = process.env.PORT || 3000;
 
 // Express
@@ -122,6 +121,7 @@ wsServer.on("request", (req) => {
           newToTable: true,
           folded: false,
           actionRequired: false,
+          allIn: false,
           clientId,
           seat,
           clientsIndex: clients.length,
@@ -197,8 +197,14 @@ wsServer.on("request", (req) => {
         let tableObj = updateRound(game.table, playerSeat, game.deck);
         game.table = tableObj.table;
         game.deck = tableObj.deck;
+        const isShowDown = tableObj.isShowDown;
+        const tableShowDown = tableObj.tableShowDown;
+        if (isShowDown) {
+          showDownGameState(tableShowDown);
+        } else {
+          updateGameState();
+        }
       }
-      updateGameState();
     }
     /***************Call*****************/
     if (res.method === "call") {
@@ -219,10 +225,18 @@ wsServer.on("request", (req) => {
         game.table.seats[playerSeat].actionRequired = false;
         game.table.pot += amountToCall;
         // game.table.playerToAct = nextToAct(game.table);
-        let { table, deck } = updateRound(game.table, playerSeat, game.deck);
+        let { table, deck, tableShowDown, isShowDown } = updateRound(
+          game.table,
+          playerSeat,
+          game.deck
+        );
         game.table = table;
         game.deck = deck;
-        updateGameState();
+        if (isShowDown) {
+          showDownGameState(tableShowDown);
+        } else {
+          updateGameState();
+        }
       }
     }
     /***************Raise****************/
@@ -270,7 +284,7 @@ wsServer.on("request", (req) => {
     }
   });
 
-  //generate a new clientId
+  // generate a new clientId
   const clientId = getUniqueID();
   clients[clientId] = {
     connection: connection,
@@ -280,7 +294,7 @@ wsServer.on("request", (req) => {
     method: "connect",
     clientId: clientId,
   };
-  //send back the client connect
+
   connection.send(JSON.stringify(payLoad));
 });
 
@@ -290,7 +304,19 @@ function updateGameState() {
     const game = games[g];
     const payLoad = {
       method: "update",
-      game: game,
+      table: game.table,
+    };
+    respondAllClients(clients, game, payLoad);
+  }
+}
+
+function showDownGameState(tableShowDown) {
+  for (const g of Object.keys(games)) {
+    const game = games[g];
+    const payLoad = {
+      method: "showdown",
+      tableShowDown,
+      table: game.table,
     };
     respondAllClients(clients, game, payLoad);
   }

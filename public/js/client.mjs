@@ -72,7 +72,7 @@ btnCopyId.addEventListener("click", () => {
 /***************Fold****************/
 const btnFold = document.getElementById("fold");
 btnFold.addEventListener("click", () => {
-  if (playerSeat !== game.table.playerToAct) return;
+  if (playerSeat !== table.playerToAct) return;
   const payLoad = {
     method: "fold",
     clientId,
@@ -87,9 +87,8 @@ const btnCheck = document.getElementById("check");
 btnCheck.addEventListener("click", () => {
   // Check if its the player turn, and that the current player's bet is equivalent to the rounds bet.
   if (
-    playerSeat !== game.table.playerToAct ||
-    game.table.seats[playerSeat].bets[game.table.round] !==
-      game.table.roundRaise
+    playerSeat !== table.playerToAct ||
+    table.seats[playerSeat].bets[table.round] !== table.roundRaise
   )
     return;
   const payLoad = {
@@ -104,7 +103,7 @@ btnCheck.addEventListener("click", () => {
 /***************Call****************/
 const btnCall = document.getElementById("call");
 btnCall.addEventListener("click", () => {
-  if (playerSeat !== game.table.playerToAct) return;
+  if (playerSeat !== table.playerToAct) return;
   const payLoad = {
     method: "call",
     clientId,
@@ -131,7 +130,7 @@ btnRaise.addEventListener("click", () => {
   let raiseAmount = parseInt(raiseAmountField.value);
 
   //checks for fake bets
-  if (raiseAmount <= 0 || playerSeat !== game.table.playerToAct) return;
+  if (raiseAmount <= 0 || playerSeat !== table.playerToAct) return;
 
   // You can't bet more chips than you have
   raiseAmount = raiseAmount < playerChips ? raiseAmount : playerChips;
@@ -191,11 +190,11 @@ ws.onmessage = async (message) => {
 
   //updated game state from server
   if (res.method === "update") {
-    game = res.game;
-    updateGame(game);
+    table = res.table;
+    updateGame(table);
   }
   if (res.method === "showdown") {
-    game = res.game;
+    table = res.table;
     let tableShowDown = res.tableShowDown;
     while (divPlayers.firstChild) divPlayers.removeChild(divPlayers.firstChild);
     console.log(tableShowDown);
@@ -270,9 +269,9 @@ ws.onmessage = async (message) => {
       3: "Turn",
       4: "River",
       5: "Showdown",
-    }[game.table.round];
+    }[table.round];
     const gamePot = document.querySelector(".game-pot");
-    gamePot.innerText = game.table.pot;
+    gamePot.innerText = table.pot;
   }
   // Error message
   if (res.method === "error") {
@@ -285,13 +284,13 @@ ws.onmessage = async (message) => {
   }
 };
 
-const updateGame = (game) => {
+const updateGame = (table) => {
   const clientId = document.querySelector("#playerId").innerText;
   document.querySelector("#gameId").innerText = gameId;
-  roundBet = game.table.roundRaise;
+  roundBet = table.roundRaise;
   while (divPlayers.firstChild) divPlayers.removeChild(divPlayers.firstChild);
 
-  game.table.seats.forEach((seat) => {
+  table.seats.forEach((seat) => {
     if (!seat.empty) {
       const player = document.createElement("div");
       // Distinguishes between player and other users
@@ -299,9 +298,9 @@ const updateGame = (game) => {
         player.classList.add("player");
         playerChips = seat.chipCount;
         playerSeat = seat.seat;
-        playerRoundBet = seat.bets[game.table.round];
+        playerRoundBet = seat.bets[table.round];
         const actionControls = document.getElementById("actions");
-        if (playerSeat === game.table.playerToAct) {
+        if (playerSeat === table.playerToAct) {
           actionControls.classList.remove("invisible");
         } else {
           actionControls.classList.add("invisible");
@@ -310,12 +309,12 @@ const updateGame = (game) => {
         // Updating sliders
         // If someone made a bet this round
         if (roundBet) {
-          raiseAmountSlider.min = roundBet - seat.bets[game.table.round];
-          raiseAmountField.min = roundBet - seat.bets[game.table.round];
+          raiseAmountSlider.min = roundBet - seat.bets[table.round];
+          raiseAmountField.min = roundBet - seat.bets[table.round];
           // If the bet is less than the player's chip count
-          if (roundBet - seat.bets[game.table.round] < seat.chipCount) {
-            raiseAmountSlider.value = roundBet - seat.bets[game.table.round];
-            raiseAmountField.value = roundBet - seat.bets[game.table.round];
+          if (roundBet - seat.bets[table.round] < seat.chipCount) {
+            raiseAmountSlider.value = roundBet - seat.bets[table.round];
+            raiseAmountField.value = roundBet - seat.bets[table.round];
           }
         }
         raiseAmountSlider.max = seat.chipCount;
@@ -342,9 +341,9 @@ const updateGame = (game) => {
 
       // Add a Dealer/blinds identifier
       let specialStatus = "";
-      if (seat.seat === game.table.smallBlind) specialStatus += " SB";
-      if (seat.seat === game.table.bigBlind) specialStatus += " BB";
-      if (seat.seat === game.table.dealer) specialStatus += " DEALER";
+      if (seat.seat === table.smallBlind) specialStatus += " SB";
+      if (seat.seat === table.bigBlind) specialStatus += " BB";
+      if (seat.seat === table.dealer) specialStatus += " DEALER";
       if (seat.folded) specialStatus += " Folded";
       if (seat.newToTable && !seat.empty) specialStatus = " Just joined";
 
@@ -361,15 +360,14 @@ const updateGame = (game) => {
     3: "Turn",
     4: "River",
     5: "Showdown",
-  }[game.table.round];
+  }[table.round];
   const gamePot = document.querySelector(".game-pot");
-  gamePot.innerText = game.table.pot;
+  gamePot.innerText = table.pot;
   const playerTurn = document.querySelector(".player-turn");
-  const currentTurnPlayerName =
-    game.table.seats[game.table.playerToAct].username;
+  const currentTurnPlayerName = table.seats[table.playerToAct].username;
   playerTurn.innerText = `It is ${currentTurnPlayerName}'s Turn`;
 
-  const amountToCall = game.table.roundRaise - playerRoundBet;
+  const amountToCall = table.roundRaise - playerRoundBet;
   btnCall.innerText = `Call (${amountToCall})`;
   if (amountToCall === 0) {
     btnCall.classList.add("hidden");
@@ -378,31 +376,31 @@ const updateGame = (game) => {
     btnCheck.classList.add("hidden");
     if (btnCall.className === "hidden") btnCall.classList.remove("hidden");
   }
-  if (game.table.round === 0) {
+  if (table.round === 0) {
     const handPlaceHolder = document.getElementById("hand");
     handPlaceHolder.innerHTML = "";
     const tableCards = document.querySelector(".table-cards");
     tableCards.innerHTML = "";
   }
-  if (game.table.round === 1) {
+  if (table.round === 1) {
     const tableCards = document.querySelector(".table-cards");
     tableCards.innerHTML = "";
-    if (!game.table.seats[playerSeat].newToTable) {
+    if (!table.seats[playerSeat].newToTable) {
       const handPlaceHolder = document.getElementById("hand");
-      const firstCard = insertCard(game.table.seats[playerSeat].hand[0]);
-      const secondCard = insertCard(game.table.seats[playerSeat].hand[1]);
+      const firstCard = insertCard(table.seats[playerSeat].hand[0]);
+      const secondCard = insertCard(table.seats[playerSeat].hand[1]);
       handPlaceHolder.innerHTML = firstCard + secondCard;
     }
   }
-  if (game.table.round > 1) {
+  if (table.round > 1) {
     const tableCards = document.querySelector(".table-cards");
     let cardsHTML = "";
-    game.table.cards.forEach((card) => {
+    table.cards.forEach((card) => {
       cardsHTML += insertCard(card);
     });
     tableCards.innerHTML = cardsHTML;
   }
   const gameLog = document.getElementById("game-log");
-  if (game.table.gameLog)
-    gameLog.innerHTML += `<div class="msg dealer-msg">Dealer: ${game.table.gameLog}</div>`;
+  if (table.gameLog)
+    gameLog.innerHTML += `<div class="msg dealer-msg">Dealer: ${table.gameLog}</div>`;
 };
