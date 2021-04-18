@@ -568,4 +568,64 @@ img {
 }
 
 @media screen and (max-width: 95.125rem) {
+  #btnJoin,
+  #btnCreate,
+  #btnCopyId {
+    width: 55%;
+    height: 2.5rem;
+    font-size: 0.75rem;
+  }
+
+  #check,
+  #fold,
+  #call,
+  #raise,
+  #all-in {
+    width: 55%;
+    height: 2.5rem;
+    font-size: 0.75rem;
+  }
+  #raiseRange,
+  #raiseAmount {
+    width: 55%;
+    height: 1.5rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media screen and (max-width: 85.313rem) {
+  .player-4,
+  .player-5 {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .player-9,
+  .player-10 {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+}
+
+@media screen and (max-width: 81.563rem) {
+  .player-1,
+  .player-2,
+  .player-3 {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  #hand {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  .player-6,
+  .player-8 {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
 }
