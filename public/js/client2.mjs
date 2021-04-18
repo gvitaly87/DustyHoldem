@@ -192,12 +192,12 @@ ws.onmessage = async (message) => {
   //updated game state from server
   if (res.method === "update") {
     table = res.table;
-    let playerSeat = res.seat;
+    playerSeat = res.seat;
     updateGame(table, playerSeat);
   }
   if (res.method === "showdown") {
     table = res.table;
-    let playerSeat = res.seat;
+    playerSeat = res.seat;
     let tableShowDown = res.tableShowDown;
     while (divPlayers.firstChild) divPlayers.removeChild(divPlayers.firstChild);
     console.log(tableShowDown);
@@ -227,7 +227,7 @@ ws.onmessage = async (message) => {
 
       divPlayers.appendChild(player);
     });
-    setTimeout(() => updateGame(game), 5000);
+    setTimeout(() => updateGame(table, playerSeat), 5000);
   }
   //A new player joins
   if (res.method === "join") {
