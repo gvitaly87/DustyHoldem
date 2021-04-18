@@ -481,10 +481,17 @@ button:focus {
 .hidden {
   display: none;
 }
-
-.hidden {
-  display: none;
+/*********** Vitaly's Rules**************/
+.invisible {
+  visibility: hidden;
 }
+.player {
+  z-index: 1000;
+}
+.hand .card.face-down {
+  background-color: red;
+}
+/*********** Vitaly's Rules End**************/
 
 .player-1,
 .player-2,
@@ -510,7 +517,8 @@ button:focus {
   justify-content: flex-end;
 }
 
-#hand {
+#hand,
+.hand {
   display: flex;
   height: 7rem;
   flex-grow: 0;
