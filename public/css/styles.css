@@ -33,13 +33,13 @@ body,
   height: 100%;
   margin: 0;
   background-color: rgba(0, 0, 0, 0.486);
-  /* background-image: url(../images/purple-paper.jpg); */
+  background-image: url(../images/purple-paper.jpg);
   background-size: cover;
 }
 
 .grid-container {
   display: grid;
-  grid-template-columns: 0.25fr 1fr 1fr 0.5fr 1fr 0.5fr 1fr 1fr 1fr;
+  grid-template-columns: 0fr 1fr 1fr 0.5fr 1fr 0.5fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 0.1fr 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 0.1fr 1.5fr 0.1fr 0.5fr;
   gap: 0px 0px;
 }
@@ -126,39 +126,57 @@ body,
 
 .action-bar {
   display: grid;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.37);
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   gap: 0px 0px;
   grid-template-areas:
     "check-btn call-btn bet-btn"
     "fold-btn all-in-btn bet-slider";
-  grid-area: 11 / 5 / 12 / 10;
+  grid-area: 11 / 5 / 12 / 9;
 }
 
 .check-btn {
   grid-area: check-btn;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .fold-btn {
   grid-area: fold-btn;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .call-btn {
   grid-area: call-btn;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .bet-btn {
   grid-area: bet-btn;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .all-in-btn {
   grid-area: all-in-btn;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .bet-slider {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .game-log {
@@ -185,7 +203,7 @@ body,
 }
 
 .game-info {
-  grid-area: 3 / 9 / 10 / 10;
+  grid-area: 3 / 9 / 12 / 10;
 }
 
 .game-pot {
@@ -248,10 +266,6 @@ body,
   align-items: center;
 }
 
-.action-bar {
-  /* background-color: rgba(0, 0, 0, 0.37); */
-}
-
 #divPlayers {
   border-top: 1px solid white;
 }
@@ -261,6 +275,11 @@ body,
   justify-content: center;
   border: 1px solid white;
   padding: 0.25rem;
+}
+
+.info-btns {
+  display: flex;
+  justify-content: center;
 }
 
 #btnJoin,
@@ -276,6 +295,7 @@ body,
 
 .player-list {
   margin: 1rem 0 0.25rem 0;
+  /* background-color: mediumblue; */
 }
 
 .game-log {

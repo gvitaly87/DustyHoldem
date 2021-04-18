@@ -71,11 +71,22 @@
       <!-- Action Bar -->
 
       <div class="action-bar actions" id="actions">
-        <button class="check-btn" id="check">CHECK</button>
-        <button class="fold-btn" id="fold">FOLD</button>
-        <button class="call-btn" id="call">CALL</button>
-        <button id="raise" class="bet-btn">BET</button>
+        <div class="check-btn"><button id="check">CHECK</button></div>
+
+        <div class="fold-btn"><button id="fold">FOLD</button></div>
+
+        <div class="call-btn"><button id="call">CALL</button></div>
+
+        <div class="bet-btn"><button id="raise">BET</button></div>
+
         <div class="bet-slider">
+          <input
+            type="range"
+            id="raiseRange"
+            min="100"
+            max="5000"
+            value="100"
+          />
           <input
             id="raiseAmount"
             type="Number"
@@ -84,16 +95,9 @@
             step="50"
             value="100"
           />
-          <input
-            type="range"
-            id="raiseRange"
-            min="100"
-            max="5000"
-            value="100"
-          />
         </div>
 
-        <button class="all-in-btn">ALL IN</button>
+        <div class="all-in-btn"><button>ALL IN</button></div>
       </div>
 
       <!-- Game Log -->
@@ -114,27 +118,29 @@
         <div class="hidden">Player ID: <span id="playerId"></span></div>
 
         <div>
-          <label for="username">Enter your player's name here:</label>
+          <label for="username">ENTER YOUR NAME HERE:</label>
           <input type="text" id="username" value="Guest" />
 
           <div>
             <label for="txtGameId"
-              >Enter 'Game ID' to join a game in progress:</label
+              >ENTER GAME ID TO JOIN A GAME IN PROGRESS:</label
             >
             <input type="text" id="txtGameId" />
           </div>
 
-          <div>
+          <div class="info-btns">
             <button id="btnJoin">Join Game</button>
           </div>
           <div class="error"></div>
-          <div>
+          <div class="info-btns">
             <button id="btnCreate">Create New Game</button>
           </div>
 
           Game ID: <span id="gameId"></span>
 
-          <div><button id="btnCopyId" class="hidden">Copy</button></div>
+          <div class="info-btns">
+            <button id="btnCopyId" class="hidden">Copy</button>
+          </div>
 
           <div class="player-list">Player List:</div>
           <div id="divPlayers"></div>
