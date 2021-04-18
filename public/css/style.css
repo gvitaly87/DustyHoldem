@@ -67,7 +67,7 @@
 .card::after {
   position: absolute;
   content: attr(data-value);
-  font-size: 1rem;
+  font-size: 1.4rem;
 }
 
 .card::before {
@@ -85,6 +85,9 @@
 
 .hidden {
   display: none;
+}
+.invisible {
+  visibility: hidden;
 }
 
 .table-cards {
