@@ -303,20 +303,25 @@ const updateGame = (table, playerSeat) => {
   if (player.folded) playerFolded += "Folded";
   if (player.newToTable) playerPos = " Just joined";
 
-  playerContainer.innerHTML = `
-    <div id="hand">
-    <!-- Cards go Here -->
-    </div>
-    <div class="img-container"></div>
-    <div class="user-info">
-      <span class="user-name">${player.username}</span>
-      <div>Chips: <span class="chip-count">${player.chipCount}</span></div>
-      <span class="position">
-        ${playerPos}
-      </span>
-      <span class="fold">${playerFolded}</span>
-    </div>
-  `;
+  document.querySelector("#player .user-name").innerText = player.username;
+  document.querySelector("#player .chip-count").innerText = player.chipCount;
+  document.querySelector("#player .position").innerText = playerPos;
+  document.querySelector("#player .fold").innerText = playerFolded;
+
+  // playerContainer.innerHTML = `
+  //   <div id="hand">
+  //   <!-- Cards go Here -->
+  //   </div>
+  //   <div class="img-container"></div>
+  //   <div class="user-info">
+  //     <span class="user-name">${player.username}</span>
+  //     <div>Chips: <span class="chip-count">${player.chipCount}</span></div>
+  //     <span class="position">
+  //       ${playerPos}
+  //     </span>
+  //     <span class="fold">${playerFolded}</span>
+  //   </div>
+  // `;
   const actionControls = document.getElementById("actions");
   if (playerSeat === table.playerToAct) {
     actionControls.classList.remove("invisible");
