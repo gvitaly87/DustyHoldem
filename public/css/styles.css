@@ -194,8 +194,20 @@ body,
   grid-area: game-log-txt;
 }
 
+.player-msg {
+  color: #003cff;
+  font-weight: bold;
+}
+
+.dealer-msg {
+  color: black;
+}
+
 .game-log-txt-type {
   grid-area: game-log-txt-type;
+  border: none;
+  color: #003cff;
+  font-size: large;
 }
 
 .footer {
@@ -304,10 +316,6 @@ body,
   background-color: rgba(211, 211, 211, 0.836);
   color: #003cff;
   overflow-y: scroll;
-}
-
-.game-log-txt-type {
-  border: none;
 }
 
 label {
