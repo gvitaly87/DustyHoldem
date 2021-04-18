@@ -294,7 +294,6 @@ const updateGame = (table, playerSeat) => {
   let player = table.seats[playerSeat];
 
   // Updating the player's Info
-  const playerContainer = document.getElementById("player");
   let playerPos = "";
   let playerFolded = "";
   if (playerSeat === table.smallBlind) playerPos += " SB";
@@ -308,20 +307,6 @@ const updateGame = (table, playerSeat) => {
   document.querySelector("#player .position").innerText = playerPos;
   document.querySelector("#player .fold").innerText = playerFolded;
 
-  // playerContainer.innerHTML = `
-  //   <div id="hand">
-  //   <!-- Cards go Here -->
-  //   </div>
-  //   <div class="img-container"></div>
-  //   <div class="user-info">
-  //     <span class="user-name">${player.username}</span>
-  //     <div>Chips: <span class="chip-count">${player.chipCount}</span></div>
-  //     <span class="position">
-  //       ${playerPos}
-  //     </span>
-  //     <span class="fold">${playerFolded}</span>
-  //   </div>
-  // `;
   const actionControls = document.getElementById("actions");
   if (playerSeat === table.playerToAct) {
     actionControls.classList.remove("invisible");

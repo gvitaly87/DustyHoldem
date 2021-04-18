@@ -148,9 +148,9 @@ wsServer.on("request", (req) => {
           updateGameState();
         }
 
-        if (game.hasStarted) {
-          game.table.seats[seat].folded = true;
-        }
+        // if (game.hasStarted) {
+        //   game.table.seats[seat].folded = true;
+        // }
 
         const payLoad = {
           method: "join",
@@ -164,14 +164,9 @@ wsServer.on("request", (req) => {
     if (res.method === "fold") {
       const { clientId, gameId, playerSeat } = res;
       const game = games[gameId];
-      // Check that the id of the player in the seat corresponds to sit provided otherwise searches the seat by id
-      if (game.table.seats[playerSeat].clientId === clientId) {
-        game.table.seats[playerSeat].folded = true;
-      } else {
-        game.table.seats.forEach((seat) => {
-          if (seat.clientId === clientId) seat.folded = true;
-        });
-      }
+      // TODO: check if its the actual client
+      game.table.seats[playerSeat].folded = true;
+      console.log(game.table.seats[playerSeat].username, " folds");
       game.table.gameLog = `${game.table.seats[playerSeat].username} folds`;
 
       let tableObj = setQue(game.table, game.deck, true);
