@@ -12,6 +12,7 @@ let playerChips = null;
 let playerSeat = null;
 let playerHand = [];
 let game = {};
+let table = {};
 
 const HOST = location.origin.replace(/^http/, "ws");
 let ws = new WebSocket(HOST);
