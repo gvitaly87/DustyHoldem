@@ -291,28 +291,53 @@ const updateGame = (table, playerSeat) => {
   const clientId = document.querySelector("#playerId").innerText;
   document.querySelector("#gameId").innerText = gameId;
   roundBet = table.roundRaise;
+  let player = table.seats[playerSeat];
+
+  // Updating the player's Info
   const playerContainer = document.getElementById("player");
   let playerPos = "";
   let playerFolded = "";
   if (playerSeat === table.smallBlind) playerPos += " SB";
   if (playerSeat === table.bigBlind) playerPos += " BB";
   if (playerSeat === table.dealer) playerPos += " DEALER";
-  if (table.seats[playerSeat].folded) playerFolded += "Folded";
-  if (table.seats[playerSeat].newToTable) playerPos = " Just joined";
+  if (player.folded) playerFolded += "Folded";
+  if (player.newToTable) playerPos = " Just joined";
+
   playerContainer.innerHTML = `
     <div id="hand">
     <!-- Cards go Here -->
     </div>
     <div class="img-container"></div>
     <div class="user-info">
-      <span class="user-name">${table.seats[playerSeat].username}</span>
-      <div>Chips: <span class="chip-count">${table.seats[playerSeat].chipCount}</span></div>
+      <span class="user-name">${player.username}</span>
+      <div>Chips: <span class="chip-count">${player.chipCount}</span></div>
       <span class="position">
         ${playerPos}
       </span>
       <span class="fold">${playerFolded}</span>
     </div>
   `;
+  const actionControls = document.getElementById("actions");
+  if (playerSeat === table.playerToAct) {
+    actionControls.classList.remove("invisible");
+  } else {
+    actionControls.classList.add("invisible");
+  }
+
+  // Updating sliders
+  // If someone made a bet this round
+  if (roundBet) {
+    raiseAmountSlider.min = roundBet - player.bets[table.round];
+    raiseAmountField.min = roundBet - player.bets[table.round];
+    // If the bet is less than the player's chip count
+    if (roundBet - player.bets[table.round] < player.chipCount) {
+      raiseAmountSlider.value = roundBet - player.bets[table.round];
+      raiseAmountField.value = roundBet - player.bets[table.round];
+    }
+  }
+  raiseAmountSlider.max = player.chipCount;
+  raiseAmountField.max = player.chipCount;
+
   table.seats.forEach((seat) => {
     if (!seat.empty && seat.seat !== playerSeat) {
       let seatAdjust = 7 - playerSeat;
@@ -347,70 +372,6 @@ const updateGame = (table, playerSeat) => {
     }
   });
 
-  while (divPlayers.firstChild) divPlayers.removeChild(divPlayers.firstChild);
-
-  table.seats.forEach((seat) => {
-    if (!seat.empty) {
-      const player = document.createElement("div");
-      // Distinguishes between player and other users
-      if (seat.clientId === clientId) {
-        player.classList.add("player");
-        playerChips = seat.chipCount;
-        playerSeat = seat.seat;
-        playerRoundBet = seat.bets[table.round];
-        const actionControls = document.getElementById("actions");
-        if (playerSeat === table.playerToAct) {
-          actionControls.classList.remove("invisible");
-        } else {
-          actionControls.classList.add("invisible");
-        }
-
-        // Updating sliders
-        // If someone made a bet this round
-        if (roundBet) {
-          raiseAmountSlider.min = roundBet - seat.bets[table.round];
-          raiseAmountField.min = roundBet - seat.bets[table.round];
-          // If the bet is less than the player's chip count
-          if (roundBet - seat.bets[table.round] < seat.chipCount) {
-            raiseAmountSlider.value = roundBet - seat.bets[table.round];
-            raiseAmountField.value = roundBet - seat.bets[table.round];
-          }
-        }
-        raiseAmountSlider.max = seat.chipCount;
-        raiseAmountField.max = seat.chipCount;
-      } else {
-        player.classList.add("opponent");
-      }
-
-      player.innerText = "Name:";
-
-      const username = document.createElement("span");
-      username.classList.add("username");
-      username.innerText = seat.username;
-      player.appendChild(username);
-
-      player.innerHTML += " Chips:";
-
-      const chipCount = document.createElement("span");
-      chipCount.classList.add("chip-count");
-      chipCount.innerText = seat.chipCount;
-      player.appendChild(chipCount);
-
-      player.innerHTML += ` Seat: ${seat.seat}`;
-
-      // Add a Dealer/blinds identifier
-      let specialStatus = "";
-      if (seat.seat === table.smallBlind) specialStatus += " SB";
-      if (seat.seat === table.bigBlind) specialStatus += " BB";
-      if (seat.seat === table.dealer) specialStatus += " DEALER";
-      if (seat.folded) specialStatus += " Folded";
-      if (seat.newToTable && !seat.empty) specialStatus = " Just joined";
-
-      player.innerHTML += specialStatus;
-
-      divPlayers.appendChild(player);
-    }
-  });
   const gameStage = document.querySelector(".game-stage");
   gameStage.innerText = {
     0: "Dealing Cards...",
