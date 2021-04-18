@@ -200,24 +200,21 @@ ws.onmessage = async (message) => {
     playerSeat = res.seat;
     let tableShowDown = res.tableShowDown;
     tableShowDown.forEach((seat) => {
-      if (seat.seat === playerSeat) {
-        document.querySelector(
-          "#hand"
-        ).innerHTML += `<span class="hand-descr">Hand: ${seat.description}</span>`;
-      } else {
-        let seatAdjust = 7 - playerSeat;
-        let i = seat.seat + seatAdjust;
-        if (i > 10) i -= 10;
-        if (i < 1) i += 10;
-        console.log(`.player-${i} .hand`);
+      let description = `<span class="hand-descr">Hand: ${seat.description}</span>`;
+      let seatAdjust = 7 - playerSeat;
+      let i = seat.seat + seatAdjust;
+      if (i > 10) i -= 10;
+      if (i < 1) i += 10;
+      const decrContainer = document.querySelector(`.player-${i} .hand-descr`);
+      decrContainer.classList.remove("hidden");
+      decrContainer.innerHTML = description;
+
+      if (seat.seat !== playerSeat) {
         let cards = insertCard(seat.card1) + insertCard(seat.card2);
-        cards += `<span class="hand-descr">Hand: ${seat.description}</span>`;
-        console.log(cards);
-        const opponentCards = document.querySelector(`.player-${i} .hand`);
-        opponentCards.innerHTML = cards;
+        document.querySelector(`.player-${i} .hand`).innerHTML = cards;
       }
     });
-    setTimeout(() => updateGame(table, playerSeat), 5000);
+    setTimeout(() => updateGame(table, playerSeat), 7500);
   }
   //A new player joins
   if (res.method === "join") {
@@ -296,7 +293,7 @@ const updateGame = (table, playerSeat) => {
   document.querySelector("#player .chip-count").innerText = player.chipCount;
   document.querySelector("#player .position").innerText = playerPos;
   document.querySelector("#player .fold").innerText = playerFolded;
-
+  // const decrContainer = document.querySelector('#player .hand-descr');
   const actionControls = document.getElementById("actions");
   if (playerSeat === table.playerToAct) {
     actionControls.classList.remove("invisible");
@@ -341,6 +338,7 @@ const updateGame = (table, playerSeat) => {
         </div>
         <div class="img-container"></div>
         <div class="user-info">
+          <span class="hand-descr hidden"></span>
           <span class="user-name">${seat.username}</span>
           <div>Chips: <span class="chip-count">${seat.chipCount}</span></div>
           <span class="position">
