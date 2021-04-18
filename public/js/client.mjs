@@ -198,34 +198,32 @@ ws.onmessage = async (message) => {
     game = res.game;
     let tableShowDown = res.tableShowDown;
     while (divPlayers.firstChild) divPlayers.removeChild(divPlayers.firstChild);
+    console.log(tableShowDown);
+    tableShowDown.forEach((seat) => {
+      const player = document.createElement("div");
 
-    tableShowDown.seats.forEach((seat) => {
-      if (!seat.empty) {
-        const player = document.createElement("div");
-        // Distinguishes between player and other users
+      player.innerText = "Name:";
+      const username = document.createElement("span");
 
-        player.innerText = "Name:";
+      username.classList.add("username");
+      username.innerText = seat.username;
+      player.appendChild(username);
 
-        const username = document.createElement("span");
-        username.classList.add("username");
-        username.innerText = seat.username;
-        player.appendChild(username);
+      player.innerHTML += " Chips:";
 
-        player.innerHTML += " Chips:";
+      const chipCount = document.createElement("span");
+      chipCount.classList.add("chip-count");
+      chipCount.innerText = seat.chipCount;
+      player.appendChild(chipCount);
 
-        const chipCount = document.createElement("span");
-        chipCount.classList.add("chip-count");
-        chipCount.innerText = seat.chipCount;
-        player.appendChild(chipCount);
+      player.innerHTML += ` Seat: ${seat.seat}`;
 
-        player.innerHTML += ` Seat: ${seat.seat}`;
+      const firstCard = insertCard(seat.card1);
+      const secondCard = insertCard(seat.card2);
+      player.innerHTML += firstCard + secondCard;
+      player.innerHTML += `Hand: ${seat.description}`;
 
-        const firstCard = insertCard(seat.hand[0]);
-        const secondCard = insertCard(seat.hand[1]);
-        player.innerHTML += firstCard + secondCard;
-
-        divPlayers.appendChild(player);
-      }
+      divPlayers.appendChild(player);
     });
     setTimeout(() => updateGame(game), 5000);
   }
@@ -351,12 +349,6 @@ const updateGame = (game) => {
       if (seat.newToTable && !seat.empty) specialStatus = " Just joined";
 
       player.innerHTML += specialStatus;
-
-      // if (isShowDown && !seat.folded) {
-      //   const firstCard = insertCard(seat.hand[0]);
-      //   const secondCard = insertCard(seat.hand[1]);
-      //   player.innerHTML += firstCard + secondCard;
-      // }
 
       divPlayers.appendChild(player);
     }

@@ -294,7 +294,7 @@ wsServer.on("request", (req) => {
     method: "connect",
     clientId: clientId,
   };
-  //send back the client connect
+
   connection.send(JSON.stringify(payLoad));
 });
 
