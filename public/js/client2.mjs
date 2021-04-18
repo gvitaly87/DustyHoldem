@@ -199,33 +199,23 @@ ws.onmessage = async (message) => {
     table = res.table;
     playerSeat = res.seat;
     let tableShowDown = res.tableShowDown;
-    while (divPlayers.firstChild) divPlayers.removeChild(divPlayers.firstChild);
-    console.log(tableShowDown);
     tableShowDown.forEach((seat) => {
-      const player = document.createElement("div");
-
-      player.innerText = "Name:";
-      const username = document.createElement("span");
-
-      username.classList.add("username");
-      username.innerText = seat.username;
-      player.appendChild(username);
-
-      player.innerHTML += " Chips:";
-
-      const chipCount = document.createElement("span");
-      chipCount.classList.add("chip-count");
-      chipCount.innerText = seat.chipCount;
-      player.appendChild(chipCount);
-
-      player.innerHTML += ` Seat: ${seat.seat}`;
-
-      const firstCard = insertCard(seat.card1);
-      const secondCard = insertCard(seat.card2);
-      player.innerHTML += firstCard + secondCard;
-      player.innerHTML += `Hand: ${seat.description}`;
-
-      divPlayers.appendChild(player);
+      if (seat.seat === playerSeat) {
+        document.querySelector(
+          "#hand"
+        ).innerHTML += `<span class="hand-descr">Hand: ${seat.description}</span>`;
+      } else {
+        let seatAdjust = 7 - playerSeat;
+        let i = seat.seat + seatAdjust;
+        if (i > 10) i -= 10;
+        if (i < 1) i += 10;
+        console.log(`.player-${i} .hand`);
+        let cards = insertCard(seat.card1) + insertCard(seat.card2);
+        cards += `<span class="hand-descr">Hand: ${seat.description}</span>`;
+        console.log(cards);
+        const opponentCards = document.querySelector(`.player-${i} .hand`);
+        opponentCards.innerHTML = cards;
+      }
     });
     setTimeout(() => updateGame(table, playerSeat), 5000);
   }
