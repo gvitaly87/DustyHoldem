@@ -16,15 +16,15 @@ h6 {
   font-family: "Roboto Condensed", sans-serif;
   font-weight: 700;
   color: white;
-  font-size: clamp(1rem, 2.5vw, 2rem);
+  font-size: clamp(1rem, 2vw, 2rem);
 }
 
 h1 {
-  font-size: clamp(1.2rem, 2.5vw, 2.5rem);
+  font-size: clamp(1.2rem, 2vw, 2.5rem);
 }
 
 .footer {
-  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  font-size: clamp(1rem, 2vw, 1.5rem);
 }
 
 html,
@@ -33,7 +33,7 @@ body,
   height: 100%;
   margin: 0;
   background-color: rgba(0, 0, 0, 0.486);
-  background-image: url(../images/purple-paper.jpg);
+  background-image: url(../images/bg-victorian.jpg);
   background-size: cover;
 }
 
@@ -90,6 +90,8 @@ body,
 
 .poker-table {
   display: grid;
+  /* width: 100%;
+  padding-bottom: 56.25%; */
   background-image: url(../images/table.png);
   background-size: contain;
   background-repeat: no-repeat;
@@ -127,7 +129,6 @@ body,
 .action-bar {
   display: grid;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.37);
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   gap: 0px 0px;
@@ -135,6 +136,10 @@ body,
     "check-btn call-btn bet-btn"
     "fold-btn all-in-btn bet-slider";
   grid-area: 11 / 5 / 12 / 9;
+}
+
+.actions {
+  /* background-color: rgba(0, 0, 0, 0.37); */
 }
 
 .check-btn {
@@ -318,14 +323,15 @@ body,
   overflow-y: scroll;
 }
 
-label {
-  margin: 0.25rem 0.5rem 0.25rem 0.5rem;
-}
-
 .footer {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.game-info-container {
+  margin-top: 0.5rem;
+  font-size: clamp(0.5rem, 2.5vw, 1rem);
 }
 
 #username {
@@ -363,8 +369,7 @@ button {
   background-color: #000d80;
   color: white;
   border-color: white;
-  font-size: clamp;
-  font-size: clamp(0.7rem, 2.5vw, 1.2rem);
+  font-size: clamp(0.7rem, 2vw, 1.2rem);
   border-radius: 2rem;
   background-image: linear-gradient(
     to right,
@@ -390,7 +395,7 @@ button:focus {
 
 /* DELETE BELOW */
 .grid-container * {
-  /* border: 1px solid white; */
+  border: 1px solid white;
   position: relative;
 }
 
@@ -525,4 +530,42 @@ button:focus {
 
 img {
   max-width: 100%;
+}
+
+@media screen and (max-width: 101.25rem) {
+  .player-1,
+  .player-2,
+  .player-3 {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  #hand {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .player-6,
+  .player-8 {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .player-4,
+  .player-5 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .player-9,
+  .player-10 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 95.125rem) {
 }
