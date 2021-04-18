@@ -33,13 +33,13 @@ body,
   height: 100%;
   margin: 0;
   background-color: rgba(0, 0, 0, 0.486);
-  background-image: url(../images/purple-paper.jpg);
+  /* background-image: url(../images/purple-paper.jpg); */
   background-size: cover;
 }
 
 .grid-container {
   display: grid;
-  grid-template-columns: 0.5fr 1fr 1fr 0.5fr 1fr 0.5fr 1fr 1fr 1fr;
+  grid-template-columns: 0.25fr 1fr 1fr 0.5fr 1fr 0.5fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 0.1fr 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 0.1fr 1.5fr 0.1fr 0.5fr;
   gap: 0px 0px;
 }
@@ -130,8 +130,8 @@ body,
   grid-template-rows: 1fr 1fr;
   gap: 0px 0px;
   grid-template-areas:
-    "check-btn call-btn all-in-btn"
-    "fold-btn bet-btn bet-slider";
+    "check-btn call-btn bet-btn"
+    "fold-btn all-in-btn bet-slider";
   grid-area: 11 / 5 / 12 / 10;
 }
 
@@ -159,7 +159,6 @@ body,
   display: flex;
   justify-content: center;
   align-items: center;
-  border-top: 1px solid white;
 }
 
 .game-log {
@@ -208,10 +207,13 @@ body,
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 7rem;
+  flex-grow: 0;
 }
 
 .winner-msg {
   grid-area: winner-msg;
+  color: green;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -247,7 +249,7 @@ body,
 }
 
 .action-bar {
-  border: 1px solid white;
+  /* background-color: rgba(0, 0, 0, 0.37); */
 }
 
 #divPlayers {
@@ -255,7 +257,21 @@ body,
 }
 
 .game-info {
+  display: flex;
+  justify-content: center;
   border: 1px solid white;
+  padding: 0.25rem;
+}
+
+#btnJoin,
+#btnCreate,
+#btnCopyId {
+  width: 60%;
+  height: 3rem;
+}
+
+.error {
+  color: red;
 }
 
 .player-list {
@@ -265,7 +281,8 @@ body,
 .game-log {
   border-top: 1px 1px 1px 1px solid white;
   border-bottom: black;
-  background-color: lightgray;
+  background-color: rgba(211, 211, 211, 0.836);
+  color: #003cff;
   overflow-y: scroll;
 }
 
@@ -281,16 +298,6 @@ label {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.p9,
-.p10 {
-  float: right;
-}
-
-.p3,
-.p6 {
-  float: right;
 }
 
 #username {
@@ -353,16 +360,9 @@ button:focus {
   outline: none;
 }
 
-#btnJoin,
-#btnCreate,
-#btnCopyId {
-  width: 60%;
-  height: 3rem;
-}
-
 /* DELETE BELOW */
 .grid-container * {
-  /* border: 1px solid gold; */
+  /* border: 1px solid white; */
   position: relative;
 }
 
@@ -412,6 +412,7 @@ button:focus {
   justify-content: center;
   align-items: center;
   font-size: 4rem;
+  height: 7rem;
 }
 
 .card.red {
@@ -448,22 +449,42 @@ button:focus {
   display: none;
 }
 
-/***** Vitaly Rules *****/
-
 .hidden {
   display: none;
 }
 
-.table-cards {
+.player-1,
+.player-2,
+.player-3,
+.player-6,
+.player-8 {
   display: flex;
-  height: 7rem;
-  flex-grow: 0;
+  align-items: center;
+  justify-content: center;
 }
+
+.player-4,
+.player-5 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.player-9,
+.player-10 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
 #hand {
   display: flex;
   height: 7rem;
   flex-grow: 0;
+  align-items: center;
+  justify-content: center;
 }
+
 .card {
   width: 5rem;
   margin: 0 1rem;
@@ -472,4 +493,8 @@ button:focus {
 .log-winner {
   font-weight: bold;
   color: hsl(0, 70%, 25%);
+}
+
+img {
+  max-width: 100%;
 }
