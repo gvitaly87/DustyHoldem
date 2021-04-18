@@ -292,12 +292,60 @@ const updateGame = (table, playerSeat) => {
   document.querySelector("#gameId").innerText = gameId;
   roundBet = table.roundRaise;
   const playerContainer = document.getElementById("player");
+  let playerPos = "";
+  let playerFolded = "";
+  if (playerSeat === table.smallBlind) playerPos += " SB";
+  if (playerSeat === table.bigBlind) playerPos += " BB";
+  if (playerSeat === table.dealer) playerPos += " DEALER";
+  if (table.seats[playerSeat].folded) playerFolded += "Folded";
+  if (table.seats[playerSeat].newToTable) playerPos = " Just joined";
   playerContainer.innerHTML = `
     <div id="hand">
-          <img src="/images/icons/test.png" class="p-icons p7" />
+    <!-- Cards go Here -->
     </div>
-    
+    <div class="img-container"></div>
+    <div class="user-info">
+      <span class="user-name">${table.seats[playerSeat].username}</span>
+      <div>Chips: <span class="chip-count">${table.seats[playerSeat].chipCount}</span></div>
+      <span class="position">
+        ${playerPos}
+      </span>
+      <span class="fold">${playerFolded}</span>
+    </div>
   `;
+  table.seats.forEach((seat) => {
+    if (!seat.empty && seat.seat !== playerSeat) {
+      let seatAdjust = 7 - playerSeat;
+      let i = seat.seat + seatAdjust;
+      if (i > 10) i -= 10;
+      if (i < 1) i += 10;
+      const opponent = document.querySelector(`.player-${i}`);
+      let oppPos = "";
+      let oppFolded = "";
+      let oppCards = `<div class="card face-down"></div><div class="card face-down"></div>`;
+      if (seat.seat === table.smallBlind) oppPos += " SB";
+      if (seat.seat === table.bigBlind) oppPos += " BB";
+      if (seat.seat === table.dealer) oppPos += " DEALER";
+      if (seat.folded) oppFolded += "Folded";
+      if (seat.newToTable) oppPos = " Just joined";
+      if (seat.folded || seat.newToTable) oppCards = "";
+
+      opponent.innerHTML = `
+        <div class="hand">
+          ${oppCards}
+        </div>
+        <div class="img-container"></div>
+        <div class="user-info">
+          <span class="user-name">${seat.username}</span>
+          <div>Chips: <span class="chip-count">${seat.chipCount}</span></div>
+          <span class="position">
+            ${oppPos}
+          </span>
+          <span class="fold">${oppFolded}</span>
+        </div>
+      `;
+    }
+  });
 
   while (divPlayers.firstChild) divPlayers.removeChild(divPlayers.firstChild);
 
