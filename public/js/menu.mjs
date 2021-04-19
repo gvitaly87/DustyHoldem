@@ -7,9 +7,6 @@ const toggleSideBar = () => {
   nav.classList.toggle("active");
   overlay.classList.toggle("active");
   document.querySelector(".play-now").classList.toggle("show-x");
-  setTimeout(() => {
-    document.querySelector(".play-now").classList.toggle("show-x");
-  }, 400);
 };
 
 burger.addEventListener("click", toggleSideBar);
