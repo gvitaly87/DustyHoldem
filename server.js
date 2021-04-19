@@ -13,6 +13,8 @@ const nextToAct = require("./lib/nextToAct");
 const updateRound = require("./lib/updateRound");
 const respondAllClients = require("./lib/respondAllClients");
 
+const Game = require("./models/game");
+const Player = require("./models/player");
 const PORT = process.env.PORT || 3000;
 
 // Express
@@ -26,7 +28,6 @@ httpServer.listen(PORT, () =>
   console.log(`Server running at http://localhost:${PORT}/`)
 );
 
-//hashmap clients
 const clients = {};
 const games = {};
 
@@ -34,53 +35,20 @@ const wsServer = new websocketServer({
   httpServer: httpServer,
 });
 wsServer.on("request", (req) => {
-  //connect
   const connection = req.accept(null, req.origin);
   connection.on("open", () => console.log("Connection opened!"));
+  // TODO: on connection close determine who left the game
   connection.on("close", () => console.log("Connection closed!"));
   connection.on("message", (message) => {
+    // TODO: security for malicious message
     const res = JSON.parse(message.utf8Data);
 
     //a user want to create a new game
     if (res.method === "create") {
       const clientId = res.clientId;
       const gameId = getUniqueID();
-      // TODO: slim down game object, so only essential information is exchanged each round
-      games[gameId] = {
-        id: gameId,
-        clients: [],
-        hasStarted: false,
-        table: {
-          pot: 0,
-          hand: 0, // Counter for hands played
-          /* Round keeps track of the rounds of betting for each hand
-           * 0 - let new players join game que
-           * 1 - pre-flop
-           * 2 - flop
-           * 3 - turn,
-           * 4 - river
-           * 5 - showdown
-           * */
-          round: 0,
-          gameLog: null,
-          /* Keep values for the big and small values in order to set them when the game initializes */
-          sbValue: 50,
-          bbValue: 100,
-          roundRaise: 100,
-          cards: [],
-          /* Pointers to seat position of the dealer, blinds, and player to act */
-          playerToAct: null,
-          dealer: null,
-          smallBlind: null,
-          bigBlind: null,
-          seatsQue: [],
-          seats: [],
-        },
-      };
-      // Set all seats to empty
-      for (let i = 0; i < 10; i++) {
-        games[gameId].table.seats.push({ empty: true });
-      }
+
+      games[gameId] = new Game(gameId, 10, 50, 100);
 
       const payLoad = {
         method: "create",
@@ -115,27 +83,22 @@ wsServer.on("request", (req) => {
           return;
         }
         const seat = getSeat(game.table.seats);
-        // TODO: switch to passing the table instead of all the clients
-        game.table.seats[seat] = {
-          empty: false,
-          newToTable: true,
-          folded: false,
-          actionRequired: false,
-          allIn: false,
-          clientId,
-          seat,
-          clientsIndex: clients.length,
-          username,
-          chipCount,
-          hand: [],
-          bets: [0, 0, 0, 0, 0],
-        };
         game.clients.push({
           clientId,
           username,
           chipCount,
           seat,
+          hand: [],
         });
+
+        game.table.seats[seat] = new Player(
+          clientId,
+          username,
+          seat,
+          chipCount,
+          game.clients.length - 1
+        );
+        console.log(game.table.seats[seat].clientIndex);
 
         game.table.gameLog = `${username} joined the game with ${chipCount} chips`;
 
