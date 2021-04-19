@@ -39,8 +39,8 @@ body,
 
 .grid-container {
   display: grid;
-  grid-template-columns: 0fr 1fr 1fr 0.5fr 1fr 0.5fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 0.1fr 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 0.1fr 1.5fr 0.1fr 0.5fr;
+  grid-template-columns: 0.8fr 1fr 1fr 0.5fr 1fr 0.5fr 1fr 1fr 0.8fr;
+  grid-template-rows: 1.5fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 0.75fr 1.5fr 0.2fr 0.5fr;
   gap: 0px 0px;
 }
 
@@ -90,8 +90,6 @@ body,
 
 .poker-table {
   display: grid;
-  /* width: 100%;
-  padding-bottom: 56.25%; */
   background-image: url(../images/table.png);
   background-size: contain;
   background-repeat: no-repeat;
@@ -187,12 +185,12 @@ body,
 .game-log {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 0.3fr;
+  grid-template-rows: 1fr 0.2fr;
   gap: 0px 0px;
   grid-template-areas:
     "game-log-txt game-log-txt game-log-txt"
     "game-log-txt-type game-log-txt-type game-log-txt-type";
-  grid-area: 11 / 1 / 12 / 5;
+  grid-area: 11 / 2 / 12 / 5;
 }
 
 .game-log-txt {
@@ -219,9 +217,9 @@ body,
   grid-area: 13 / 1 / 14 / 10;
 }
 
-.game-info {
+/* .game-info {
   grid-area: 3 / 9 / 12 / 10;
-}
+} */
 
 .game-pot {
   grid-area: game-pot;
@@ -262,6 +260,7 @@ body,
 }
 
 .logo {
+  margin-left: 1.25rem;
   max-width: 20%;
   height: auto;
 }
@@ -283,20 +282,18 @@ body,
   align-items: center;
 }
 
-#divPlayers {
-  border-top: 1px solid white;
-}
-
 .game-info {
   display: flex;
   justify-content: center;
-  border: 1px solid white;
+  /* border: 1px solid white; */
   padding: 0.25rem;
 }
 
 .info-btns {
   display: flex;
   justify-content: center;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
 
 #btnJoin,
@@ -334,18 +331,15 @@ body,
   font-size: clamp(0.5rem, 2.5vw, 1rem);
 }
 
-#username {
+#username,
+#txtGameId {
   font-size: clamp(1rem, 2.5vw, 1.5rem);
+  margin-top: 0.5rem;
   margin-bottom: 1rem;
 }
 
 #raiseAmount {
   font-size: clamp(1rem, 2.5vw, 1.5rem);
-}
-
-#txtGameId {
-  font-size: clamp(1rem, 2.5vw, 1.5rem);
-  margin-bottom: 1rem;
 }
 
 #raiseRange {
@@ -395,7 +389,7 @@ button:focus {
 
 /* DELETE BELOW */
 .grid-container * {
-  border: 1px solid white;
+  /* border: 1px solid white; */
   position: relative;
 }
 
