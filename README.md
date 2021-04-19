@@ -8,15 +8,29 @@
   - [Vitaly Gins](https://github.com/gvitaly87)
 - GitHub Links:
   - [GH repo](https://github.com/gvitaly87/DustyHoldem)
-  - [Deployed Heroku URL]()
+  - [Deployed Heroku URL](https://dusty-holdem.herokuapp.com/)
 
 ### Context
 
-#### API's
+A multiplayer poker game that offers all the functionality expected out of a Texas Hold'em game. The app uses websocket and express in order to exchange information with the clients, and run several games simultaneously.
+
+- The game starts from clicking the play now button and either creating a game, or joining an existing game.
+- Once there are at least 3 players connected to a new game the game begins.
+- Users that join after the game starts are added to the que, and start playing from the very next hand.
 
 ---
 
 ### Dependencies
+
+- dotenv
+- ejs
+- express
+- pokersolver
+- websocket
+
+#### Dev dependencies
+
+- nodemon
 
 ---
 
@@ -26,9 +40,7 @@
 
 ### Icons
 
-
-https://creativecommons.org/licenses/by/3.0/
----
+## https://creativecommons.org/licenses/by/3.0/
 
 ### Content/text
 

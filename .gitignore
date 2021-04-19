@@ -56,3 +56,6 @@ jspm_packages
 
 # source images folder
 public/images/_src/
+
+# .vscode
+.vscode/
