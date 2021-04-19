@@ -1,0 +1,68 @@
+import insertCard from "/js/insertCard.mjs";
+import copyGameID from "/js/copyGameID.mjs";
+import toggleSideBar from "/js/menu.mjs";
+
+const playerJoined = (client, clientId, table, gameStarted) => {
+  if (client.clientId === clientId) {
+    // Close the menu on a successful join
+    toggleSideBar();
+    copyGameID();
+
+    document.querySelector("#gameId").innerText = gameId;
+    document.querySelector("#player .user-name").innerText = client.username;
+    document.querySelector("#player .chip-count").innerText = client.chipCount;
+    document.querySelector("#player .position").innerText =
+      "Waiting to join...";
+    const gameStage = document.querySelector(".game-stage");
+    if (gameStarted) {
+      gameStage.innerText = {
+        0: "Dealing Cards...",
+        1: "Pre-flop",
+        2: "Flop",
+        3: "Turn",
+        4: "River",
+        5: "Showdown",
+      }[table.round];
+      const gamePot = document.querySelector(".pot-value");
+      gamePot.innerText = table.pot;
+
+      const playerTurn = document.querySelector(".player-turn");
+      const currentTurnPlayerName = table.seats[table.playerToAct].username;
+      playerTurn.innerText = `It is ${currentTurnPlayerName}'s Turn`;
+
+      if (table.round >= 1) {
+        const tableCards = document.querySelector(".table-cards");
+        let cardsHTML = "";
+        table.cards.forEach((card) => {
+          cardsHTML += insertCard(card);
+        });
+        tableCards.innerHTML = cardsHTML;
+      }
+    } else {
+      gameStage.innerText =
+        "Waiting for game to start...\n The game Id has been copied to clipboard";
+    }
+  } else {
+    let seatAdjust = 7 - player.seat;
+    let i = client.seat + seatAdjust;
+    if (i > 10) i -= 10;
+    if (i < 1) i += 10;
+    const opponent = document.querySelector(`.player-${i}`);
+
+    opponent.innerHTML = `
+        <div class="hand"></div>
+        <div class="img-container"></div>
+        <div class="user-info">
+          <span class="hand-descr hidden"></span>
+          <span class="user-name">${client.username}</span>
+          <div>Chips: <span class="chip-count">${client.chipCount}</span></div>
+          <span class="position">Just Joined</span>
+          <span class="fold"></span>
+        </div>
+      `;
+  }
+  const gameLog = document.getElementById("game-log");
+  gameLog.innerHTML += `<div class="msg dealer-msg">Dealer: ${client.username} just joined the game with ${client.chipCount} chips</div>`;
+};
+
+export default playerJoined;
