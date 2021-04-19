@@ -3,56 +3,170 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/css/style.css" />
-    <script src="/js/client.mjs" type="module"></script>
-    <title>Document</title>
+    <script src="/js/client2.mjs" type="module"></script>
+    <script src="/js/menu.mjs" type="module"></script>
+    <title>VGDS' Poker World</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/menu.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
   </head>
   <body>
-    <h1>Hold'em Game</h1>
-    <div class="hidden">Player ID: <span id="playerId"></span></div>
-    <div>
-      Game ID: <span id="gameId"></span
-      ><button id="btnCopyId" class="hidden">Copy</button>
+    <!-- Navbar -->
+    <div class="grid-container">
+      <div class="nav-bar">
+        <img class="logo" src="/images/vistin-logo.png" />
+        <div id="overlay">
+          <div class="text">
+            <div class="box-2">
+              <div class="play-now" id="burger">
+                <span>PLAY NOW</span>
+              </div>
+            </div>
+            <div id="nav">
+              <div class="hidden">Player ID: <span id="playerId"></span></div>
+
+              <div class="game-info-container">
+                <label for="username">ENTER USERNAME HERE:</label>
+                <input type="text" id="username" value="Guest" />
+
+                <div>
+                  <button id="btnCreate">CREATE A NEW GAME</button>
+                </div>
+
+                <span id="gameId"></span>
+
+                <div>
+                  <button id="btnCopyId" class="hidden">COPY GAME ID</button>
+                </div>
+
+                <div>
+                  <div>
+                    <label for="txtGameId"
+                      >ENTER A GAME ID TO JOIN A GAME IN PROGRESS:
+                    </label>
+                  </div>
+
+                  <input type="text" id="txtGameId" />
+                </div>
+
+                <div>
+                  <button id="btnJoin">JOIN GAME</button>
+                </div>
+                <div class="error"></div>
+              </div>
+              <!-- </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Player grid -->
+
+      <div class="player player-2">
+        <img src="/images/icons/test.png" class="p-icons p2" />
+      </div>
+
+      <div class="player player-1">
+        <img src="/images/icons/test.png" class="p-icons p1" />
+      </div>
+
+      <div class="player player-3">
+        <img src="/images/icons/test.png" class="p-icons p3" />
+      </div>
+
+      <div class="player player-4">
+        <img src="/images/icons/test.png" class="p-icons p4" />
+      </div>
+
+      <div class="player player-5">
+        <img src="/images/icons/test.png" class="p-icons p5" />
+      </div>
+
+      <div id="player" class="player player-7">
+        <div class="round-bet"></div>
+        <div id="hand">
+          <img src="/images/icons/test.png" class="p-icons p7" />
+        </div>
+        <div class="user-info">
+          <span class="hand-descr hidden"></span>
+          <span class="user-name"></span>
+          <div>Chips: <span class="chip-count"></span></div>
+          <span class="position"> </span>
+          <span class="fold"></span>
+        </div>
+      </div>
+
+      <div class="player player-6">
+        <img src="/images/icons/test.png" class="p-icons p6" />
+      </div>
+
+      <div class="player player-8">
+        <img src="/images/icons/test.png" class="p-icons p8" />
+      </div>
+
+      <div class="player player-9">
+        <img src="/images/icons/test.png" class="p-icons p9" />
+      </div>
+
+      <div class="player player-10">
+        <img src="/images/icons/test.png" class="p-icons p10" />
+      </div>
+
+      <!-- Poker table grid -->
+
+      <div class="poker-table" id="divBoard">
+        <div class="table-cards"></div>
+        <div class="game-pot">Pot: <span class="pot-value"></span></div>
+        <div class="game-stage"></div>
+        <div class="player-turn"></div>
+      </div>
+
+      <!-- Action Bar -->
+
+      <div class="action-bar actions" id="actions">
+        <div class="check-btn"><button id="check">CHECK</button></div>
+
+        <div class="fold-btn"><button id="fold">FOLD</button></div>
+
+        <div class="call-btn"><button id="call">CALL</button></div>
+
+        <div class="bet-btn"><button id="raise">BET</button></div>
+
+        <div class="bet-slider">
+          <input
+            type="range"
+            id="raiseRange"
+            min="100"
+            max="5000"
+            step="50"
+            value="100"
+          />
+          <input
+            id="raiseAmount"
+            type="Number"
+            min="100"
+            max="5000"
+            step="50"
+            value="100"
+          />
+        </div>
+
+        <div class="all-in-btn"><button id="all-in">ALL IN</button></div>
+      </div>
+
+      <!-- Game Log -->
+
+      <div class="game-log">
+        <div class="game-log-txt" id="game-log"></div>
+
+        <input type="text" id="chat-message" class="game-log-txt-type" />
+      </div>
+
+      <!-- Footer -->
+
+      <div class="footer"><footer>&copy; 2021 Vistin Development</footer></div>
+
+      <!-- Game info & setup -->
     </div>
-    <label for="username">Name:</label>
-    <input type="text" id="username" value="Guest" />
-    <button id="btnCreate">New Game</button>
-    <button id="btnJoin">Join Game</button>
-    <label for="txtGameId">Game ID:</label>
-    <input type="text" id="txtGameId" />
-    <div class="error"></div>
-    <div id="divPlayers"></div>
-    <div id="divBoard">
-      <h2 class="game-stage"></h2>
-      <h3 class="player-turn"></h3>
-      <div class="table-cards"></div>
-      <h2 class="game-pot"></h2>
-    </div>
-    <div id="hand"></div>
-    <div id="actions" class="invisible">
-      <button id="fold">Fold</button>
-      <button id="check">Check</button>
-      <button id="call">Call</button>
-      <!-- TODO: replace with JS -->
-      <input
-        id="raiseAmount"
-        type="Number"
-        min="100"
-        max="5000"
-        step="50"
-        value="100"
-      />
-      <input
-        type="range"
-        id="raiseRange"
-        min="100"
-        max="5000"
-        step="50"
-        value="100"
-      />
-      <button id="raise">Bet</button>
-    </div>
-    <div id="game-log" class="game-log-txt"></div>
-    <input type="text" id="chat-message" class="game-log-txt-type" />
   </body>
 </html>

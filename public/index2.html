@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="/js/client.mjs" type="module"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Hold'em Game</h1>
+    <div class="hidden">Player ID: <span id="playerId"></span></div>
+    <div>
+      Game ID: <span id="gameId"></span
+      ><button id="btnCopyId" class="hidden">Copy</button>
+    </div>
+    <label for="username">Name:</label>
+    <input type="text" id="username" value="Guest" />
+    <button id="btnCreate">New Game</button>
+    <button id="btnJoin">Join Game</button>
+    <label for="txtGameId">Game ID:</label>
+    <input type="text" id="txtGameId" />
+    <div class="error"></div>
+    <div id="divPlayers"></div>
+    <div id="divBoard">
+      <h2 class="game-stage"></h2>
+      <h3 class="player-turn"></h3>
+      <div class="table-cards"></div>
+      <h2 class="game-pot"></h2>
+    </div>
+    <div id="hand"></div>
+    <div id="actions" class="invisible">
+      <button id="fold">Fold</button>
+      <button id="check">Check</button>
+      <button id="call">Call</button>
+      <!-- TODO: replace with JS -->
+      <input
+        id="raiseAmount"
+        type="Number"
+        min="100"
+        max="5000"
+        step="50"
+        value="100"
+      />
+      <input
+        type="range"
+        id="raiseRange"
+        min="100"
+        max="5000"
+        step="50"
+        value="100"
+      />
+      <button id="raise">Bet</button>
+    </div>
+    <div id="game-log" class="game-log-txt"></div>
+    <input type="text" id="chat-message" class="game-log-txt-type" />
+  </body>
+</html>
