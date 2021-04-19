@@ -1,3 +1,4 @@
+import findOppSelector from "./findOppSelector.mjs";
 import insertCard from "/js/insertCard.mjs";
 
 // In game actions
@@ -51,11 +52,9 @@ const updateGame = (table, playerSeat) => {
 
   table.seats.forEach((seat) => {
     if (!seat.empty && seat.seat !== playerSeat) {
-      let seatAdjust = 7 - playerSeat;
-      let i = seat.seat + seatAdjust;
-      if (i > 10) i -= 10;
-      if (i < 1) i += 10;
-      const opponent = document.querySelector(`.player-${i}`);
+      const cssSelector = findOppSelector(playerSeat, seat.seat);
+
+      const opponent = document.querySelector(cssSelector);
       let oppPos = "";
       let oppFolded = "";
       let oppCards = `<div class="card face-down"></div><div class="card face-down"></div>`;

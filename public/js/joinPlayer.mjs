@@ -1,6 +1,7 @@
 import insertCard from "/js/insertCard.mjs";
 import copyGameID from "/js/copyGameID.mjs";
 import toggleSideBar from "/js/menu.mjs";
+import findOppSelector from "/js/findOppSelector.mjs";
 
 const joinPlayer = (client, clientId, table, gameStarted) => {
   if (client.clientId === clientId) {
@@ -43,12 +44,8 @@ const joinPlayer = (client, clientId, table, gameStarted) => {
         "Waiting for game to start...\n The game Id has been copied to clipboard";
     }
   } else {
-    let seatAdjust = 7 - player.seat;
-    let i = client.seat + seatAdjust;
-    if (i > 10) i -= 10;
-    if (i < 1) i += 10;
-    const opponent = document.querySelector(`.player-${i}`);
-
+    const cssSelector = findOppSelector(player.seat, client.seat);
+    const opponent = document.querySelector(cssSelector);
     opponent.innerHTML = `
         <div class="hand"></div>
         <div class="img-container"></div>
