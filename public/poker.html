@@ -4,8 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="/js/client2.mjs" type="module"></script>
+
     <title>VGDS' Poker World</title>
     <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/menu.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
   </head>
   <body>
@@ -13,6 +15,46 @@
     <div class="grid-container">
       <div class="nav-bar">
         <img class="logo" src="/images/vistin-logo.png" />
+        <div id="overlay">
+          <div class="text">
+            <div>
+              <button id="burger">PLAY NOW</button>
+            </div>
+            <div id="nav">
+              <!-- <div class="game-info"> -->
+              <div class="hidden">Player ID: <span id="playerId"></span></div>
+
+              <div class="game-info-container">
+                <label for="username">ENTER USERNAME HERE:</label>
+                <input type="text" id="username" value="Guest" />
+
+                <div class="info-btns">
+                  <button id="btnCreate">CREATE A NEW GAME</button>
+                </div>
+
+                <span id="gameId"></span>
+
+                <div class="info-btns">
+                  <button id="btnCopyId" class="hidden">COPY GAME ID</button>
+                </div>
+
+                <div>
+                  <label for="txtGameId"
+                    >OR ENTER A GAME ID TO JOIN A GAME IN PROGRESS:
+                  </label>
+
+                  <input type="text" id="txtGameId" />
+                </div>
+
+                <div class="info-btns">
+                  <button id="btnJoin">JOIN GAME</button>
+                </div>
+                <div class="error"></div>
+              </div>
+              <!-- </div> -->
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Player grid -->
@@ -120,39 +162,7 @@
       <div class="footer"><footer>&copy; 2021 Vistin Development</footer></div>
 
       <!-- Game info & setup -->
-
-      <div class="game-info">
-        <div class="hidden">Player ID: <span id="playerId"></span></div>
-
-        <div class="game-info-container">
-          <label for="username">ENTER YOUR USERNAME HERE:</label>
-          <input type="text" id="username" value="Guest" />
-
-          <div>
-            <label for="txtGameId"
-              >ENTER YOUR GAME ID TO JOIN A GAME IN PROGRESS:</label
-            >
-            <input type="text" id="txtGameId" />
-          </div>
-
-          <div class="info-btns">
-            <button id="btnJoin">Join Game</button>
-          </div>
-          <div class="error"></div>
-          <div class="info-btns">
-            <button id="btnCreate">Create New Game</button>
-          </div>
-
-          Game ID: <span id="gameId"></span>
-
-          <div class="info-btns">
-            <button id="btnCopyId" class="hidden">Copy</button>
-          </div>
-
-          <div class="player-list">Player List:</div>
-          <div id="divPlayers"></div>
-        </div>
-      </div>
     </div>
+    <script src="/js/menu.js"></script>
   </body>
 </html>
