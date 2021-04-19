@@ -123,8 +123,8 @@ wsServer.on("request", (req) => {
           table: game.table,
           client: game.clients[clientIndex],
         };
-        if (game.clients.length < 3 && game.table.round === 0)
-          respondAllClients(clients, game, payLoad);
+        // if (game.clients.length < 3 && game.table.round === 0)
+        respondAllClients(clients, game, payLoad);
       }
     }
     /***************** In Game Actions *****************/

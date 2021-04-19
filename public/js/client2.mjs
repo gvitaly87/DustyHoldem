@@ -221,6 +221,7 @@ ws.onmessage = async (message) => {
     table = res.table;
     gameId = res.gameId;
     const { client, gameStarted } = res;
+    console.log(client);
     if (client.clientId === clientId) {
       document.querySelector("#gameId").innerText = gameId;
       document.querySelector("#player .user-name").innerText = client.username;
@@ -345,8 +346,8 @@ const updateGame = (table, playerSeat) => {
       if (seat.seat === table.smallBlind) oppPos += " SB";
       if (seat.seat === table.bigBlind) oppPos += " BB";
       if (seat.seat === table.dealer) oppPos += " DEALER";
-      if (seat.folded) oppFolded += "Folded";
-      if (seat.newToTable) oppPos = " Just joined";
+      if (seat.folded && seat.newToTable) oppFolded += "Folded";
+      if (seat.newToTable) oppPos = "Just joined";
       if (seat.folded || seat.newToTable) oppCards = "";
 
       opponent.innerHTML = `
