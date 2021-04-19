@@ -6,9 +6,10 @@ const toggleSideBar = () => {
   burger.classList.toggle("active");
   nav.classList.toggle("active");
   overlay.classList.toggle("active");
-  const playNow = document.querySelector(".play-now::before");
-  playNow.style.setProperty("--transform-rotate-var", "-45deg");
-  playNow.style.setProperty("--transform-bg-color", "rgba(255, 255, 255, 0)");
+  document.querySelector(".play-now").classList.toggle("show-x");
+  setTimeout(() => {
+    document.querySelector(".play-now").classList.toggle("show-x");
+  }, 400);
 };
 
 burger.addEventListener("click", toggleSideBar);

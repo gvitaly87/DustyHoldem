@@ -101,6 +101,8 @@ a:hover {
 /* play now button styling */
 
 .play-now {
+  --transform-rotate-var: 0deg;
+  --transform-bg-color: rgba(255, 0, 0, 0.5);
   color: #fff;
   font-size: larger;
   font-weight: bold;
@@ -114,8 +116,6 @@ a:hover {
   left: -8rem;
 }
 .play-now::before {
-  --transform-rotate-var: 0deg;
-  --transform-bg-color: rgba(255, 0, 0, 0.5);
   content: "";
   position: absolute;
   top: 0.5rem;
@@ -140,11 +140,11 @@ a:hover {
   border: 1px solid rgba(255, 255, 255, 0.2);
   background-color: rgba(255, 0, 0, 0.5);
 }
-/* .play-now:active::before {
+.play-now.show-x::before {
   transform: rotate(-45deg);
   background-color: rgba(255, 255, 255, 0);
-} */
-.play-now:active::after {
+}
+.play-now.show-x::after {
   transform: rotate(45deg);
   background-color: rgba(255, 255, 255, 0);
 }
