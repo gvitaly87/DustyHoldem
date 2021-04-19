@@ -215,7 +215,7 @@ ws.onmessage = async (message) => {
         document.querySelector(`.player-${i} .hand`).innerHTML = cards;
       }
     });
-    setTimeout(() => updateGame(table, playerSeat), 7500);
+    setTimeout(() => updateGame(table, playerSeat), 7000);
   }
   //A new player joins
   if (res.method === "join") {
