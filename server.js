@@ -101,8 +101,6 @@ wsServer.on("request", (req) => {
         );
         console.log(game.table.seats[seat].clientIndex);
 
-        game.table.gameLog = `${username} joined the game with ${chipCount} chips`;
-
         if (game.hasStarted) {
           game.table.seats[seat].folded = true;
         }
@@ -123,7 +121,6 @@ wsServer.on("request", (req) => {
           table: game.table,
           client: game.clients[clientIndex],
         };
-        // if (game.clients.length < 3 && game.table.round === 0)
         respondAllClients(clients, game, payLoad);
       }
     }

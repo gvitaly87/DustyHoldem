@@ -5,19 +5,18 @@ import insertCard from "/js/insertCard.mjs";
 let clientId = null;
 let gameId = null;
 
-let roundBet = 0;
+// let roundBet = 0;
+// let playerRoundBet = 0;
+// let playerChips = null;
+// let playerSeat = null;
+// let playerHand = [];
+// let game = {};
 
-let playerRoundBet = 0;
-let playerChips = null;
-let playerSeat = null;
-let playerHand = [];
-let game = {};
 let table = {};
+let player = {};
 
 const HOST = location.origin.replace(/^http/, "ws");
 let ws = new WebSocket(HOST);
-
-const divPlayers = document.getElementById("divPlayers");
 
 //wiring events
 const btnJoin = document.getElementById("btnJoin");
@@ -73,12 +72,12 @@ btnCopyId.addEventListener("click", () => {
 /***************Fold****************/
 const btnFold = document.getElementById("fold");
 btnFold.addEventListener("click", () => {
-  if (playerSeat !== table.playerToAct) return;
+  if (player.seat !== table.playerToAct) return;
   const payLoad = {
     method: "fold",
     clientId,
     gameId,
-    playerSeat,
+    playerSeat: player.seat,
   };
   ws.send(JSON.stringify(payLoad));
 });
@@ -88,15 +87,15 @@ const btnCheck = document.getElementById("check");
 btnCheck.addEventListener("click", () => {
   // Check if its the player turn, and that the current player's bet is equivalent to the rounds bet.
   if (
-    playerSeat !== table.playerToAct ||
-    table.seats[playerSeat].bets[table.round] !== table.roundRaise
+    player.seat !== table.playerToAct ||
+    table.seats[player.seat].bets[table.round] !== table.roundRaise
   )
     return;
   const payLoad = {
     method: "check",
     clientId,
     gameId,
-    playerSeat,
+    playerSeat: player.seat,
   };
   ws.send(JSON.stringify(payLoad));
 });
@@ -104,12 +103,12 @@ btnCheck.addEventListener("click", () => {
 /***************Call****************/
 const btnCall = document.getElementById("call");
 btnCall.addEventListener("click", () => {
-  if (playerSeat !== table.playerToAct) return;
+  if (player.seat !== table.playerToAct) return;
   const payLoad = {
     method: "call",
     clientId,
     gameId,
-    playerSeat,
+    playerSeat: player.seat,
   };
   ws.send(JSON.stringify(payLoad));
 });
@@ -131,16 +130,16 @@ btnRaise.addEventListener("click", () => {
   let raiseAmount = parseInt(raiseAmountField.value);
 
   //checks for fake bets
-  if (raiseAmount <= 0 || playerSeat !== table.playerToAct) return;
+  if (raiseAmount <= 0 || player.seat !== table.playerToAct) return;
 
   // You can't bet more chips than you have
-  raiseAmount = raiseAmount < playerChips ? raiseAmount : playerChips;
+  raiseAmount = raiseAmount < player.chipCount ? raiseAmount : player.chipCount;
 
   const payLoad = {
     method: "raise",
     gameId,
     clientId,
-    playerSeat,
+    playerSeat: player.seat,
     raiseAmount,
   };
 
@@ -156,7 +155,7 @@ chatMessage.addEventListener("keyup", (e) => {
       method: "chat",
       gameId,
       clientId,
-      username,
+      username: player.username,
       message: chatMessage.value,
     };
     chatMessage.value = "";
@@ -192,12 +191,12 @@ ws.onmessage = async (message) => {
   //updated game state from server
   if (res.method === "update") {
     table = res.table;
-    playerSeat = res.seat;
+    let playerSeat = res.seat;
     updateGame(table, playerSeat);
   }
   if (res.method === "showdown") {
     table = res.table;
-    playerSeat = res.seat;
+    let playerSeat = res.seat;
     let tableShowDown = res.tableShowDown;
     tableShowDown.forEach((seat) => {
       let description = `<span class="hand-descr">Hand: ${seat.description}</span>`;
@@ -223,6 +222,7 @@ ws.onmessage = async (message) => {
     const { client, gameStarted } = res;
     console.log(client);
     if (client.clientId === clientId) {
+      player = client;
       document.querySelector("#gameId").innerText = gameId;
       document.querySelector("#player .user-name").innerText = client.username;
       document.querySelector("#player .chip-count").innerText =
@@ -276,6 +276,8 @@ ws.onmessage = async (message) => {
         </div>
       `;
     }
+    const gameLog = document.getElementById("game-log");
+    gameLog.innerHTML += `<div class="msg dealer-msg">Dealer: ${client.username} just joined the game with ${client.chipCount} chips</div>`;
   }
 
   // Error message
@@ -285,15 +287,12 @@ ws.onmessage = async (message) => {
   }
   if (res.method === "chat") {
     const gameLog = document.getElementById("game-log");
-    gameLog.innerHTML += `<div class="msg player-msg">${res.username}: ${res.message}</div>`;
+    gameLog.innerHTML += `< class="msg player-msg">${res.username}: ${res.message}</>`;
   }
 };
 
 const updateGame = (table, playerSeat) => {
-  const clientId = document.querySelector("#playerId").innerText;
-  document.querySelector("#gameId").innerText = gameId;
-  roundBet = table.roundRaise;
-  let player = table.seats[playerSeat];
+  player = table.seats[playerSeat];
 
   // Updating the player's Info
   let playerPos = "";
@@ -321,13 +320,13 @@ const updateGame = (table, playerSeat) => {
 
   // Updating sliders
   // If someone made a bet this round
-  if (roundBet) {
-    raiseAmountSlider.min = roundBet - player.bets[table.round];
-    raiseAmountField.min = roundBet - player.bets[table.round];
+  if (table.roundRaise) {
+    raiseAmountSlider.min = table.roundRaise - player.bets[table.round];
+    raiseAmountField.min = table.roundRaise - player.bets[table.round];
     // If the bet is less than the player's chip count
-    if (roundBet - player.bets[table.round] < player.chipCount) {
-      raiseAmountSlider.value = roundBet - player.bets[table.round];
-      raiseAmountField.value = roundBet - player.bets[table.round];
+    if (table.roundRaise - player.bets[table.round] < player.chipCount) {
+      raiseAmountSlider.value = table.roundRaise - player.bets[table.round];
+      raiseAmountField.value = table.roundRaise - player.bets[table.round];
     }
   }
   raiseAmountSlider.max = player.chipCount;
@@ -383,7 +382,7 @@ const updateGame = (table, playerSeat) => {
   const currentTurnPlayerName = table.seats[table.playerToAct].username;
   playerTurn.innerText = `It is ${currentTurnPlayerName}'s Turn`;
 
-  const amountToCall = table.roundRaise - playerRoundBet;
+  const amountToCall = table.roundRaise - player.bets[table.round];
   btnCall.innerText = `Call (${amountToCall})`;
   if (amountToCall === 0) {
     btnCall.classList.add("hidden");
@@ -401,10 +400,10 @@ const updateGame = (table, playerSeat) => {
   if (table.round === 1) {
     const tableCards = document.querySelector(".table-cards");
     tableCards.innerHTML = "";
-    if (!table.seats[playerSeat].newToTable) {
+    if (!player.newToTable) {
       const handPlaceHolder = document.getElementById("hand");
-      const firstCard = insertCard(table.seats[playerSeat].hand[0]);
-      const secondCard = insertCard(table.seats[playerSeat].hand[1]);
+      const firstCard = insertCard(player.hand[0]);
+      const secondCard = insertCard(player.hand[1]);
       handPlaceHolder.innerHTML = firstCard + secondCard;
     }
   }
