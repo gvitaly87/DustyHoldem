@@ -2,20 +2,31 @@ import insertCard from "/js/insertCard.mjs";
 import toggleSideBar from "/js/menu.mjs";
 // import updateGame from "/js/updateGame.mjs";
 
-//HTML elements
+// Client Global Variable
 let clientId = null;
 let gameId = null;
 
 let table = {};
 let player = {};
 
+// Websocket
 const HOST = location.origin.replace(/^http/, "ws");
 let ws = new WebSocket(HOST);
 
-//wiring events
+// New/Join Game
+const btnCreate = document.getElementById("btnCreate");
 const btnJoin = document.getElementById("btnJoin");
 const txtGameId = document.getElementById("txtGameId");
 const btnCopyId = document.getElementById("btnCopyId");
+
+// In game actions
+const btnFold = document.getElementById("fold");
+const btnCheck = document.getElementById("check");
+const btnCall = document.getElementById("call");
+const btnRaise = document.getElementById("raise");
+
+// Chat actions
+const chatMessage = document.getElementById("chat-message");
 
 // Join game listener
 btnJoin.addEventListener("click", () => {
@@ -35,7 +46,6 @@ btnJoin.addEventListener("click", () => {
 });
 
 // Create a new game listener
-const btnCreate = document.getElementById("btnCreate");
 btnCreate.addEventListener("click", () => {
   btnCopyId.classList.remove("hidden");
   let username = document.getElementById("username").value;
@@ -66,7 +76,6 @@ const copyGameId = () => {
 btnCopyId.addEventListener("click", copyGameId);
 
 /***************Fold****************/
-const btnFold = document.getElementById("fold");
 btnFold.addEventListener("click", () => {
   if (player.seat !== table.playerToAct) return;
   const payLoad = {
@@ -79,7 +88,6 @@ btnFold.addEventListener("click", () => {
 });
 
 /***************Check****************/
-const btnCheck = document.getElementById("check");
 btnCheck.addEventListener("click", () => {
   // Check if its the player turn, and that the current player's bet is equivalent to the rounds bet.
   if (
@@ -97,7 +105,6 @@ btnCheck.addEventListener("click", () => {
 });
 
 /***************Call****************/
-const btnCall = document.getElementById("call");
 btnCall.addEventListener("click", () => {
   if (player.seat !== table.playerToAct) return;
   const payLoad = {
@@ -121,7 +128,6 @@ raiseAmountSlider.addEventListener("input", () => {
 });
 
 /***************Raise****************/
-const btnRaise = document.getElementById("raise");
 btnRaise.addEventListener("click", () => {
   let raiseAmount = parseInt(raiseAmountField.value);
 
@@ -143,7 +149,6 @@ btnRaise.addEventListener("click", () => {
 });
 
 /***********Message************/
-const chatMessage = document.getElementById("chat-message");
 chatMessage.addEventListener("keyup", (e) => {
   if (e.key === "Enter") {
     const username = document.getElementById("username").value;
@@ -159,6 +164,7 @@ chatMessage.addEventListener("keyup", (e) => {
   }
 });
 
+/************ WebSocket Response Handler *********/
 ws.onmessage = async (message) => {
   //message.data
   const res = JSON.parse(message.data);
