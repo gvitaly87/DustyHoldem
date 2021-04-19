@@ -1,4 +1,5 @@
 import insertCard from "/js/insertCard.mjs";
+import toggleSideBar from "/js/menu.mjs";
 // import updateGame from "/js/updateGame.mjs";
 
 //HTML elements
@@ -220,8 +221,10 @@ ws.onmessage = async (message) => {
     table = res.table;
     gameId = res.gameId;
     const { client, gameStarted } = res;
-    console.log(client);
     if (client.clientId === clientId) {
+      // Close the menu on a successful join
+      toggleSideBar();
+
       player = client;
       document.querySelector("#gameId").innerText = gameId;
       document.querySelector("#player .user-name").innerText = client.username;
