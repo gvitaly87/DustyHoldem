@@ -99,7 +99,6 @@ wsServer.on("request", (req) => {
           chipCount,
           clientIndex
         );
-        console.log(game.table.seats[seat].clientIndex);
 
         if (game.hasStarted) {
           game.table.seats[seat].folded = true;
@@ -129,38 +128,49 @@ wsServer.on("request", (req) => {
     if (res.method === "fold") {
       const { clientId, gameId, playerSeat } = res;
       const game = games[gameId];
-      // TODO: check if its the actual client
-      game.table.seats[playerSeat].folded = true;
-      console.log(game.table.seats[playerSeat].username, " folds");
-      game.table.gameLog = `${game.table.seats[playerSeat].username} folds`;
+      const table = game.table;
+      const player = table.seats[playerSeat];
+      const client = game.clients[player.clientIndex];
 
-      let tableObj = setQue(game.table, game.deck, true);
-      game.table = tableObj.table;
-      game.deck = tableObj.deck;
+      // Compare the playerId with the information stored in clients(which is not passed to the other players)
+      if (clientId === client.clientId) {
+        player.folded = true;
+        table.gameLog = `${player.username} folds`;
 
-      tableObj = updateRound(game.table, playerSeat, game.deck);
-      game.table = tableObj.table;
-      game.deck = tableObj.deck;
-      updateGameState();
+        let updatedRound = setQue(table, game.deck, true);
+        updatedRound = updateRound(
+          updatedRound.table,
+          playerSeat,
+          updatedRound.deck
+        );
+
+        game.table = updatedRound.table;
+        game.deck = updatedRound.deck;
+        updateGameState();
+      }
     }
 
     /*************** Check ****************/
     if (res.method === "check") {
       const { clientId, gameId, playerSeat } = res;
       const game = games[gameId];
+      const table = game.table;
+      const player = table.seats[playerSeat];
+      const client = game.clients[player.clientIndex];
+
       if (
-        game.table.seats[playerSeat].bets[game.table.round] ===
-        game.table.roundRaise
+        client.clientId === clientId &&
+        player.bets[table.round] === table.roundRaise
       ) {
-        game.table.seats[playerSeat].actionRequired = false;
-        game.table.gameLog = `${game.table.seats[playerSeat].username} checks`;
-        let tableObj = updateRound(game.table, playerSeat, game.deck);
-        game.table = tableObj.table;
-        game.deck = tableObj.deck;
-        const isShowDown = tableObj.isShowDown;
-        const tableShowDown = tableObj.tableShowDown;
-        if (isShowDown) {
-          showDownGameState(tableShowDown);
+        player.actionRequired = false;
+        table.gameLog = `${player.username} checks`;
+
+        const updatedRound = updateRound(table, playerSeat, game.deck);
+        game.table = updatedRound.table;
+        game.deck = updatedRound.deck;
+
+        if (updatedRound.isShowDown) {
+          showDownGameState(updatedRound.tableShowDown);
         } else {
           updateGameState();
         }
@@ -170,30 +180,31 @@ wsServer.on("request", (req) => {
     if (res.method === "call") {
       const { clientId, gameId, playerSeat } = res;
       const game = games[gameId];
+      const table = game.table;
+      const player = table.seats[playerSeat];
+      const client = game.clients[player.clientIndex];
+
       // Check if the player's seat hasn't been tempered with
-      if (game.table.seats[playerSeat].clientId === clientId) {
-        let amountToCall =
-          game.table.roundRaise -
-          game.table.seats[playerSeat].bets[game.table.round];
-        game.table.gameLog = `${game.table.seats[playerSeat].username} calls ${amountToCall}`;
-        if (game.table.seats[playerSeat].chipCount < amountToCall) {
-          amountToCall = game.table.seats[playerSeat].chipCount;
-          game.table.gameLog = `${game.table.seats[playerSeat].username} calls ${amountToCall} and is all in`;
+      if (client.clientId === clientId) {
+        let amountToCall = table.roundRaise - player.bets[table.round];
+        table.gameLog = `${player.username} calls ${amountToCall}`;
+        if (player.chipCount < amountToCall) {
+          amountToCall = player.chipCount;
+          player.allIn = true;
+          table.gameLog = `${player.username} calls ${amountToCall} and is all in`;
         }
-        game.table.seats[playerSeat].chipCount -= amountToCall;
-        game.table.seats[playerSeat].bets[game.table.round] += amountToCall;
-        game.table.seats[playerSeat].actionRequired = false;
-        game.table.pot += amountToCall;
-        // game.table.playerToAct = nextToAct(game.table);
-        let { table, deck, tableShowDown, isShowDown } = updateRound(
-          game.table,
-          playerSeat,
-          game.deck
-        );
-        game.table = table;
-        game.deck = deck;
-        if (isShowDown) {
-          showDownGameState(tableShowDown);
+        player.chipCount -= amountToCall;
+        client.chipCount = player.chipCount;
+        player.bets[game.table.round] += amountToCall;
+        player.actionRequired = false;
+        table.pot += amountToCall;
+
+        let updatedRound = updateRound(table, playerSeat, game.deck);
+        game.table = updatedRound.table;
+        game.deck = updatedRound.deck;
+
+        if (updatedRound.isShowDown) {
+          showDownGameState(updatedRound.tableShowDown);
         } else {
           updateGameState();
         }
@@ -202,20 +213,29 @@ wsServer.on("request", (req) => {
     /*************** Raise ****************/
     if (res.method === "raise") {
       const { clientId, gameId, playerSeat, raiseAmount } = res;
-      const table = games[gameId].table;
+      const game = games[gameId];
+      const table = game.table;
       const player = table.seats[playerSeat];
+      const client = game.clients[player.clientIndex];
 
-      if (player.clientId === clientId) {
+      if (
+        client.clientId === clientId &&
+        raiseAmount + player.bets[table.round] >= table.roundRaise
+      ) {
+        if (raiseAmount > player.chipCount) {
+          raiseAmount = player.chipCount;
+          player.allIn = true;
+          table.gameLog += " and is all in";
+        }
         player.chipCount -= raiseAmount;
+        client.chipCount = player.chipCount;
         player.bets[table.round] += raiseAmount;
         table.gameLog = `${player.username} bets ${raiseAmount}`;
-        if (player.chipCount === 0) table.gameLog += " and is all in";
-        table.roundRaise += raiseAmount;
+        table.roundRaise = player.bets[table.round];
         table.pot += raiseAmount;
         table.playerToAct = nextToAct(table);
         player.actionRequired = false;
         table.seatsQue.forEach((que) => {
-          console.log(que, playerSeat);
           if (que !== playerSeat) table.seats[que].actionRequired = true;
         });
       }
