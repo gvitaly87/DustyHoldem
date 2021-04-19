@@ -34,6 +34,7 @@ const games = {};
 const wsServer = new websocketServer({
   httpServer: httpServer,
 });
+
 wsServer.on("request", (req) => {
   const connection = req.accept(null, req.origin);
   connection.on("open", () => console.log("Connection opened!"));
@@ -43,7 +44,7 @@ wsServer.on("request", (req) => {
     // TODO: security for malicious message
     const res = JSON.parse(message.utf8Data);
 
-    //a user want to create a new game
+    /***************** Create a new Game *****************/
     if (res.method === "create") {
       const clientId = res.clientId;
       const gameId = getUniqueID();
@@ -59,7 +60,7 @@ wsServer.on("request", (req) => {
       con.send(JSON.stringify(payLoad));
     }
 
-    //a client want to join an existing game
+    /***************** Join an existing Game *****************/
     if (res.method === "join") {
       const { clientId, gameId, username } = res;
       const chipCount = res.chipCount || 5000;
@@ -90,13 +91,13 @@ wsServer.on("request", (req) => {
           seat,
           hand: [],
         });
-
+        const clientIndex = game.clients.length - 1;
         game.table.seats[seat] = new Player(
           clientId,
           username,
           seat,
           chipCount,
-          game.clients.length - 1
+          clientIndex
         );
         console.log(game.table.seats[seat].clientIndex);
 
@@ -117,13 +118,17 @@ wsServer.on("request", (req) => {
 
         const payLoad = {
           method: "join",
-          game: game,
+          gameId: game.id,
+          gameStarted: game.hasStarted,
+          table: game.table,
+          client: game.clients[clientIndex],
         };
         if (game.clients.length < 3 && game.table.round === 0)
           respondAllClients(clients, game, payLoad);
       }
     }
-    /***************Fold****************/
+    /***************** In Game Actions *****************/
+    /*************** Fold ****************/
     if (res.method === "fold") {
       const { clientId, gameId, playerSeat } = res;
       const game = games[gameId];
@@ -142,7 +147,7 @@ wsServer.on("request", (req) => {
       updateGameState();
     }
 
-    /***************Check****************/
+    /*************** Check ****************/
     if (res.method === "check") {
       const { clientId, gameId, playerSeat } = res;
       const game = games[gameId];
@@ -164,7 +169,7 @@ wsServer.on("request", (req) => {
         }
       }
     }
-    /***************Call*****************/
+    /*************** Call *****************/
     if (res.method === "call") {
       const { clientId, gameId, playerSeat } = res;
       const game = games[gameId];
@@ -197,7 +202,7 @@ wsServer.on("request", (req) => {
         }
       }
     }
-    /***************Raise****************/
+    /*************** Raise ****************/
     if (res.method === "raise") {
       const { clientId, gameId, playerSeat, raiseAmount } = res;
       const game = games[gameId];
@@ -219,7 +224,7 @@ wsServer.on("request", (req) => {
       }
       updateGameState();
     }
-    /*****************Chat Message****************/
+    /***************** Chat Message ****************/
     if (res.method === "chat") {
       const { clientId, gameId, username, message } = res;
 

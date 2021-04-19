@@ -218,51 +218,65 @@ ws.onmessage = async (message) => {
   }
   //A new player joins
   if (res.method === "join") {
-    game = res.game;
-    gameId = res.game.id;
-    document.querySelector("#gameId").innerText = gameId;
-    const clientId = document.querySelector("#playerId").innerText;
+    table = res.table;
+    gameId = res.gameId;
+    const { client, gameStarted } = res;
+    if (client.clientId === clientId) {
+      document.querySelector("#gameId").innerText = gameId;
+      document.querySelector("#player .user-name").innerText = client.username;
+      document.querySelector("#player .chip-count").innerText =
+        client.chipCount;
+      document.querySelector("#player .position").innerText =
+        "Waiting to join...";
+      const gameStage = document.querySelector(".game-stage");
+      if (gameStarted) {
+        gameStage.innerText = {
+          0: "Dealing Cards...",
+          1: "Pre-flop",
+          2: "Flop",
+          3: "Turn",
+          4: "River",
+          5: "Showdown",
+        }[table.round];
+        const gamePot = document.querySelector(".game-pot");
+        gamePot.innerText = table.pot;
 
-    while (divPlayers.firstChild) divPlayers.removeChild(divPlayers.firstChild);
+        const playerTurn = document.querySelector(".player-turn");
+        const currentTurnPlayerName = table.seats[table.playerToAct].username;
+        playerTurn.innerText = `It is ${currentTurnPlayerName}'s Turn`;
 
-    game.clients.forEach((client) => {
-      const player = document.createElement("div");
-      // Distinguishes between player and other users
-      if (client.clientId === clientId) {
-        player.classList.add("player");
+        if (table.round >= 1) {
+          const tableCards = document.querySelector(".table-cards");
+          let cardsHTML = "";
+          table.cards.forEach((card) => {
+            cardsHTML += insertCard(card);
+          });
+          tableCards.innerHTML = cardsHTML;
+        }
       } else {
-        player.classList.add("opponent");
+        gameStage.innerText = "Waiting for game to start...";
       }
+    } else {
+      let seatAdjust = 7 - playerSeat;
+      let i = client.seat + seatAdjust;
+      if (i > 10) i -= 10;
+      if (i < 1) i += 10;
+      const opponent = document.querySelector(`.player-${i}`);
 
-      player.innerText = "Name:";
-
-      const username = document.createElement("span");
-      username.classList.add("username");
-      username.innerText = client.username;
-      player.appendChild(username);
-
-      player.innerHTML += " Chips:";
-
-      const chipCount = document.createElement("span");
-      chipCount.classList.add("chip-count");
-      chipCount.innerText = client.chipCount;
-      player.appendChild(chipCount);
-
-      divPlayers.appendChild(player);
-    });
-
-    const gameStage = document.querySelector(".game-stage");
-    gameStage.innerText = {
-      0: "Dealing Cards...",
-      1: "Pre-flop",
-      2: "Flop",
-      3: "Turn",
-      4: "River",
-      5: "Showdown",
-    }[table.round];
-    const gamePot = document.querySelector(".game-pot");
-    gamePot.innerText = table.pot;
+      opponent.innerHTML = `
+        <div class="hand"></div>
+        <div class="img-container"></div>
+        <div class="user-info">
+          <span class="hand-descr hidden"></span>
+          <span class="user-name">${client.username}</span>
+          <div>Chips: <span class="chip-count">${client.chipCount}</span></div>
+          <span class="position">Just Joined</span>
+          <span class="fold"></span>
+        </div>
+      `;
+    }
   }
+
   // Error message
   if (res.method === "error") {
     const errorContainer = document.querySelector(".error");
