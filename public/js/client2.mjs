@@ -55,7 +55,7 @@ btnCreate.addEventListener("click", () => {
   ws.send(JSON.stringify(payLoad));
 });
 /************Copy Game ID************/
-btnCopyId.addEventListener("click", () => {
+const copyGameId = () => {
   const textToCopy = document.getElementById("gameId").innerText;
 
   const myTemporaryInputElement = document.createElement("input");
@@ -68,7 +68,9 @@ btnCopyId.addEventListener("click", () => {
   document.execCommand("Copy");
 
   document.body.removeChild(myTemporaryInputElement);
-});
+};
+
+btnCopyId.addEventListener("click", copyGameId);
 
 /***************Fold****************/
 const btnFold = document.getElementById("fold");
@@ -224,6 +226,7 @@ ws.onmessage = async (message) => {
     if (client.clientId === clientId) {
       // Close the menu on a successful join
       toggleSideBar();
+      copyGameId();
 
       player = client;
       document.querySelector("#gameId").innerText = gameId;
@@ -258,7 +261,8 @@ ws.onmessage = async (message) => {
           tableCards.innerHTML = cardsHTML;
         }
       } else {
-        gameStage.innerText = "Waiting for game to start...";
+        gameStage.innerText =
+          "Waiting for game to start...\n The game Id has been copied to clipboard";
       }
     } else {
       let seatAdjust = 7 - player.seat;
