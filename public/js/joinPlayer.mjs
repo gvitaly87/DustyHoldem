@@ -2,7 +2,7 @@ import insertCard from "/js/insertCard.mjs";
 import copyGameID from "/js/copyGameID.mjs";
 import toggleSideBar from "/js/menu.mjs";
 
-const playerJoined = (client, clientId, table, gameStarted) => {
+const joinPlayer = (client, clientId, table, gameStarted) => {
   if (client.clientId === clientId) {
     // Close the menu on a successful join
     toggleSideBar();
@@ -65,4 +65,4 @@ const playerJoined = (client, clientId, table, gameStarted) => {
   gameLog.innerHTML += `<div class="msg dealer-msg">Dealer: ${client.username} just joined the game with ${client.chipCount} chips</div>`;
 };
 
-export default playerJoined;
+export default joinPlayer;

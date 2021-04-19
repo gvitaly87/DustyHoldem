@@ -1,7 +1,7 @@
 import copyGameID from "/js/copyGameID.mjs";
 import updateGame from "/js/updateGame.mjs";
 import showDown from "/js/showDown.mjs";
-import playerJoined from "./playerJoined.mjs";
+import joinPlayer from "./joinPlayer.mjs";
 
 // Client Global Variable
 let clientId = null;
@@ -196,7 +196,7 @@ ws.onmessage = async (message) => {
     gameId = res.gameId;
     const { client, gameStarted } = res;
     if (client.clientId === clientId) player = client;
-    playerJoined(client, clientId, table, gameStarted);
+    joinPlayer(client, clientId, table, gameStarted);
   }
 
   // Error message
