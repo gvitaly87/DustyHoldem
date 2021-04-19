@@ -6,13 +6,6 @@ import toggleSideBar from "/js/menu.mjs";
 let clientId = null;
 let gameId = null;
 
-// let roundBet = 0;
-// let playerRoundBet = 0;
-// let playerChips = null;
-// let playerSeat = null;
-// let playerHand = [];
-// let game = {};
-
 let table = {};
 let player = {};
 
@@ -311,6 +304,8 @@ const updateGame = (table, playerSeat) => {
   if (player.newToTable) playerPos = " Just joined";
 
   document.querySelector("#player .user-name").innerText = player.username;
+  document.querySelector("#player .round-bet").innerText =
+    player.bets[table.round];
   document.querySelector("#player .chip-count").innerText = player.chipCount;
   document.querySelector("#player .position").innerText = playerPos;
   document.querySelector("#player .fold").innerText = playerFolded;
@@ -357,6 +352,7 @@ const updateGame = (table, playerSeat) => {
       if (seat.folded || seat.newToTable) oppCards = "";
 
       opponent.innerHTML = `
+        <div class="round-bet">${seat.bets[table.round]}</div>
         <div class="hand">
           ${oppCards}
         </div>
