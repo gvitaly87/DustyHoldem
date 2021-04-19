@@ -238,7 +238,7 @@ ws.onmessage = async (message) => {
           4: "River",
           5: "Showdown",
         }[table.round];
-        const gamePot = document.querySelector(".game-pot");
+        const gamePot = document.querySelector(".pot-value");
         gamePot.innerText = table.pot;
 
         const playerTurn = document.querySelector(".player-turn");
@@ -379,7 +379,7 @@ const updateGame = (table, playerSeat) => {
     4: "River",
     5: "Showdown",
   }[table.round];
-  const gamePot = document.querySelector(".game-pot");
+  const gamePot = document.querySelector(".pot-value");
   gamePot.innerText = table.pot;
   const playerTurn = document.querySelector(".player-turn");
   const currentTurnPlayerName = table.seats[table.playerToAct].username;
