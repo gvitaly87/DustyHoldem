@@ -293,7 +293,10 @@ const updateGame = (table, playerSeat) => {
   document.querySelector("#player .chip-count").innerText = player.chipCount;
   document.querySelector("#player .position").innerText = playerPos;
   document.querySelector("#player .fold").innerText = playerFolded;
-  // const decrContainer = document.querySelector('#player .hand-descr');
+  const decrContainer = document.querySelector("#player .hand-descr");
+  decrContainer.innerHTML = "";
+  // descrContainer.classList.add("hidden");
+
   const actionControls = document.getElementById("actions");
   if (playerSeat === table.playerToAct) {
     actionControls.classList.remove("invisible");

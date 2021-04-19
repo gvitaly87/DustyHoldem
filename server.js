@@ -139,6 +139,10 @@ wsServer.on("request", (req) => {
 
         game.table.gameLog = `${username} joined the game with ${chipCount} chips`;
 
+        if (game.hasStarted) {
+          game.table.seats[seat].folded = true;
+        }
+
         //start the game
         if (game.clients.length >= 3 && !game.hasStarted) {
           let { table, deck } = setQue(game.table, game.deck);
@@ -147,10 +151,6 @@ wsServer.on("request", (req) => {
           game.deck = deck;
           updateGameState();
         }
-
-        // if (game.hasStarted) {
-        //   game.table.seats[seat].folded = true;
-        // }
 
         const payLoad = {
           method: "join",
