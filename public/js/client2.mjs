@@ -261,7 +261,7 @@ ws.onmessage = async (message) => {
         gameStage.innerText = "Waiting for game to start...";
       }
     } else {
-      let seatAdjust = 7 - playerSeat;
+      let seatAdjust = 7 - player.seat;
       let i = client.seat + seatAdjust;
       if (i > 10) i -= 10;
       if (i < 1) i += 10;
