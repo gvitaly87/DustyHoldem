@@ -287,7 +287,7 @@ ws.onmessage = async (message) => {
   }
   if (res.method === "chat") {
     const gameLog = document.getElementById("game-log");
-    gameLog.innerHTML += `< class="msg player-msg">${res.username}: ${res.message}</>`;
+    gameLog.innerHTML += `<div class="msg player-msg">${res.username}: ${res.message}</div>`;
   }
 };
 
