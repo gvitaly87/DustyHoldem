@@ -322,7 +322,7 @@ const updateGame = (table, playerSeat) => {
 
   // Updating sliders
   // If someone made a bet this round
-  if (table.roundRaise) {
+  if (table.roundRaise >= 100) {
     raiseAmountSlider.min = table.roundRaise - player.bets[table.round];
     raiseAmountField.min = table.roundRaise - player.bets[table.round];
     // If the bet is less than the player's chip count

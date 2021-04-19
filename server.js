@@ -202,21 +202,21 @@ wsServer.on("request", (req) => {
     /*************** Raise ****************/
     if (res.method === "raise") {
       const { clientId, gameId, playerSeat, raiseAmount } = res;
-      const game = games[gameId];
+      const table = games[gameId].table;
+      const player = table.seats[playerSeat];
 
-      if (game.table.seats[playerSeat].clientId === clientId) {
-        game.table.seats[playerSeat].chipCount -= raiseAmount;
-        game.table.seats[playerSeat].bets[game.table.round] += raiseAmount;
-        game.table.gameLog = `${game.table.seats[playerSeat].username} bets ${raiseAmount}`;
-        if (game.table.seats[playerSeat].chipCount === 0)
-          game.table.gameLog += " and is all in";
-        game.table.roundRaise += raiseAmount;
-        game.table.pot += raiseAmount;
-        game.table.playerToAct = nextToAct(game.table);
-        game.table.seats[playerSeat].actionRequired = false;
-        game.table.seatsQue.forEach((que) => {
+      if (player.clientId === clientId) {
+        player.chipCount -= raiseAmount;
+        player.bets[table.round] += raiseAmount;
+        table.gameLog = `${player.username} bets ${raiseAmount}`;
+        if (player.chipCount === 0) table.gameLog += " and is all in";
+        table.roundRaise += raiseAmount;
+        table.pot += raiseAmount;
+        table.playerToAct = nextToAct(table);
+        player.actionRequired = false;
+        table.seatsQue.forEach((que) => {
           console.log(que, playerSeat);
-          if (que !== playerSeat) game.table.seats[que].actionRequired = true;
+          if (que !== playerSeat) table.seats[que].actionRequired = true;
         });
       }
       updateGameState();
