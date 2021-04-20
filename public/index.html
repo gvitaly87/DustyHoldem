@@ -15,6 +15,7 @@
     <div class="grid-container">
       <div class="nav-bar">
         <img class="logo" src="/images/vistin-logo.png" />
+
         <!-- Play Now Dropdown Menu -->
         <div id="overlay">
           <div class="text">
@@ -55,7 +56,6 @@
                 </div>
                 <div class="error"></div>
               </div>
-              <!-- </div> -->
             </div>
           </div>
         </div>
@@ -85,14 +85,16 @@
 
       <div id="player" class="player player-7">
         <div class="round-bet"></div>
-        <span id="hand">
+        <div id="hand">
           <img src="/images/icons/test.png" class="p-icons p7" />
-        </span>
+        </div>
         <span class="user-info hidden">
           <span class="hand-descr hidden"></span>
           <span class="user-name"></span>
-          <div>Chips: <span class="chip-count"></span></div>
-          <span class="position"> </span>
+          <div class="chip-count-container">
+            Chips: <span class="chip-count"></span>
+          </div>
+          <div class="position"></div>
           <span class="fold"></span>
         </span>
       </div>
