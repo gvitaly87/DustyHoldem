@@ -8,7 +8,7 @@ const joinPlayer = (client, clientId, table, gameStarted) => {
     // Close the menu on a successful join
     toggleSideBar();
     copyGameID();
-
+    document.querySelector("#player .user-info").classList.remove("hidden");
     document.querySelector("#gameId").innerText = gameId;
     document.querySelector("#player .user-name").innerText = client.username;
     document.querySelector("#player .chip-count").innerText = client.chipCount;
@@ -40,8 +40,7 @@ const joinPlayer = (client, clientId, table, gameStarted) => {
         tableCards.innerHTML = cardsHTML;
       }
     } else {
-      gameStage.innerText =
-        "Waiting for game to start...\n The game Id has been copied to clipboard";
+      gameStage.innerHTML = `<div class="wait-msg">Waiting for game to start...</div><div class="copy-msg">The game ID has been copied to clipboard</div>`;
     }
   } else {
     const cssSelector = findOppSelector(player.seat, client.seat);
