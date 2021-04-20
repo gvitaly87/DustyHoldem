@@ -50,6 +50,7 @@ body,
 
 .player-2 {
   grid-area: 3 / 5 / 4 / 6;
+  display: flex;
 }
 
 .player-1 {
@@ -112,7 +113,7 @@ body,
   grid-area: table-cards;
 }
 
-.game-pot {
+/* .game-pot {
   grid-area: game-pot;
   font-size: clamp(1rem, 2vw, 2rem);
 }
@@ -123,7 +124,8 @@ body,
 
 .player-turn {
   grid-area: player-turn;
-}
+  font-size: clamp(1rem, 2vw, 2rem);
+} */
 
 .action-bar {
   display: grid;
@@ -375,20 +377,6 @@ body,
   box-shadow: 0 4px 15px 0 #00d9ff;
 }
 
-/* DELETE BELOW */
-.grid-container * {
-  /* border: 1px solid white; */
-  position: relative;
-}
-
-/* .grid-container *:after {
-  content:attr(class);
-  position: absolute;
-  top: 0;
-  left: 0;
-  color: gold;
-} */
-
 .deck {
   height: 100%;
   width: 100%;
@@ -475,6 +463,8 @@ body,
 }
 /*********** Vitaly's Rules End**************/
 
+/* Player adjustments */
+
 .player-1,
 .player-2,
 .player-3,
@@ -483,6 +473,7 @@ body,
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: nowrap;
 }
 
 .player-4,
@@ -490,6 +481,7 @@ body,
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  flex-wrap: nowrap;
 }
 
 .player-9,
@@ -497,6 +489,14 @@ body,
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  flex-wrap: nowrap;
+}
+
+.player-7 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
 }
 
 #hand,
@@ -618,4 +618,18 @@ img {
     align-items: flex-start;
     justify-content: center;
   }
+} */
+
+/* DELETE BELOW */
+.grid-container * {
+  /* border: 1px solid white; */
+  position: relative;
+}
+
+/* .grid-container *:after {
+  content: attr(class);
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: gold;
 } */

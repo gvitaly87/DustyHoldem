@@ -50,41 +50,11 @@
   transform: translateX(0);
 }
 
-/* ul {
-  list-style: none;
-  text-align: center;
-}
-
-li {
-  text-transform: uppercase;
-  font-size: 2rem;
-  letter-spacing: 3px;
-  line-height: 1.6;
-} */
-
 .text {
   width: 80%;
   text-align: center;
   line-height: 1.8;
   letter-spacing: 3px;
-}
-
-/* h1 {
-  margin-bottom: 3rem;
-}
-
-a {
-  color: #fafafa;
-  transition: 0.3s linear;
-}
-
-i {
-  margin: 2rem;
-} */
-
-a:hover {
-  /* color: goldenrod; */
-  outline: none;
 }
 
 /* play now button styling */
@@ -104,6 +74,7 @@ a:hover {
   top: 0.5rem;
   left: -8rem;
 }
+
 .play-now::before {
   content: "";
   position: absolute;
@@ -117,6 +88,7 @@ a:hover {
   border: 1px solid rgba(255, 255, 255, 0.2);
   background-color: rgba(255, 0, 0, 0.5);
 }
+
 .play-now::after {
   content: "";
   position: absolute;
@@ -130,20 +102,26 @@ a:hover {
   border: 1px solid rgba(255, 255, 255, 0.2);
   background-color: rgba(255, 0, 0, 0.5);
 }
+
 .play-now:hover::before {
   box-shadow: 0 5px 15px rgba(255, 255, 255, 0.747);
 }
+
 .play-now:hover::before {
   box-shadow: 0 5px 15px rgba(255, 255, 255, 0.747);
 }
+
 .play-now.show-x::before {
   transform: rotate(-180deg);
   background-color: rgba(255, 255, 255, 0);
 }
+
 .play-now.show-x::after {
   transform: rotate(180deg);
   background-color: rgba(255, 255, 255, 0);
 }
+
+/* hamburger menu button styling */
 
 #btnJoin,
 #btnCreate,
@@ -176,13 +154,7 @@ a:hover {
   margin-top: 0.5rem;
   margin-bottom: 1rem;
 }
+
 #txtGameId {
   width: 94%;
 }
-
-/* @media screen and (max-width: 600px) {
-  #burger {
-    top: 90%;
-    right: 12%;
-  }
-} */
