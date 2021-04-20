@@ -25,6 +25,7 @@ const btnFold = document.getElementById("fold");
 const btnCheck = document.getElementById("check");
 const btnCall = document.getElementById("call");
 const btnRaise = document.getElementById("raise");
+const btnAllIn = document.getElementById("all-in");
 const raiseAmountField = document.getElementById("raiseAmount");
 const raiseAmountSlider = document.getElementById("raiseRange");
 
@@ -135,6 +136,24 @@ btnRaise.addEventListener("click", () => {
   ws.send(JSON.stringify(payLoad));
 });
 
+btnAllIn.addEventListener("click", () => {
+  const raiseAmount = player.chipCount;
+
+  //checks for fake bets
+  if (raiseAmount <= 0 || player.seat !== table.playerToAct) return;
+
+  const payLoad = {
+    method: "raise",
+    gameId,
+    clientId,
+    playerSeat: player.seat,
+    raiseAmount,
+  };
+
+  if (table.roundRaise > raiseAmount) payLoad.method = "call";
+
+  ws.send(JSON.stringify(payLoad));
+});
 /***********Message************/
 chatMessage.addEventListener("keyup", (e) => {
   if (e.key === "Enter") {

@@ -218,7 +218,8 @@ wsServer.on("request", (req) => {
     }
     /*************** Raise ****************/
     if (res.method === "raise") {
-      const { clientId, gameId, playerSeat, raiseAmount } = res;
+      const { clientId, gameId, playerSeat } = res;
+      let raiseAmount = res.raiseAmount;
       const game = games[gameId];
       const table = game.table;
       const player = table.seats[playerSeat];
