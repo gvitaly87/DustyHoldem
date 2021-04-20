@@ -180,14 +180,14 @@ ws.onmessage = async (message) => {
   //updated game state from server
   if (res.method === "update") {
     table = res.table;
-    let playerSeat = res.seat;
+    const playerSeat = res.seat;
     updateGame(table, playerSeat);
   }
   if (res.method === "showdown") {
     table = res.table;
-    let playerSeat = res.seat;
-    let tableShowDown = res.tableShowDown;
-    showDown(tableShowDown, playerSeat);
+    const playerSeat = res.seat;
+    const { tableShowDown, winnerMessage } = res;
+    showDown(tableShowDown, playerSeat, winnerMessage);
     setTimeout(() => updateGame(table, playerSeat), 7000);
   }
   //A new player joins

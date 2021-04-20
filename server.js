@@ -170,7 +170,10 @@ wsServer.on("request", (req) => {
         game.deck = updatedRound.deck;
 
         if (updatedRound.isShowDown) {
-          showDownGameState(updatedRound.tableShowDown);
+          showDownGameState(
+            updatedRound.tableShowDown,
+            updatedRound.winnerMessage
+          );
         } else {
           updateGameState();
         }
@@ -204,7 +207,10 @@ wsServer.on("request", (req) => {
         game.deck = updatedRound.deck;
 
         if (updatedRound.isShowDown) {
-          showDownGameState(updatedRound.tableShowDown);
+          showDownGameState(
+            updatedRound.tableShowDown,
+            updatedRound.winnerMessage
+          );
         } else {
           updateGameState();
         }
@@ -290,12 +296,13 @@ function updateGameState() {
   }
 }
 
-function showDownGameState(tableShowDown) {
+function showDownGameState(tableShowDown, winnerMessage) {
   for (const g of Object.keys(games)) {
     const game = games[g];
     const payLoad = {
       method: "showdown",
       tableShowDown,
+      winnerMessage,
       table: game.table,
     };
     respondAllClients(clients, game, payLoad);

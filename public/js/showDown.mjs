@@ -1,20 +1,19 @@
 import insertCard from "/js/insertCard.mjs";
+import findOppSelector from "./findOppSelector.mjs";
 
-const showDown = (table, playerSeat) => {
+const showDown = (table, playerSeat, winnerMessage) => {
+  document.querySelector(".game-stage").innerHTML = winnerMessage;
   table.forEach((seat) => {
     let description = `<span class="hand-descr">Hand: ${seat.description}</span>`;
-    let seatAdjust = 7 - playerSeat;
-    let i = seat.seat + seatAdjust;
-    if (i > 10) i -= 10;
-    if (i < 1) i += 10;
+    const cssSelector = findOppSelector(playerSeat, seat.seat);
 
-    const decrContainer = document.querySelector(`.player-${i} .hand-descr`);
+    const decrContainer = document.querySelector(`${cssSelector} .hand-descr`);
     decrContainer.classList.remove("hidden");
     decrContainer.innerHTML = description;
 
     if (seat.seat !== playerSeat) {
       let cards = insertCard(seat.card1) + insertCard(seat.card2);
-      document.querySelector(`.player-${i} .hand`).innerHTML = cards;
+      document.querySelector(`${cssSelector} .hand`).innerHTML = cards;
     }
   });
 };
