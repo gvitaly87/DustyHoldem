@@ -13,7 +13,9 @@ const showDown = (table, playerSeat, winnerMessage) => {
 
     if (seat.seat !== playerSeat) {
       let cards = insertCard(seat.card1) + insertCard(seat.card2);
-      document.querySelector(`${cssSelector} .hand`).innerHTML = cards;
+      const handContainer = document.querySelector(`${cssSelector} .hand`);
+      handContainer.classList.add("opponent");
+      handContainer.innerHTML = cards;
     }
   });
 };
