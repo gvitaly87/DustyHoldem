@@ -3,7 +3,7 @@ import copyGameID from "/js/copyGameID.mjs";
 import toggleSideBar from "/js/menu.mjs";
 import findOppSelector from "/js/findOppSelector.mjs";
 
-const joinPlayer = (client, clientId, table, gameStarted) => {
+const joinPlayer = (client, clientId, player, table, gameStarted) => {
   if (client.clientId === clientId) {
     // Close the menu on a successful join
     toggleSideBar();
@@ -43,8 +43,11 @@ const joinPlayer = (client, clientId, table, gameStarted) => {
       gameStage.innerHTML = `<div class="wait-msg">Waiting for game to start...</div><div class="copy-msg">The game ID has been copied to clipboard</div>`;
     }
   } else {
+    console.log(player.seat, client.seat);
     const cssSelector = findOppSelector(player.seat, client.seat);
     const opponent = document.querySelector(cssSelector);
+    console.log(cssSelector, opponent);
+
     opponent.innerHTML = `
         <div class="hand"></div>
         <div class="img-container"></div>

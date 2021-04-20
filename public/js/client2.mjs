@@ -215,7 +215,7 @@ ws.onmessage = async (message) => {
     gameId = res.gameId;
     const { client, gameStarted } = res;
     if (client.clientId === clientId) player = client;
-    joinPlayer(client, clientId, table, gameStarted);
+    joinPlayer(client, clientId, player, table, gameStarted);
   }
 
   // Error message

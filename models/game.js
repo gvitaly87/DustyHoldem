@@ -25,6 +25,7 @@ class Table {
     this.sbValue = smallBlind;
     this.bbValue = bigBlind;
     this.roundRaise = bigBlind;
+    this.roundCall = 0;
     this.cards = [];
     /* Pointers to seat position of the dealer, blinds, and player to act */
     this.playerToAct = null;

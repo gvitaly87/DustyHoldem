@@ -4,6 +4,7 @@ import insertCard from "/js/insertCard.mjs";
 // In game actions
 const btnCheck = document.getElementById("check");
 const btnCall = document.getElementById("call");
+const btnAllIn = document.getElementById("all-in");
 const raiseAmountField = document.getElementById("raiseAmount");
 const raiseAmountSlider = document.getElementById("raiseRange");
 
@@ -27,7 +28,8 @@ const updateGame = (table, playerSeat) => {
   document.querySelector("#player .fold").innerText = playerFolded;
   const decrContainer = document.querySelector("#player .hand-descr");
   decrContainer.innerHTML = "";
-  // descrContainer.classList.add("hidden");
+  // if (!decrContainer.classList.contains("hidden"))
+  // decrContainer.classList.add("hidden");
 
   const actionControls = document.getElementById("actions");
   if (playerSeat === table.playerToAct) {
@@ -100,13 +102,22 @@ const updateGame = (table, playerSeat) => {
   playerTurn.innerText = `It is ${currentTurnPlayerName}'s Turn`;
 
   const amountToCall = table.roundRaise - player.bets[table.round];
-  btnCall.innerText = `Call (${amountToCall})`;
+  if (amountToCall < player.chipCount) {
+    btnCall.innerText = `CALL (${amountToCall})`;
+    btnAllIn.innerText = `ALL IN (${player.chipCount})`;
+  } else {
+    btnCall.innerText = `CALL (ALL IN)`;
+    btnAllIn.innerText = `ALL IN (${player.chipCount})`;
+  }
+
   if (amountToCall === 0) {
     btnCall.classList.add("hidden");
-    if ((btnCheck.className = "hidden")) btnCheck.classList.remove("hidden");
+    if (btnCheck.classList.contains("hidden"))
+      btnCheck.classList.remove("hidden");
   } else {
     btnCheck.classList.add("hidden");
-    if (btnCall.className === "hidden") btnCall.classList.remove("hidden");
+    if (btnCall.classList.contains("hidden"))
+      btnCall.classList.remove("hidden");
   }
   if (table.round === 0) {
     const handPlaceHolder = document.getElementById("hand");

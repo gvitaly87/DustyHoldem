@@ -42,6 +42,7 @@ wsServer.on("request", (req) => {
   connection.on("close", () => console.log("Connection closed!"));
   connection.on("message", (message) => {
     // TODO: security for malicious message
+    // TODO: security for DoS attacks
     const res = JSON.parse(message.utf8Data);
 
     /***************** Create a new Game *****************/
@@ -63,7 +64,7 @@ wsServer.on("request", (req) => {
     /***************** Join an existing Game *****************/
     if (res.method === "join") {
       const { clientId, gameId, username } = res;
-      const chipCount = res.chipCount || 5000;
+      const chipCount = res.chipCount || 10000;
       // Check that the game exists
       if (games[gameId] === undefined) {
         const payLoad = {
@@ -199,6 +200,11 @@ wsServer.on("request", (req) => {
         player.chipCount -= amountToCall;
         client.chipCount = player.chipCount;
         player.bets[game.table.round] += amountToCall;
+        // Keep track of the highest call each round
+        if (player.bets[game.table.round] > table.roundCall) {
+          table.roundCall = player.bets[game.table.round];
+        }
+        console.log("Round Call: ", table.roundCall);
         player.actionRequired = false;
         table.pot += amountToCall;
 
