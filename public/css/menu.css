@@ -94,24 +94,23 @@ i {
 }
 
 a:hover {
-  color: goldenrod;
+  /* color: goldenrod; */
   outline: none;
 }
 
 /* play now button styling */
 
 .play-now {
-  --transform-rotate-var: 0deg;
-  --transform-bg-color: rgba(255, 0, 0, 0.5);
-  color: #fff;
+  color: rgba(255, 255, 255, 0.9);
   font-size: larger;
   font-weight: bold;
   transition: all 0.5s;
   position: relative;
 }
+
 .play-now span {
   z-index: 2;
-  margin: 2rem;
+  margin: 1.5rem;
   top: 0.5rem;
   left: -8rem;
 }
@@ -120,19 +119,7 @@ a:hover {
   position: absolute;
   top: 0.5rem;
   left: -8rem;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-  transition: all 0.5s;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transform: rotate(var(--transform-rotate-var));
-  background-color: var(--transform-bg-color);
-}
-.play-now::after {
-  content: "";
-  position: absolute;
-  top: 0.5rem;
-  left: -8rem;
+  border-radius: 0.25rem;
   width: 100%;
   height: 100%;
   z-index: 1;
@@ -140,12 +127,33 @@ a:hover {
   border: 1px solid rgba(255, 255, 255, 0.2);
   background-color: rgba(255, 0, 0, 0.5);
 }
+.play-now::after {
+  content: "";
+  position: absolute;
+  top: 0.5rem;
+  left: -8rem;
+  border-radius: 0.25rem;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transition: all 0.5s;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 0, 0, 0.5);
+}
+.play-now:hover::before {
+  color: green;
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.747);
+}
+.play-now:hover::before {
+  color: green;
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.747);
+}
 .play-now.show-x::before {
-  transform: rotate(-45deg);
+  transform: rotate(-180deg);
   background-color: rgba(255, 255, 255, 0);
 }
 .play-now.show-x::after {
-  transform: rotate(45deg);
+  transform: rotate(180deg);
   background-color: rgba(255, 255, 255, 0);
 }
 
