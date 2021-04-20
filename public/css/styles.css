@@ -39,8 +39,8 @@ body,
 
 .grid-container {
   display: grid;
-  grid-template-columns: 0.8fr 1fr 1fr 0.5fr 1fr 0.5fr 1fr 1fr 0.8fr;
-  grid-template-rows: 1.5fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 0.75fr 1.5fr 0.2fr 0.5fr;
+  grid-template-columns: 0.5fr 1fr 1fr 0.5fr 1fr 0.5fr 1fr 1fr 0.5fr;
+  grid-template-rows: 1.5fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 0fr 1.5fr 0.2fr 0.5fr;
   gap: 0px 0px;
 }
 
@@ -114,6 +114,7 @@ body,
 
 .game-pot {
   grid-area: game-pot;
+  font-size: clamp(1rem, 2vw, 2rem);
 }
 
 .game-stage {
@@ -285,7 +286,6 @@ body,
 .game-info {
   display: flex;
   justify-content: center;
-  /* border: 1px solid white; */
   padding: 0.25rem;
 }
 
@@ -294,13 +294,6 @@ body,
   justify-content: center;
   margin-top: 1rem;
   margin-bottom: 1rem;
-}
-
-#btnJoin,
-#btnCreate,
-#btnCopyId {
-  width: 60%;
-  height: 3rem;
 }
 
 .error {
@@ -331,13 +324,6 @@ body,
   font-size: clamp(0.5rem, 2.5vw, 1rem);
 }
 
-#username,
-#txtGameId {
-  font-size: clamp(1rem, 2.5vw, 1.5rem);
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
-}
-
 #raiseAmount {
   font-size: clamp(1rem, 2.5vw, 1.5rem);
 }
@@ -348,13 +334,13 @@ body,
 
 /* action bar button styling */
 
-button {
+.action-btns {
   font-size: 16px;
   font-weight: 600;
   color: #fff;
   cursor: pointer;
   margin: 20px;
-  width: 12.5rem;
+  width: 10rem;
   height: 3rem;
   text-align: center;
   border: none;
@@ -366,7 +352,7 @@ button {
   color: white;
   border-color: white;
   font-size: clamp(0.7rem, 2vw, 1.2rem);
-  border-radius: 2rem;
+  border-radius: 1rem;
   background-image: linear-gradient(
     to right,
     #003cff,
@@ -374,19 +360,19 @@ button {
     #0051ffa8,
     #4f31d6
   );
-  box-shadow: 0 4px 15px 0 #00d9ff;
 }
 
-button:hover {
+.action-btns:hover {
   background-position: 100% 0;
-  moz-transition: all 0.4s ease-in-out;
-  -o-transition: all 0.4s ease-in-out;
-  -webkit-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
 }
 
-button:focus {
+.action-btns:focus {
   outline: none;
+}
+
+.action-btns:active {
+  box-shadow: 0 4px 15px 0 #00d9ff;
 }
 
 /* DELETE BELOW */
@@ -536,7 +522,7 @@ img {
   max-width: 100%;
 }
 
-@media screen and (max-width: 101.25rem) {
+/* @media screen and (max-width: 101.25rem) {
   .player-1,
   .player-2,
   .player-3 {
@@ -632,4 +618,4 @@ img {
     align-items: flex-start;
     justify-content: center;
   }
-}
+} */

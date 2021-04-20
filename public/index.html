@@ -15,6 +15,7 @@
     <div class="grid-container">
       <div class="nav-bar">
         <img class="logo" src="/images/vistin-logo.png" />
+        <!-- Play Now Dropdown Menu -->
         <div id="overlay">
           <div class="text">
             <div class="box-2">
@@ -84,16 +85,16 @@
 
       <div id="player" class="player player-7">
         <div class="round-bet"></div>
-        <div id="hand">
+        <span id="hand">
           <img src="/images/icons/test.png" class="p-icons p7" />
-        </div>
-        <div class="user-info">
+        </span>
+        <span class="user-info">
           <span class="hand-descr hidden"></span>
           <span class="user-name"></span>
           <div>Chips: <span class="chip-count"></span></div>
           <span class="position"> </span>
           <span class="fold"></span>
-        </div>
+        </span>
       </div>
 
       <div class="player player-6">
@@ -116,7 +117,9 @@
 
       <div class="poker-table" id="divBoard">
         <div class="table-cards"></div>
-        <div class="game-pot">Pot: <span class="pot-value"></span></div>
+        <div class="game-pot">
+          Current Pot Size: <span class="pot-value"></span>
+        </div>
         <div class="game-stage"></div>
         <div class="player-turn"></div>
       </div>
@@ -124,13 +127,21 @@
       <!-- Action Bar -->
 
       <div class="action-bar actions" id="actions">
-        <div class="check-btn"><button id="check">CHECK</button></div>
+        <div class="check-btn">
+          <button class="action-btns" id="check">CHECK</button>
+        </div>
 
-        <div class="fold-btn"><button id="fold">FOLD</button></div>
+        <div class="fold-btn">
+          <button class="action-btns" id="fold">FOLD</button>
+        </div>
 
-        <div class="call-btn"><button id="call">CALL</button></div>
+        <div class="call-btn">
+          <button class="action-btns" id="call">CALL</button>
+        </div>
 
-        <div class="bet-btn"><button id="raise">BET</button></div>
+        <div class="bet-btn">
+          <button class="action-btns" id="raise">BET</button>
+        </div>
 
         <div class="bet-slider">
           <input
@@ -151,10 +162,12 @@
           />
         </div>
 
-        <div class="all-in-btn"><button id="all-in">ALL IN</button></div>
+        <div class="all-in-btn">
+          <button class="action-btns" id="all-in">ALL IN</button>
+        </div>
       </div>
 
-      <!-- Game Log -->
+      <!-- Game Chat & Log -->
 
       <div class="game-log">
         <div class="game-log-txt" id="game-log"></div>
