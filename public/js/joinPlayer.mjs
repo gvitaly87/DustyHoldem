@@ -9,7 +9,6 @@ const joinPlayer = (client, clientId, player, table, gameStarted) => {
     toggleSideBar();
     copyGameID();
     document.querySelector("#player .user-info").classList.remove("hidden");
-    document.querySelector("#gameId").innerText = gameId;
     document.querySelector("#player .user-name").innerText = client.username;
     document.querySelector("#player .chip-count").innerText = client.chipCount;
     document.querySelector("#player .position").innerText =

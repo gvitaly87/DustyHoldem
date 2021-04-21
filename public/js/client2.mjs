@@ -191,7 +191,8 @@ ws.onmessage = async (message) => {
   //A game create request has been processed
   if (res.method === "create") {
     gameId = res.game.id;
-    document.querySelector("#gameId").innerText = gameId;
+    console.log(gameId);
+    document.getElementById("gameId").innerText = gameId;
     let username = document.getElementById("username").value;
 
     const payLoad = {
@@ -221,6 +222,8 @@ ws.onmessage = async (message) => {
   if (res.method === "join") {
     table = res.table;
     gameId = res.gameId;
+    document.getElementById("gameId").innerText = gameId;
+
     const { client, gameStarted } = res;
     if (client.clientId === clientId) player = client;
     joinPlayer(client, clientId, player, table, gameStarted);
