@@ -12,8 +12,11 @@ const raiseAmountSlider = document.getElementById("raiseRange");
 const resetOpponents = () => {
   for (let i = 1; i < 11; i++) {
     if (i !== 7) {
-      document.querySelector(`.player-${i}`).innerHTML =
+      const oppSelector = document.querySelector(`.player-${i}`);
+      oppSelector.innerHTML =
         '<img src="/images/icons/test.png" class="p-icons p2" />';
+      if (!oppSelector.classList.contains("clear"))
+        oppSelector.classList.add("clear");
     }
   }
 };
@@ -97,6 +100,9 @@ const updateGame = (table, playerSeat) => {
       const cssSelector = findOppSelector(playerSeat, seat.seat);
 
       const opponent = document.querySelector(cssSelector);
+      if (opponent.classList.contains("clear"))
+        opponent.classList.remove("clear");
+
       let oppPos = "";
       let oppFolded = "";
       let oppCards = `<div class="card face-down"></div><div class="card face-down"></div>`;
