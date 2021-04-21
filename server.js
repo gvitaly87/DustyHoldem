@@ -40,8 +40,8 @@ wsServer.on("request", (req) => {
   connection.on("open", () => console.log("Connection opened!"));
   // TODO: on connection close determine who left the game
   connection.on("close", () => {
-    // clientLeft();
-    // updateGameState();
+    clientLeft();
+    updateGameState();
     console.log("Connection closed!");
   });
   connection.on("message", (message) => {
@@ -341,7 +341,7 @@ const clientLeft = () => {
         delete clients[client.clientId];
       }
     });
-    let { table, deck } = setQue(game.table, game.deck);
+    let { table, deck } = setQue(game.table, game.deck, true);
     game.table = table;
     game.deck = deck;
   }
