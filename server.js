@@ -41,7 +41,6 @@ wsServer.on("request", (req) => {
   // TODO: on connection close determine who left the game
   connection.on("close", () => {
     clientLeft();
-    updateGameState();
     console.log("Connection closed!");
   });
   connection.on("message", (message) => {
@@ -115,7 +114,7 @@ wsServer.on("request", (req) => {
           game.hasStarted = true;
           game.table = table;
           game.deck = deck;
-          updateGameState();
+          updateGameState(game);
         }
 
         const payLoad = {
@@ -151,7 +150,7 @@ wsServer.on("request", (req) => {
 
         game.table = updatedRound.table;
         game.deck = updatedRound.deck;
-        updateGameState();
+        updateGameState(game);
       }
     }
 
@@ -176,11 +175,12 @@ wsServer.on("request", (req) => {
 
         if (updatedRound.isShowDown) {
           showDownGameState(
+            game,
             updatedRound.tableShowDown,
             updatedRound.winnerMessage
           );
         } else {
-          updateGameState();
+          updateGameState(game);
         }
       }
     }
@@ -218,11 +218,12 @@ wsServer.on("request", (req) => {
 
         if (updatedRound.isShowDown) {
           showDownGameState(
+            game,
             updatedRound.tableShowDown,
             updatedRound.winnerMessage
           );
         } else {
-          updateGameState();
+          updateGameState(game);
         }
       }
     }
@@ -256,7 +257,7 @@ wsServer.on("request", (req) => {
           if (que !== playerSeat) table.seats[que].actionRequired = true;
         });
       }
-      updateGameState();
+      updateGameState(game);
     }
     /***************** Chat Message ****************/
     if (res.method === "chat") {
@@ -294,29 +295,25 @@ wsServer.on("request", (req) => {
   connection.send(JSON.stringify(payLoad));
 });
 
-function updateGameState() {
-  // TODO: rewrite updateGameState to update game-state only for one game
-  for (const g of Object.keys(games)) {
-    const game = games[g];
-    const payLoad = {
-      method: "update",
-      table: game.table,
-    };
-    respondAllClients(clients, game, payLoad);
-  }
+function updateGameState(game) {
+  const payLoad = {
+    method: "update",
+    table: game.table,
+  };
+  respondAllClients(clients, game, payLoad);
 }
 
-function showDownGameState(tableShowDown, winnerMessage) {
-  for (const g of Object.keys(games)) {
-    const game = games[g];
-    const payLoad = {
-      method: "showdown",
-      tableShowDown,
-      winnerMessage,
-      table: game.table,
-    };
-    respondAllClients(clients, game, payLoad);
-  }
+function showDownGameState(game, tableShowDown, winnerMessage) {
+  // for (const g of Object.keys(games)) {
+  //   const game = games[g];
+  const payLoad = {
+    method: "showdown",
+    tableShowDown,
+    winnerMessage,
+    table: game.table,
+  };
+  respondAllClients(clients, game, payLoad);
+  //}
 }
 
 const clientLeft = () => {
@@ -344,5 +341,6 @@ const clientLeft = () => {
     let { table, deck } = setQue(game.table, game.deck, true);
     game.table = table;
     game.deck = deck;
+    updateGameState(game);
   }
 };
