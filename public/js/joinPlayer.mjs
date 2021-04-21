@@ -40,7 +40,7 @@ const joinPlayer = (client, clientId, player, table, gameStarted) => {
         tableCards.innerHTML = cardsHTML;
       }
     } else {
-      gameStage.innerHTML = `<div class="wait-msg">Waiting for game to start...</div><div class="copy-msg">The game ID has been copied to clipboard</div>`;
+      gameStage.innerHTML = `<div class="wait-msg">Waiting for more players to join the game before starting...</div><div class="copy-msg">The game ID has been copied to clipboard</div>`;
     }
   } else {
     console.log(player.seat, client.seat);
@@ -52,11 +52,11 @@ const joinPlayer = (client, clientId, player, table, gameStarted) => {
         <div class="hand"></div>
         <div class="img-container"></div>
         <div class="user-info">
-          <span class="hand-descr hidden"></span>
-          <span class="user-name">${client.username}</span>
-          <div>Chips: <span class="chip-count">${client.chipCount}</span></div>
-          <span class="position">Just Joined</span>
-          <span class="fold"></span>
+          <div class="hand-descr hidden"></div>
+          <div class="user-name">${client.username}</div>
+          <div>Chips: <div class="chip-count">${client.chipCount}</div></div>
+          <div class="position">Just Joined</div>
+          <div class="fold"></div>
         </div>
       `;
   }

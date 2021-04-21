@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="/js/client2.mjs" type="module"></script>
     <script src="/js/menu.mjs" type="module"></script>
-    <title>VGDS' Poker World</title>
+    <title>Vistin Poker World</title>
     <link rel="stylesheet" href="/css/styles.css" />
     <link rel="stylesheet" href="/css/menu.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -28,11 +28,31 @@
               <div class="hidden">Player ID: <span id="playerId"></span></div>
 
               <div class="game-info-container">
-                <label for="username">ENTER USERNAME HERE:</label>
-                <input type="text" id="username" value="Guest" />
+                <div class="username">
+                  <div><label for="username">ENTER USERNAME:</label></div>
+                  <input type="text" id="username" value="Guest" />
+                </div>
 
                 <div>
-                  <button id="btnCreate">CREATE A NEW GAME</button>
+                  <label for="txtGameId"
+                    >ENTER A GAME ID TO JOIN A GAME IN PROGRESS:
+                  </label>
+
+                  <input type="text" id="txtGameId" />
+                </div>
+
+                <div class="join">
+                  <button id="btnJoin">JOIN GAME</button>
+                  <div class="error"></div>
+                </div>
+
+                <div class="create">
+                  <div>
+                    <label for="btnCreate"
+                      >CREATE A UNIQUE TABLE TO PLAY WITH FRIENDS:</label
+                    >
+                  </div>
+                  <button id="btnCreate">CREATE GAME</button>
                 </div>
 
                 <span id="gameId"></span>
@@ -40,21 +60,6 @@
                 <div>
                   <button id="btnCopyId" class="hidden">COPY GAME ID</button>
                 </div>
-
-                <div>
-                  <div>
-                    <label for="txtGameId"
-                      >ENTER A GAME ID TO JOIN A GAME IN PROGRESS:
-                    </label>
-                  </div>
-
-                  <input type="text" id="txtGameId" />
-                </div>
-
-                <div>
-                  <button id="btnJoin">JOIN GAME</button>
-                </div>
-                <div class="error"></div>
               </div>
             </div>
           </div>
@@ -118,10 +123,10 @@
       <!-- Poker table grid -->
 
       <div class="poker-table" id="divBoard">
-        <div class="table-cards"></div>
         <div class="game-pot">
           Current Pot Size: $<span class="pot-value">0</span>
         </div>
+        <div class="table-cards"></div>
         <div class="game-stage"></div>
         <div class="player-turn"></div>
       </div>

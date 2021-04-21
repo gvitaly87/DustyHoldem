@@ -39,117 +39,103 @@ body,
 
 .grid-container {
   display: grid;
-  grid-template-columns: 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr 0.2fr 0.5fr 0.5fr 0.2fr 0.5fr 0.5fr 0.5fr 0.5fr 0.5fr;
-  grid-template-rows: 0.75fr 0.25fr 1fr 0.15fr 1fr 0.15fr 1fr 0.15fr 1fr 0.3fr 1.5fr 0.1fr 0.5fr;
+  grid-template-columns: 1fr 1fr 1fr 0.5fr 1fr 0.5fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 0.25fr 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1.5fr 0.1fr 0.5fr;
   gap: 0px 0px;
 }
 
-.player-8 {
-  grid-area: 9 / 4 / 10 / 6;
-}
-
-.player-7 {
-  grid-area: 9 / 7 / 10 / 9;
-}
-
-.player-6 {
-  grid-area: 9 / 10 / 10 / 12;
-}
-
-.player-4 {
-  grid-area: 5 / 11 / 6 / 13;
-}
-
-.player-5 {
-  grid-area: 7 / 11 / 8 / 13;
-}
-
-.player-3 {
-  grid-area: 3 / 10 / 4 / 12;
+.nav-bar {
+  grid-area: 1 / 1 / 2 / 10;
 }
 
 .player-2 {
-  grid-area: 3 / 7 / 4 / 9;
+  grid-area: 3 / 5 / 4 / 6;
 }
 
 .player-1 {
-  grid-area: 3 / 4 / 4 / 6;
+  grid-area: 3 / 3 / 4 / 4;
 }
 
-.player-10 {
-  grid-area: 5 / 3 / 6 / 5;
+.player-3 {
+  grid-area: 3 / 7 / 4 / 8;
+}
+
+.player-4 {
+  grid-area: 5 / 8 / 6 / 9;
+}
+
+.player-5 {
+  grid-area: 7 / 8 / 8 / 9;
+}
+
+.player-7 {
+  grid-area: 9 / 5 / 10 / 6;
+}
+
+.player-6 {
+  grid-area: 9 / 7 / 10 / 8;
+}
+
+.player-8 {
+  grid-area: 9 / 3 / 10 / 4;
 }
 
 .player-9 {
-  grid-area: 7 / 3 / 8 / 5;
+  grid-area: 7 / 2 / 8 / 3;
 }
 
-.game-log-txt {
-  grid-area: 11 / 2 / 12 / 7;
-}
-
-.action-bar {
-  grid-area: 11 / 7 / 12 / 14;
-}
-
-.footer {
-  grid-area: 13 / 1 / 14 / 15;
-}
-
-.nav-bar {
-  grid-area: 1 / 1 / 2 / 15;
+.player-10 {
+  grid-area: 5 / 2 / 6 / 3;
 }
 
 .poker-table {
-  grid-area: 3 / 2 / 10 / 14;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: grid;
   background-image: url(../images/table.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-}
-
-/* .mid-table {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 2fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 2fr 1fr 1fr 2.5fr 0fr 1fr 2fr;
   gap: 0px 0px;
   grid-template-areas:
-    "game-pot game-pot game-pot game-pot game-pot"
-    "game-stage game-stage game-stage game-stage game-stage"
-    "table-cards table-cards table-cards table-cards table-cards"
-    "player-turn player-turn player-turn player-turn player-turn";
-  grid-area: 4 / 5 / 9 / 11;
-} */
+    ". . . . . . ."
+    ". . game-pot game-pot game-pot . ."
+    ". . game-stage game-stage game-stage . ."
+    ". . table-cards table-cards table-cards . ."
+    ". . table-cards table-cards table-cards . ."
+    ". . player-turn player-turn player-turn . ."
+    ". . . . . . .";
+  grid-area: 3 / 2 / 10 / 9;
+}
 
 .table-cards {
   grid-area: table-cards;
+}
+
+/* .game-pot {
+  grid-area: game-pot;
+  font-size: clamp(1rem, 2vw, 2rem);
 }
 
 .game-stage {
   grid-area: game-stage;
 }
 
-.game-pot {
-  grid-area: game-pot;
-}
-
 .player-turn {
   grid-area: player-turn;
-}
+  font-size: clamp(1rem, 2vw, 2rem);
+} */
 
 .action-bar {
   display: grid;
+  align-items: center;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   gap: 0px 0px;
   grid-template-areas:
     "check-btn call-btn bet-btn"
     "fold-btn all-in-btn bet-slider";
-  grid-area: 11 / 7 / 12 / 14;
+  grid-area: 11 / 5 / 12 / 9;
 }
 
 .actions {
@@ -206,17 +192,11 @@ body,
   grid-template-areas:
     "game-log-txt game-log-txt game-log-txt"
     "game-log-txt-type game-log-txt-type game-log-txt-type";
-  grid-area: 11 / 2 / 12 / 7;
-}
-.game-log-txt {
-  grid-area: game-log-txt;
+  grid-area: 11 / 2 / 12 / 5;
 }
 
-.game-log-txt-type {
-  grid-area: game-log-txt-type;
-  border: none;
-  color: #003cff;
-  font-size: large;
+.game-log-txt {
+  grid-area: game-log-txt;
 }
 
 .player-msg {
@@ -233,6 +213,10 @@ body,
   border: none;
   color: #003cff;
   font-size: large;
+}
+
+.footer {
+  grid-area: 13 / 1 / 14 / 10;
 }
 
 /* .game-info {
@@ -508,7 +492,7 @@ body,
   z-index: 1000;
   height: 6rem;
   width: 14.5rem;
-  background-color: rgba(128, 128, 128, 0.336);
+  /* background-color: rgba(128, 128, 128, 0.336); */
   border-radius: 0.5rem;
 }
 
@@ -661,7 +645,7 @@ body,
 
 /* DELETE BELOW */
 .grid-container * {
-  border: 1px dotted white;
+  /* border: 1px dotted white; */
   position: relative;
 }
 
