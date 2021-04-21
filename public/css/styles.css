@@ -492,7 +492,7 @@ body,
   z-index: 1000;
   height: 6rem;
   width: 14.5rem;
-  background-color: rgba(128, 128, 128, 0.336);
+  /* background-color: rgba(128, 128, 128, 0.336); */
   border-radius: 0.5rem;
 }
 
@@ -649,10 +649,10 @@ body,
   position: relative;
 }
 
-.grid-container *:after {
+/* .grid-container *:after {
   content: attr(class);
   position: absolute;
   top: 0;
   left: 0;
   color: red;
-}
+} */
