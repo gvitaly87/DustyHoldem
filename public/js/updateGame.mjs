@@ -4,9 +4,11 @@ import insertCard from "/js/insertCard.mjs";
 // In game actions
 const btnCheck = document.getElementById("check");
 const btnCall = document.getElementById("call");
+const btnRaise = document.getElementById("raise");
 const btnAllIn = document.getElementById("all-in");
 const raiseAmountField = document.getElementById("raiseAmount");
 const raiseAmountSlider = document.getElementById("raiseRange");
+
 const resetOpponents = () => {
   for (let i = 1; i < 11; i++) {
     if (i !== 7) {
@@ -15,6 +17,49 @@ const resetOpponents = () => {
     }
   }
 };
+
+const showBtn = (btnElement) => {
+  if (btnElement.classList.contains("hidden"))
+    btnElement.classList.remove("hidden");
+};
+
+const hideBtn = (btnElement) => {
+  if (!btnElement.classList.contains("hidden"))
+    btnElement.classList.add("hidden");
+};
+
+const updateSliders = (table, player) => {
+  // Updating sliders
+  // If someone made a bet this round
+  if (table.roundRaise >= 100 && table.roundRaise > player.bets[table.round]) {
+    raiseAmountSlider.min = table.roundRaise - player.bets[table.round];
+    raiseAmountField.min = table.roundRaise - player.bets[table.round];
+    // If the bet is less than the player's chip count
+    if (table.roundRaise - player.bets[table.round] < player.chipCount) {
+      raiseAmountSlider.value = table.roundRaise - player.bets[table.round];
+      raiseAmountField.value = table.roundRaise - player.bets[table.round];
+    }
+  } else {
+    raiseAmountSlider.min = 100;
+    raiseAmountField.min = 100;
+    raiseAmountSlider.value = 100;
+    raiseAmountField.value = 100;
+  }
+  if (player.chipCount <= 0) {
+    hideBtn(raiseAmountSlider);
+    hideBtn(raiseAmountField);
+    hideBtn(btnRaise);
+    hideBtn(btnAllIn);
+  } else {
+    showBtn(raiseAmountSlider);
+    showBtn(raiseAmountField);
+    showBtn(btnRaise);
+    showBtn(btnAllIn);
+    raiseAmountSlider.max = player.chipCount;
+    raiseAmountField.max = player.chipCount;
+  }
+};
+
 const updateGame = (table, playerSeat) => {
   player = table.seats[playerSeat];
 
@@ -45,19 +90,7 @@ const updateGame = (table, playerSeat) => {
     actionControls.classList.add("invisible");
   }
 
-  // Updating sliders
-  // If someone made a bet this round
-  if (table.roundRaise >= 100) {
-    raiseAmountSlider.min = table.roundRaise - player.bets[table.round];
-    raiseAmountField.min = table.roundRaise - player.bets[table.round];
-    // If the bet is less than the player's chip count
-    if (table.roundRaise - player.bets[table.round] < player.chipCount) {
-      raiseAmountSlider.value = table.roundRaise - player.bets[table.round];
-      raiseAmountField.value = table.roundRaise - player.bets[table.round];
-    }
-  }
-  raiseAmountSlider.max = player.chipCount;
-  raiseAmountField.max = player.chipCount;
+  updateSliders(table, player);
   resetOpponents();
   table.seats.forEach((seat) => {
     if (!seat.empty && seat.seat !== playerSeat) {
@@ -122,23 +155,18 @@ const updateGame = (table, playerSeat) => {
 
   // Hide either check or call
   if (amountToCall === 0) {
-    if (!btnCall.classList.contains("hidden")) btnCall.classList.add("hidden");
-    if (btnCheck.classList.contains("hidden"))
-      btnCheck.classList.remove("hidden");
+    hideBtn(btnCall);
+    showBtn(btnCheck);
   } else {
-    if (!btnCheck.classList.contains("hidden"))
-      btnCheck.classList.add("hidden");
-    if (btnCall.classList.contains("hidden"))
-      btnCall.classList.remove("hidden");
+    hideBtn(btnCheck);
+    showBtn(btnCall);
   }
 
   // Hide All-in if the player is out of chips
   if (player.chipCount > 0) {
-    if (btnAllIn.classList.contains("hidden"))
-      btnAllIn.classList.remove("hidden");
+    showBtn(btnAllIn);
   } else {
-    if (!btnAllIn.classList.contains("hidden"))
-      btnAllIn.classList.add("hidden");
+    hideBtn(btnAllIn);
   }
 
   if (table.round === 0) {

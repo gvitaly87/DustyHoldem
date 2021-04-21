@@ -149,8 +149,16 @@ btnAllIn.addEventListener("click", () => {
     playerSeat: player.seat,
     raiseAmount,
   };
-
-  if (table.roundRaise > raiseAmount) payLoad.method = "call";
+  console.log(
+    "Round Raise: ",
+    table.roundRaise,
+    "Player All in Amount: ",
+    raiseAmount
+  );
+  if (table.roundRaise >= raiseAmount) {
+    payLoad.method = "call";
+    console.log("call");
+  } else console.log("raise");
 
   ws.send(JSON.stringify(payLoad));
 });

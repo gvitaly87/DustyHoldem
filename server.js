@@ -196,7 +196,7 @@ wsServer.on("request", (req) => {
       if (client.clientId === clientId) {
         let amountToCall = table.roundRaise - player.bets[table.round];
         table.gameLog = `${player.username} calls ${amountToCall}`;
-        if (player.chipCount < amountToCall) {
+        if (player.chipCount <= amountToCall) {
           amountToCall = player.chipCount;
           player.allIn = true;
           table.gameLog = `${player.username} calls ${amountToCall} and is all in`;
@@ -208,7 +208,7 @@ wsServer.on("request", (req) => {
         if (player.bets[game.table.round] > table.roundCall) {
           table.roundCall = player.bets[game.table.round];
         }
-        console.log("Round Call: ", table.roundCall);
+        // console.log("Round Call: ", table.roundCall);
         player.actionRequired = false;
         table.pot += amountToCall;
 
@@ -254,7 +254,8 @@ wsServer.on("request", (req) => {
         table.playerToAct = nextToAct(table);
         player.actionRequired = false;
         table.seatsQue.forEach((que) => {
-          if (que !== playerSeat) table.seats[que].actionRequired = true;
+          if (que !== playerSeat && !table.seats[que].allIn)
+            table.seats[que].actionRequired = true;
         });
       }
       updateGameState(game);
@@ -291,7 +292,6 @@ wsServer.on("request", (req) => {
     method: "connect",
     clientId: clientId,
   };
-  console.log(clients[clientId].connection.state);
   connection.send(JSON.stringify(payLoad));
 });
 
@@ -304,8 +304,6 @@ function updateGameState(game) {
 }
 
 function showDownGameState(game, tableShowDown, winnerMessage) {
-  // for (const g of Object.keys(games)) {
-  //   const game = games[g];
   const payLoad = {
     method: "showdown",
     tableShowDown,
@@ -313,7 +311,6 @@ function showDownGameState(game, tableShowDown, winnerMessage) {
     table: game.table,
   };
   respondAllClients(clients, game, payLoad);
-  //}
 }
 
 const clientLeft = () => {
