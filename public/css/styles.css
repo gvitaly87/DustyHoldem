@@ -39,8 +39,8 @@ body,
 
 .grid-container {
   display: grid;
-  grid-template-columns: 0.5fr 1fr 1fr 0.5fr 1fr 0.5fr 1fr 1fr 0.5fr;
-  grid-template-rows: 1.5fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 0fr 1.5fr 0.2fr 0.5fr;
+  grid-template-columns: 1fr 1fr 1fr 0.5fr 1fr 0.5fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 0.25fr 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1fr 0.5fr 1.5fr 0.1fr 0.5fr;
   gap: 0px 0px;
 }
 
@@ -236,6 +236,7 @@ body,
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .table-cards {
@@ -268,14 +269,8 @@ body,
   height: auto;
 }
 
-.p2 {
-  display: grid;
-  justify-self: center;
-}
-
 .p-icons {
-  max-width: 42%;
-  height: auto;
+  max-height: 100%;
   z-index: 999;
 }
 
@@ -408,14 +403,14 @@ body,
 .card {
   position: relative;
   height: 100%;
-  width: 100%;
   border: 1px solid black;
   border-radius: 0.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 4rem;
-  height: 7rem;
+  font-size: 2.75rem;
+  width: 4.25rem;
+  margin: 0 0.1rem;
 }
 
 .card.red {
@@ -451,12 +446,41 @@ body,
 .hidden {
   display: none;
 }
+
+/* User Information (next to cards) */
+
+.user-info {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+.hand-descr {
+}
+.user-name {
+  color: rgb(0, 0, 133);
+  font-size: 1rem;
+}
+.chip-count-container {
+  color: white;
+}
+.position {
+  color: white;
+}
+.fold {
+  color: red;
+}
+
+.wait-msg {
+  color: white;
+}
+
+.copy-msg {
+  color: yellow;
+}
 /*********** Vitaly's Rules**************/
 .invisible {
   visibility: hidden;
-}
-.player {
-  z-index: 1000;
 }
 .hand .card.face-down {
   background-color: red;
@@ -464,6 +488,24 @@ body,
 /*********** Vitaly's Rules End**************/
 
 /* Player adjustments */
+
+.player {
+  z-index: 1000;
+  height: 6rem;
+  width: 14.5rem;
+  background-color: rgba(128, 128, 128, 0.336);
+  border-radius: 0.5rem;
+}
+
+#hand,
+.hand {
+  height: 6rem;
+  display: flex;
+  width: 100%;
+  flex-grow: 0;
+  align-items: center;
+  justify-content: center;
+}
 
 .player-1,
 .player-2,
@@ -499,27 +541,9 @@ body,
   flex-wrap: nowrap;
 }
 
-#hand,
-.hand {
-  display: flex;
-  height: 7rem;
-  flex-grow: 0;
-  align-items: center;
-  justify-content: center;
-}
-
-.card {
-  width: 5rem;
-  margin: 0 1rem;
-}
-
 .log-winner {
   font-weight: bold;
   color: hsl(0, 70%, 25%);
-}
-
-img {
-  max-width: 100%;
 }
 
 /* @media screen and (max-width: 101.25rem) {
@@ -622,7 +646,7 @@ img {
 
 /* DELETE BELOW */
 .grid-container * {
-  /* border: 1px solid white; */
+  /* border: 1px dotted white; */
   position: relative;
 }
 
