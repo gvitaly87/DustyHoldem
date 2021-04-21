@@ -39,7 +39,11 @@ wsServer.on("request", (req) => {
   const connection = req.accept(null, req.origin);
   connection.on("open", () => console.log("Connection opened!"));
   // TODO: on connection close determine who left the game
-  connection.on("close", () => console.log("Connection closed!"));
+  connection.on("close", () => {
+    clientLeft();
+    updateGameState();
+    console.log("Connection closed!");
+  });
   connection.on("message", (message) => {
     // TODO: security for malicious message
     // TODO: security for DoS attacks
@@ -282,12 +286,11 @@ wsServer.on("request", (req) => {
   clients[clientId] = {
     connection: connection,
   };
-
   const payLoad = {
     method: "connect",
     clientId: clientId,
   };
-
+  console.log(clients[clientId].connection.state);
   connection.send(JSON.stringify(payLoad));
 });
 
@@ -315,3 +318,31 @@ function showDownGameState(tableShowDown, winnerMessage) {
     respondAllClients(clients, game, payLoad);
   }
 }
+
+const clientLeft = () => {
+  for (const g of Object.keys(games)) {
+    const game = games[g];
+    game.clients.forEach((client, index, object) => {
+      if (clients[client.clientId].connection.state === "closed") {
+        console.log(client.username, " has left the game!");
+        game.table.gameLog = `${client.username} has left the game`;
+        game.table.seats[client.seat] = { empty: true };
+        if (game.table.playerToAct === client.seat)
+          game.table.playerToAct = nextToAct(game.table);
+
+        // remove client from game
+        object.splice(index, 1);
+        // update clientIndex for each player's seat
+        game.table.seats.forEach((seat) => {
+          if (!seat.empty) {
+            if (seat.clientIndex > index) seat.clientIndex -= 1;
+          }
+        });
+        delete clients[client.clientId];
+      }
+    });
+    let { table, deck } = setQue(game.table, game.deck);
+    game.table = table;
+    game.deck = deck;
+  }
+};
