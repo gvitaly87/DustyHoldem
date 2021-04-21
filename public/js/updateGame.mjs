@@ -7,7 +7,14 @@ const btnCall = document.getElementById("call");
 const btnAllIn = document.getElementById("all-in");
 const raiseAmountField = document.getElementById("raiseAmount");
 const raiseAmountSlider = document.getElementById("raiseRange");
-
+const resetOpponents = () => {
+  for (let i = 1; i < 11; i++) {
+    if (i !== 7) {
+      document.querySelector(`.player-${i}`).innerHTML =
+        '<img src="/images/icons/test.png" class="p-icons p2" />';
+    }
+  }
+};
 const updateGame = (table, playerSeat) => {
   player = table.seats[playerSeat];
 
@@ -51,7 +58,7 @@ const updateGame = (table, playerSeat) => {
   }
   raiseAmountSlider.max = player.chipCount;
   raiseAmountField.max = player.chipCount;
-
+  resetOpponents();
   table.seats.forEach((seat) => {
     if (!seat.empty && seat.seat !== playerSeat) {
       const cssSelector = findOppSelector(playerSeat, seat.seat);
