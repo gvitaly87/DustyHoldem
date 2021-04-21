@@ -34,6 +34,19 @@ A multiplayer poker game that offers all the functionality expected out of a Tex
 
 ---
 
+## To Do
+
+- Add partial pot logic for all in
+- Security against DoS attacks
+- Automate Rounds when only one player is left with chips in the hand
+- Add spectator view option
+- Add cookies for chip count for guests
+- Main table page showing all the public tables
+- Private/Public table option
+- Login
+
+---
+
 ### Images
 
 ---

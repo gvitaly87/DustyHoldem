@@ -108,7 +108,10 @@ const updateGame = (table, playerSeat) => {
   const currentTurnPlayerName = table.seats[table.playerToAct].username;
   playerTurn.innerText = `It is ${currentTurnPlayerName}'s Turn`;
 
-  const amountToCall = table.roundRaise - player.bets[table.round];
+  let amountToCall = table.roundRaise - player.bets[table.round];
+  amountToCall = amountToCall < 0 ? 0 : amountToCall;
+
+  // Update the Call sum inside the brackets
   if (amountToCall < player.chipCount) {
     btnCall.innerText = `CALL (${amountToCall})`;
     btnAllIn.innerText = `ALL IN (${player.chipCount})`;
@@ -117,15 +120,27 @@ const updateGame = (table, playerSeat) => {
     btnAllIn.innerText = `ALL IN (${player.chipCount})`;
   }
 
+  // Hide either check or call
   if (amountToCall === 0) {
-    btnCall.classList.add("hidden");
+    if (!btnCall.classList.contains("hidden")) btnCall.classList.add("hidden");
     if (btnCheck.classList.contains("hidden"))
       btnCheck.classList.remove("hidden");
   } else {
-    btnCheck.classList.add("hidden");
+    if (!btnCheck.classList.contains("hidden"))
+      btnCheck.classList.add("hidden");
     if (btnCall.classList.contains("hidden"))
       btnCall.classList.remove("hidden");
   }
+
+  // Hide All-in if the player is out of chips
+  if (player.chipCount > 0) {
+    if (btnAllIn.classList.contains("hidden"))
+      btnAllIn.classList.remove("hidden");
+  } else {
+    if (!btnAllIn.classList.contains("hidden"))
+      btnAllIn.classList.add("hidden");
+  }
+
   if (table.round === 0) {
     const handPlaceHolder = document.getElementById("hand");
     handPlaceHolder.innerHTML = "";
