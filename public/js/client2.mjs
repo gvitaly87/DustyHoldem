@@ -215,12 +215,17 @@ ws.onmessage = async (message) => {
       console.log(table.seatsQue.length);
       if (table.roundJustStarted && playerSeat === table.playerToAct) {
         table.seats.forEach((seat) => {
-          if (!seat.empty && seat.actionRequired && !seat.folded) {
+          if (
+            !seat.empty &&
+            seat.actionRequired &&
+            !seat.folded &&
+            !seat.allIn
+          ) {
             reqActionCounter += 1;
           }
         });
         console.log(reqActionCounter);
-        if (reqActionCounter === 0) {
+        if (reqActionCounter <= 1) {
           const payLoad = {
             method: "check",
             clientId,
