@@ -157,7 +157,16 @@ wsServer.on("request", (req) => {
           }
         });
 
-        updateGameState(game);
+        if (updatedRound.isShowDown) {
+          showDownGameState(
+            game,
+            updatedRound.tableShowDown,
+            updatedRound.winnerMessage,
+            updatedRound.everyoneFolded
+          );
+        } else {
+          updateGameState(game);
+        }
       }
     }
 
@@ -190,7 +199,8 @@ wsServer.on("request", (req) => {
           showDownGameState(
             game,
             updatedRound.tableShowDown,
-            updatedRound.winnerMessage
+            updatedRound.winnerMessage,
+            updatedRound.everyoneFolded
           );
         } else {
           updateGameState(game);
@@ -239,7 +249,8 @@ wsServer.on("request", (req) => {
           showDownGameState(
             game,
             updatedRound.tableShowDown,
-            updatedRound.winnerMessage
+            updatedRound.winnerMessage,
+            updatedRound.everyoneFolded
           );
         } else {
           updateGameState(game);
@@ -329,12 +340,13 @@ function updateGameState(game) {
   respondAllClients(clients, game, payLoad);
 }
 
-function showDownGameState(game, tableShowDown, winnerMessage) {
+function showDownGameState(game, tableShowDown, winnerMessage, everyoneFolded) {
   const payLoad = {
     method: "showdown",
     tableShowDown,
     winnerMessage,
     table: game.table,
+    everyoneFolded,
   };
   respondAllClients(clients, game, payLoad);
 }

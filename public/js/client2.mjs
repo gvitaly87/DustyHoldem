@@ -246,10 +246,10 @@ ws.onmessage = async (message) => {
   if (res.method === "showdown") {
     table = res.table;
     const playerSeat = res.seat;
-    const { tableShowDown, winnerMessage } = res;
+    const { tableShowDown, winnerMessage, everyoneFolded } = res;
     player = table.seats[playerSeat];
 
-    showDown(tableShowDown, playerSeat, winnerMessage);
+    showDown(tableShowDown, playerSeat, winnerMessage, everyoneFolded);
     setTimeout(() => updateGame(table, playerSeat), 7000);
   }
   //A new player joins

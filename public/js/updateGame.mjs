@@ -157,8 +157,12 @@ const updateGame = (table, playerSeat) => {
   const gamePot = document.querySelector(".pot-value");
   gamePot.innerText = table.pot;
   const playerTurn = document.querySelector(".player-turn");
-  const currentTurnPlayerName = table.seats[table.playerToAct].username;
-  playerTurn.innerText = `It is ${currentTurnPlayerName}'s Turn`;
+  if (table.playerToAct === playerSeat) {
+    playerTurn.innerText = `It is Your Turn!`;
+  } else {
+    const currentTurnPlayerName = table.seats[table.playerToAct].username;
+    playerTurn.innerText = `It is ${currentTurnPlayerName}'s Turn`;
+  }
 
   let amountToCall = table.roundRaise - player.bets[table.round];
   amountToCall = amountToCall < 0 ? 0 : amountToCall;
