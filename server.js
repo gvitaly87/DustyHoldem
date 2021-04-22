@@ -124,7 +124,8 @@ wsServer.on("request", (req) => {
           table: game.table,
           client: game.clients[clientIndex],
         };
-        respondAllClients(clients, game, payLoad);
+        if (!game.hasStarted) respondAllClients(clients, game, payLoad);
+        else clients[clientId].connection.send(JSON.stringify(payLoad));
       }
     }
     /***************** In Game Actions *****************/
