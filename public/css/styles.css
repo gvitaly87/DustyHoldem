@@ -228,7 +228,7 @@ body,
 .game-stage {
   grid-area: game-stage;
   font-size: clamp(1rem, 2.5vw, 1.5rem);
-  color: #00aeff;
+  color: yellow;
 }
 
 .wait-msg {
@@ -332,8 +332,9 @@ body,
 }
 
 .logo {
+  margin-top: 1.2rem;
   margin-left: 1.25rem;
-  max-width: 20%;
+  max-width: 17.5%;
   height: auto;
 }
 
@@ -535,6 +536,7 @@ body,
 }
 .hand .card.face-down {
   background-color: red;
+  background-image: url("../images/icons/vistin-card-logo-opti.png");
 }
 /*********** Vitaly's Rules End**************/
 
