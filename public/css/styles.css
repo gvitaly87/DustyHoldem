@@ -332,10 +332,10 @@ body,
 }
 
 .logo {
-  margin-top: 1.2rem;
   margin-left: 1.25rem;
   max-width: 17.5%;
   height: auto;
+  align-self: center;
 }
 
 .p-icons {
@@ -537,7 +537,7 @@ body,
 .hand .card.face-down {
   background-color: red;
   background-image: url("../images/icons/vistin-symbol.png");
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position-y: center;
 }
