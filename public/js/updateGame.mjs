@@ -92,9 +92,11 @@ const updateGame = (table, playerSeat) => {
 
   const actionControls = document.getElementById("actions");
   if (playerSeat === table.playerToAct) {
-    actionControls.classList.remove("invisible");
+    if (actionControls.classList.contains("invisible"))
+      actionControls.classList.remove("invisible");
   } else {
-    actionControls.classList.add("invisible");
+    if (!actionControls.classList.contains("invisible"))
+      actionControls.classList.add("invisible");
   }
 
   updateSliders(table, player);
