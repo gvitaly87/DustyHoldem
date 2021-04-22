@@ -4,8 +4,8 @@ import findOppSelector from "./findOppSelector.mjs";
 const showDown = (table, playerSeat, winnerMessage) => {
   document.querySelector(".game-stage").innerHTML = winnerMessage;
   const actionControls = document.getElementById("actions");
-  if (!actionControls.classList.contains("invisible"))
-    actionControls.classList.add("invisible");
+  if (!actionControls.classList.contains("hidden"))
+    actionControls.classList.add("hidden");
   table.forEach((seat) => {
     let description = `<span class="hand-descr">Hand: ${seat.description}</span>`;
     const cssSelector = findOppSelector(playerSeat, seat.seat);
