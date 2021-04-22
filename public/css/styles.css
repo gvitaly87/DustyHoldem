@@ -230,18 +230,55 @@ body,
   justify-content: center;
   align-items: center;
   flex-wrap: wrap; */
-  font-size: clamp(0.75rem, 2.5vw, 1.2rem);
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
   color: #00aeff;
 }
 
 .wait-msg {
   color: yellow;
   width: 100%;
+  overflow: hidden;
+  border-right: 0.15em solid yellow;
+  white-space: nowrap;
+  margin: 0 auto;
+  letter-spacing: 0.1em;
+  animation: typing 6.5s steps(60), blink-caret 0.75s step-end infinite;
+}
+
+/* typing effect */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* typewriter cursor effect */
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #00aeff;
+  }
 }
 
 .copy-msg {
-  color: #00aeff;
+  color: red;
+  text-align: center;
   width: 100%;
+  animation: cssAnimation 0s ease-in 5s forwards;
+  animation-fill-mode: forwards;
+}
+@keyframes cssAnimation {
+  to {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
 }
 
 .player-turn {
@@ -266,8 +303,11 @@ body,
   width: 100%;
 }
 .user-name {
+  text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #00aeff,
+    0 0 30px #00aeff, 0 0 40px #ff2d95, 0 0 50px #00aeff, 0 0 75px #00aeff;
+  letter-spacing: 0.1rem;
   color: #00aeff;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   width: 100%;
   font-weight: bold;
 }
@@ -506,14 +546,8 @@ body,
   border-radius: 0.5rem;
 }
 
-#hand,
-.hand {
-  height: 7rem;
-  display: flex;
-  width: 100%;
-  flex-grow: 0;
-  align-items: center;
-  justify-content: center;
+.player.clear {
+  background-color: transparent;
 }
 
 .player-1,
@@ -555,6 +589,16 @@ body,
   align-items: center;
   justify-content: center;
   flex-wrap: nowrap;
+}
+
+#hand,
+.hand {
+  height: 7rem;
+  display: flex;
+  width: 100%;
+  flex-grow: 0;
+  align-items: center;
+  justify-content: center;
 }
 
 .log-winner {
