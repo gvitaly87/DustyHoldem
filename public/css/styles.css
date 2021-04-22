@@ -536,7 +536,10 @@ body,
 }
 .hand .card.face-down {
   background-color: red;
-  background-image: url("../images/icons/vistin-card-logo-opti.png");
+  background-image: url("../images/icons/vistin-symbol.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position-y: center;
 }
 /*********** Vitaly's Rules End**************/
 
