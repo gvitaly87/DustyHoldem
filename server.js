@@ -240,7 +240,7 @@ wsServer.on("request", (req) => {
         client.clientId === clientId &&
         raiseAmount + player.bets[table.round] >= table.roundRaise
       ) {
-        if (raiseAmount > player.chipCount) {
+        if (raiseAmount >= player.chipCount) {
           raiseAmount = player.chipCount;
           player.allIn = true;
           table.gameLog += " and is all in";

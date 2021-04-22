@@ -202,6 +202,8 @@ const updateGame = (table, playerSeat) => {
   const gameLog = document.getElementById("game-log");
   if (table.gameLog)
     gameLog.innerHTML += `<div class="msg dealer-msg">Dealer: ${table.gameLog}</div>`;
+  const gameLogContainer = document.querySelector(".game-log");
+  gameLogContainer.scrollTop = gameLogContainer.scrollHeight;
 };
 
 export default updateGame;
