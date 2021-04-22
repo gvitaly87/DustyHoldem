@@ -149,12 +149,12 @@ btnAllIn.addEventListener("click", () => {
     playerSeat: player.seat,
     raiseAmount,
   };
-  console.log(
-    "Round Raise: ",
-    table.roundRaise,
-    "Player All in Amount: ",
-    raiseAmount
-  );
+  // console.log(
+  //   "Round Raise: ",
+  //   table.roundRaise,
+  //   "Player All in Amount: ",
+  //   raiseAmount
+  // );
   if (table.roundRaise >= raiseAmount) {
     payLoad.method = "call";
     console.log("call");
@@ -199,7 +199,6 @@ ws.onmessage = async (message) => {
   //A game create request has been processed
   if (res.method === "create") {
     gameId = res.game.id;
-    console.log(gameId);
     document.getElementById("gameId").innerText = gameId;
     let username = document.getElementById("username").value;
 
@@ -218,7 +217,6 @@ ws.onmessage = async (message) => {
     table = res.table;
     const playerSeat = res.seat;
     player = table.seats[playerSeat];
-    console.log(player);
     updateGame(table, playerSeat);
     setTimeout(() => {
       let reqActionCounter = 0;

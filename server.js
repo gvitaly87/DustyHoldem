@@ -258,7 +258,7 @@ wsServer.on("request", (req) => {
 
       if (
         client.clientId === clientId &&
-        raiseAmount + player.bets[table.round] >= table.roundRaise
+        raiseAmount + player.bets[table.round] > table.roundRaise
       ) {
         if (raiseAmount >= player.chipCount) {
           raiseAmount = player.chipCount;

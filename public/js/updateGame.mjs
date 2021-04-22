@@ -69,11 +69,15 @@ const updateGame = (table, playerSeat) => {
   // Updating the player's Info
   let playerPos = "";
   let playerFolded = "";
+
+  if (!player.newToTable) {
+    if (player.folded) playerFolded += "Folded";
+  } else {
+    playerPos = " Just joined";
+  }
   if (playerSeat === table.smallBlind) playerPos += " SB";
   if (playerSeat === table.bigBlind) playerPos += " BB";
   if (playerSeat === table.dealer) playerPos += " DEALER";
-  if (player.folded) playerFolded += "Folded";
-  if (player.newToTable) playerPos = " Just joined";
 
   document.querySelector("#player .user-name").innerText = player.username;
   document.querySelector("#player .round-bet").innerText =
@@ -106,11 +110,18 @@ const updateGame = (table, playerSeat) => {
       let oppPos = "";
       let oppFolded = "";
       let oppCards = `<div class="card face-down"></div><div class="card face-down"></div>`;
+
+      if (!seat.newToTable) {
+        if (seat.folded) oppFolded += "Folded";
+      } else {
+        oppPos = " Just joined";
+      }
+
       if (seat.seat === table.smallBlind) oppPos += " SB";
       if (seat.seat === table.bigBlind) oppPos += " BB";
       if (seat.seat === table.dealer) oppPos += " DEALER";
-      if (seat.folded && seat.newToTable) oppFolded += "Folded";
-      if (seat.newToTable) oppPos = "Just joined";
+      // if (seat.folded && seat.newToTable) oppFolded += "Folded";
+      // if (seat.newToTable) oppPos = "Just joined";
       if (seat.folded || seat.newToTable) oppCards = "";
 
       opponent.innerHTML = `
