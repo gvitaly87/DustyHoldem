@@ -223,13 +223,10 @@ body,
   height: 7rem;
   flex-grow: 0;
 }
+
 /* game stage text styling */
 .game-stage {
   grid-area: game-stage;
-  /* display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap; */
   font-size: clamp(1rem, 2.5vw, 1.5rem);
   color: #00aeff;
 }
@@ -246,6 +243,7 @@ body,
 }
 
 /* typing effect */
+
 @keyframes typing {
   from {
     width: 0;
@@ -256,6 +254,7 @@ body,
 }
 
 /* typewriter cursor effect */
+
 @keyframes blink-caret {
   from,
   to {
@@ -304,9 +303,9 @@ body,
 }
 .user-name {
   text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #00aeff,
-    0 0 30px #00aeff, 0 0 40px #ff2d95, 0 0 50px #00aeff, 0 0 75px #00aeff;
+    0 0 30px #00aeff, 0 0 40px #00aeff, 0 0 50px #00aeff, 0 0 75px #00aeff;
   letter-spacing: 0.1rem;
-  color: #00aeff;
+  color: #006eff;
   font-size: 1.25rem;
   width: 100%;
   font-weight: bold;
@@ -326,7 +325,7 @@ body,
 
 .winner-msg {
   grid-area: winner-msg;
-  color: #00aeff;
+  color: yellow;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -366,9 +365,12 @@ body,
   color: red;
 }
 
+.err-msg {
+  color: red;
+}
+
 .player-list {
   margin: 1rem 0 0.25rem 0;
-  /* background-color: mediumblue; */
 }
 
 .game-log {
@@ -398,6 +400,7 @@ body,
 }
 
 .create {
+  margin-bottom: 2.5rem;
 }
 
 #raiseAmount {
@@ -406,7 +409,6 @@ body,
 
 #raiseRange {
   font-size: clamp(1rem, 2.5vw, 1.5rem);
-  /* margin-left: 1rem; */
 }
 
 /* action bar button styling */
@@ -483,7 +485,7 @@ body,
 .card {
   position: relative;
   height: 100%;
-  border: 1px solid black;
+  border: 1px solid rgb(0, 0, 0);
   border-radius: 0.5rem;
   display: flex;
   justify-content: center;
@@ -603,7 +605,7 @@ body,
 
 .log-winner {
   font-weight: bold;
-  color: hsl(0, 70%, 25%);
+  color: rgb(151, 0, 0);
 }
 
 /* @media screen and (max-width: 101.25rem) {
