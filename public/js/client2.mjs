@@ -210,6 +210,27 @@ ws.onmessage = async (message) => {
     table = res.table;
     const playerSeat = res.seat;
     updateGame(table, playerSeat);
+    setTimeout(() => {
+      let reqActionCounter = 0;
+      console.log(table.seatsQue.length);
+      if (table.roundJustStarted && playerSeat === table.playerToAct) {
+        table.seats.forEach((seat) => {
+          if (!seat.empty && seat.actionRequired && !seat.folded) {
+            reqActionCounter += 1;
+          }
+        });
+        console.log(reqActionCounter);
+        if (reqActionCounter === 0) {
+          const payLoad = {
+            method: "check",
+            clientId,
+            gameId,
+            playerSeat: player.seat,
+          };
+          ws.send(JSON.stringify(payLoad));
+        }
+      }
+    }, 1000);
   }
   if (res.method === "showdown") {
     table = res.table;

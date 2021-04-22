@@ -32,6 +32,7 @@ class Table {
     this.dealer = null;
     this.smallBlind = null;
     this.bigBlind = null;
+    this.roundJustStarted = true;
     this.numOfPlayersToAct = 3;
     this.seatsQue = [];
     this.seats = [];

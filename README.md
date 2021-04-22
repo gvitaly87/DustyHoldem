@@ -44,6 +44,7 @@ A multiplayer poker game that offers all the functionality expected out of a Tex
 - Main table page showing all the public tables
 - Private/Public table option
 - Login
+- Mobile Design
 
 ---
 
