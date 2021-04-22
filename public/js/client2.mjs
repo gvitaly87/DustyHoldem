@@ -235,7 +235,7 @@ ws.onmessage = async (message) => {
           ws.send(JSON.stringify(payLoad));
         }
       }
-    }, 1000);
+    }, 2000);
   }
   if (res.method === "showdown") {
     table = res.table;
