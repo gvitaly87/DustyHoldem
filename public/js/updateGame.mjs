@@ -64,7 +64,7 @@ const updateSliders = (table, player) => {
 };
 
 const updateGame = (table, playerSeat) => {
-  player = table.seats[playerSeat];
+  let player = table.seats[playerSeat];
 
   // Updating the player's Info
   let playerPos = "";
