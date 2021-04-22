@@ -150,6 +150,13 @@ wsServer.on("request", (req) => {
 
         game.table = updatedRound.table;
         game.deck = updatedRound.deck;
+
+        game.table.seats.forEach((seat) => {
+          if (!seat.empty) {
+            game.clients[seat.clientIndex].chipCount = seat.chipCount;
+          }
+        });
+
         updateGameState(game);
       }
     }
@@ -172,6 +179,12 @@ wsServer.on("request", (req) => {
         const updatedRound = updateRound(table, playerSeat, game.deck);
         game.table = updatedRound.table;
         game.deck = updatedRound.deck;
+
+        game.table.seats.forEach((seat) => {
+          if (!seat.empty) {
+            game.clients[seat.clientIndex].chipCount = seat.chipCount;
+          }
+        });
 
         if (updatedRound.isShowDown) {
           showDownGameState(
@@ -216,6 +229,12 @@ wsServer.on("request", (req) => {
         game.table = updatedRound.table;
         game.deck = updatedRound.deck;
 
+        game.table.seats.forEach((seat) => {
+          if (!seat.empty) {
+            game.clients[seat.clientIndex].chipCount = seat.chipCount;
+          }
+        });
+
         if (updatedRound.isShowDown) {
           showDownGameState(
             game,
@@ -235,6 +254,7 @@ wsServer.on("request", (req) => {
       const table = game.table;
       const player = table.seats[playerSeat];
       const client = game.clients[player.clientIndex];
+      // console.log("Raise Amount: ", res.raiseAmount);
 
       if (
         client.clientId === clientId &&
@@ -245,6 +265,7 @@ wsServer.on("request", (req) => {
           player.allIn = true;
           table.gameLog += " and is all in";
         }
+        // console.log("Adjusted raise amount: ", raiseAmount);
         player.chipCount -= raiseAmount;
         client.chipCount = player.chipCount;
         player.bets[table.round] += raiseAmount;
@@ -258,6 +279,11 @@ wsServer.on("request", (req) => {
             table.seats[que].actionRequired = true;
         });
       }
+      game.table.seats.forEach((seat) => {
+        if (!seat.empty) {
+          game.clients[seat.clientIndex].chipCount = seat.chipCount;
+        }
+      });
       updateGameState(game);
     }
     /***************** Chat Message ****************/

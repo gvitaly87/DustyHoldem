@@ -42,10 +42,8 @@ const joinPlayer = (client, clientId, player, table, gameStarted) => {
       gameStage.innerHTML = `<div class="wait-msg">Waiting for more players to join the game before starting...</div><div class="copy-msg">The game ID has been copied to clipboard</div>`;
     }
   } else {
-    console.log(player.seat, client.seat);
     const cssSelector = findOppSelector(player.seat, client.seat);
     const opponent = document.querySelector(cssSelector);
-    console.log(cssSelector, opponent);
 
     opponent.innerHTML = `
         <div class="hand"></div>

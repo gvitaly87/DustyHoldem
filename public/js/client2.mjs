@@ -124,7 +124,7 @@ btnRaise.addEventListener("click", () => {
 
   // You can't bet more chips than you have
   raiseAmount = raiseAmount < player.chipCount ? raiseAmount : player.chipCount;
-
+  // console.log(raiseAmount);
   const payLoad = {
     method: "raise",
     gameId,
@@ -217,10 +217,11 @@ ws.onmessage = async (message) => {
   if (res.method === "update") {
     table = res.table;
     const playerSeat = res.seat;
+    player = table.seats[playerSeat];
+    console.log(player);
     updateGame(table, playerSeat);
     setTimeout(() => {
       let reqActionCounter = 0;
-      console.log(table.seatsQue.length);
       if (table.roundJustStarted && playerSeat === table.playerToAct) {
         table.seats.forEach((seat) => {
           if (
@@ -232,7 +233,6 @@ ws.onmessage = async (message) => {
             reqActionCounter += 1;
           }
         });
-        console.log(reqActionCounter);
         if (reqActionCounter <= 1) {
           const payLoad = {
             method: "check",
@@ -249,6 +249,8 @@ ws.onmessage = async (message) => {
     table = res.table;
     const playerSeat = res.seat;
     const { tableShowDown, winnerMessage } = res;
+    player = table.seats[playerSeat];
+
     showDown(tableShowDown, playerSeat, winnerMessage);
     setTimeout(() => updateGame(table, playerSeat), 7000);
   }
