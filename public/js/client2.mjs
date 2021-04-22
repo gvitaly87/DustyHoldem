@@ -166,15 +166,23 @@ btnAllIn.addEventListener("click", () => {
 chatMessage.addEventListener("keyup", (e) => {
   if (e.key === "Enter") {
     const username = document.getElementById("username").value;
-    const payLoad = {
-      method: "chat",
-      gameId,
-      clientId,
-      username: player.username,
-      message: chatMessage.value,
-    };
-    chatMessage.value = "";
-    ws.send(JSON.stringify(payLoad));
+    if (gameId !== null) {
+      const payLoad = {
+        method: "chat",
+        gameId,
+        clientId,
+        username: player.username,
+        message: chatMessage.value,
+      };
+      chatMessage.value = "";
+      ws.send(JSON.stringify(payLoad));
+    } else {
+      const gameLog = document.getElementById("game-log");
+      gameLog.innerHTML +=
+        '<div class="msg err-msg">Unable to send a message before connecting to a game...</div>';
+      const gameLogContainer = document.querySelector(".game-log");
+      gameLogContainer.scrollTop = gameLogContainer.scrollHeight;
+    }
   }
 });
 
