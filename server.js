@@ -275,7 +275,7 @@ wsServer.on("request", (req) => {
         table.playerToAct = nextToAct(table);
         player.actionRequired = false;
         table.seatsQue.forEach((que) => {
-          if (que !== playerSeat && !table.seats[que].allIn)
+          if (que !== playerSeat /* && !table.seats[que].allIn*/)
             table.seats[que].actionRequired = true;
         });
       }
