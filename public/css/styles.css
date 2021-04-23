@@ -33,7 +33,7 @@ body,
   height: 100%;
   margin: 0;
   background-color: rgba(0, 0, 0, 0.486);
-  background-image: url(../images/bg-victorian.jpg);
+  background-image: url(../images/bg-victorian-2.webp);
   background-size: cover;
 }
 
@@ -332,8 +332,8 @@ body,
 }
 
 .logo {
-  margin-left: 1.25rem;
-  max-width: 17.5%;
+  margin: 1rem;
+  max-width: 20rem;
   height: auto;
   align-self: center;
 }
@@ -390,6 +390,7 @@ body,
 
 .game-info-container {
   font-size: clamp(0.5rem, 2.5vw, 1rem);
+  margin: 0.5rem;
 }
 
 .username {
@@ -613,7 +614,7 @@ body,
   color: rgb(151, 0, 0);
 }
 
-/* @media screen and (max-width: 101.25rem) {
+@media screen and (max-width: 101.25rem) {
   .player-1,
   .player-2,
   .player-3 {
@@ -648,7 +649,7 @@ body,
   }
 }
 
-@media screen and (max-width: 95.125rem) {
+/* @media screen and (max-width: 95.125rem) { */
   #btnJoin,
   #btnCreate,
   #btnCopyId {

@@ -54,7 +54,13 @@ A multiplayer poker game that offers all the functionality expected out of a Tex
 
 ### Icons
 
+## https://www.pngjoy.com/fullpng/f7c8m2r4q7s0s7/
+
 ## https://creativecommons.org/licenses/by/3.0/
+
+## https://cutewallpaper.org/21/black-background-hd-images/Black-Backgrounds-Pictures-HD-Wallpaper-Cave.jpg
+
+## https://cutewallpaper.org/copyright.html
 
 ### Content/text
 

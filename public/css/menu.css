@@ -69,16 +69,17 @@
 }
 
 .play-now span {
+  position: relative;
   z-index: 2;
   margin: 1.5rem;
-  top: 0.5rem;
+  top: 0.75rem;
   left: -8rem;
 }
 
 .play-now::before {
   content: "";
   position: absolute;
-  top: 0.5rem;
+  top: 0.75rem;
   left: -8rem;
   border-radius: 0.25rem;
   width: 100%;
@@ -92,7 +93,7 @@
 .play-now::after {
   content: "";
   position: absolute;
-  top: 0.5rem;
+  top: 0.75rem;
   left: -8rem;
   border-radius: 0.25rem;
   width: 100%;
