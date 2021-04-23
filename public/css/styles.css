@@ -20,7 +20,7 @@ h6 {
 }
 
 h1 {
-  font-size: clamp(1.2rem, 2vw, 2.5rem);
+  font-size: clamp(1.2rem, 2.5vw, 2.5rem);
 }
 
 .footer {
@@ -227,7 +227,7 @@ body,
 /* game stage text styling */
 .game-stage {
   grid-area: game-stage;
-  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  font-size: clamp(0.9rem, 2.5vw, 1.4rem);
   color: yellow;
 }
 
@@ -285,7 +285,7 @@ body,
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  font-size: clamp(0.9rem, 2.5vw, 1.4rem);
 }
 
 /* User Information (next to cards) */
@@ -297,6 +297,7 @@ body,
 }
 .round-bet {
   color: yellow;
+  padding: 0.5rem;
 }
 .hand-descr {
   width: 100%;
@@ -389,7 +390,7 @@ body,
 }
 
 .game-info-container {
-  font-size: clamp(0.5rem, 2.5vw, 1rem);
+  font-size: clamp(0.5rem, 2vw, 1rem);
   margin: 0.5rem;
 }
 
@@ -406,11 +407,11 @@ body,
 }
 
 #raiseAmount {
-  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  font-size: clamp(1rem, 2vw, 1.4rem);
 }
 
 #raiseRange {
-  font-size: clamp(1rem, 2.5vw, 1.5rem);
+  font-size: clamp(1rem, 2vw, 1.4rem);
 }
 
 /* action bar button styling */
