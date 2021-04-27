@@ -1,8 +1,7 @@
-# CPNT265 - Final Assignment - Texas Hold'em multiplayer
+# Multiplayer Texas Hold'Em Game
 
 ## General Information
 
-- Course: CPNT-265
 - Contributors:
   - [Dustin Shulz](https://github.com/cowtowndusty)
   - [Vitaly Gins](https://github.com/gvitaly87)
