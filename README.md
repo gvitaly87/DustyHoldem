@@ -7,7 +7,7 @@
   - [Dustin Shulz](https://github.com/cowtowndusty)
   - [Vitaly Gins](https://github.com/gvitaly87)
 - GitHub Links:
-  - [GH repo](https://github.com/gvitaly87/DustyHoldem)
+  - [GH Repo](https://github.com/gvitaly87/DustyHoldem)
   - [Deployed Heroku URL](https://dusty-holdem.herokuapp.com/)
 
 ### Context
@@ -16,7 +16,7 @@ A multiplayer poker game that offers all the functionality expected out of a Tex
 
 - The game starts from clicking the play now button and either creating a game, or joining an existing game.
 - Once there are at least 3 players connected to a new game the game begins.
-- Users that join after the game starts are added to the que, and start playing from the very next hand.
+- Users that join after the game begins are automatically added to the queue, they will be added to the game the next hand.
 
 ---
 
@@ -45,6 +45,7 @@ A multiplayer poker game that offers all the functionality expected out of a Tex
 - Private/Public table option
 - Login
 - Mobile Design
+- Animations & Improved Cosmetics
 
 ---
 
