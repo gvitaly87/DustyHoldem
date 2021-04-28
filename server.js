@@ -38,10 +38,9 @@ const wsServer = new websocketServer({
 wsServer.on("request", (req) => {
   const connection = req.accept(null, req.origin);
   connection.on("open", () => console.log("Connection opened!"));
-  // TODO: on connection close determine who left the game
   connection.on("close", () => {
-    clientLeft();
     console.log("Connection closed!");
+    clientLeft();
   });
   connection.on("message", (message) => {
     // TODO: security for malicious message
@@ -52,7 +51,7 @@ wsServer.on("request", (req) => {
     if (res.method === "create") {
       const clientId = res.clientId;
       const gameId = getUniqueID();
-
+      // console.log("A new game has been created, ID: ", gameId);
       games[gameId] = new Game(gameId, 10, 50, 100);
 
       const payLoad = {
@@ -136,7 +135,8 @@ wsServer.on("request", (req) => {
       const table = game.table;
       const player = table.seats[playerSeat];
       const client = game.clients[player.clientIndex];
-
+      // console.log("***** Player Action *****");
+      // console.log(res);
       // Compare the playerId with the information stored in clients(which is not passed to the other players)
       if (clientId === client.clientId) {
         player.folded = true;
@@ -178,7 +178,8 @@ wsServer.on("request", (req) => {
       const table = game.table;
       const player = table.seats[playerSeat];
       const client = game.clients[player.clientIndex];
-
+      // console.log("***** Player Action *****");
+      // console.log(res);
       if (
         client.clientId === clientId &&
         player.bets[table.round] === table.roundRaise
@@ -215,7 +216,8 @@ wsServer.on("request", (req) => {
       const table = game.table;
       const player = table.seats[playerSeat];
       const client = game.clients[player.clientIndex];
-
+      // console.log("***** Player Action *****");
+      // console.log(res);
       // Check if the player's seat hasn't been tempered with
       if (client.clientId === clientId) {
         let amountToCall = table.roundRaise - player.bets[table.round];
@@ -267,7 +269,8 @@ wsServer.on("request", (req) => {
       const player = table.seats[playerSeat];
       const client = game.clients[player.clientIndex];
       // console.log("Raise Amount: ", res.raiseAmount);
-
+      // console.log("***** Player Action *****");
+      // console.log(res);
       if (
         client.clientId === clientId &&
         raiseAmount + player.bets[table.round] > table.roundRaise
@@ -301,7 +304,8 @@ wsServer.on("request", (req) => {
     /***************** Chat Message ****************/
     if (res.method === "chat") {
       const { clientId, gameId, username, message } = res;
-
+      // console.log("***** Chat Message *****");
+      // console.log(res);
       if (games[gameId] === undefined) {
         const payLoad = {
           method: "error",
@@ -323,6 +327,7 @@ wsServer.on("request", (req) => {
 
   // generate a new clientId
   const clientId = getUniqueID();
+  console.log("A new client connected with the ID: ", clientId);
   clients[clientId] = {
     connection: connection,
   };
