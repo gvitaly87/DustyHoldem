@@ -141,14 +141,15 @@ wsServer.on("request", (req) => {
       if (clientId === client.clientId) {
         player.folded = true;
         table.gameLog = `${player.username} folds`;
-
+        console.log("Player to act before set que: ", table.playerToAct);
         let updatedRound = setQue(table, game.deck, true);
+        console.log("Player to act after set que: ", table.playerToAct);
         updatedRound = updateRound(
           updatedRound.table,
           playerSeat,
           updatedRound.deck
         );
-
+        console.log("Player to act after update round: ", table.playerToAct);
         game.table = updatedRound.table;
         game.deck = updatedRound.deck;
 
