@@ -18,7 +18,8 @@ const showDown = (table, playerSeat, winnerMessage, everyoneFolded) => {
       decrContainer.innerHTML = description;
 
       if (seat.seat !== playerSeat) {
-        let cards = insertCard(seat.card1) + insertCard(seat.card2);
+        let cards =
+          insertCard(seat.card1, "card-1") + insertCard(seat.card2, "card-2");
         const handContainer = document.querySelector(`${cssSelector} .hand`);
         handContainer.classList.add("opponent");
         handContainer.innerHTML = cards;

@@ -111,7 +111,7 @@ const updateGame = (table, playerSeat) => {
 
       let oppPos = "";
       let oppFolded = "";
-      let oppCards = `<div class="card face-down"></div><div class="card face-down"></div>`;
+      let oppCards = `<div class="card face-down card-1"></div><div class="card face-down card-2"></div>`;
 
       if (!seat.newToTable) {
         if (seat.folded) oppFolded += "Folded";
@@ -203,8 +203,8 @@ const updateGame = (table, playerSeat) => {
     tableCards.innerHTML = "";
     if (!player.newToTable) {
       const handPlaceHolder = document.getElementById("hand");
-      const firstCard = insertCard(player.hand[0]);
-      const secondCard = insertCard(player.hand[1]);
+      const firstCard = insertCard(player.hand[0], "card-1");
+      const secondCard = insertCard(player.hand[1], "card-2");
       handPlaceHolder.innerHTML = firstCard + secondCard;
     }
   }
