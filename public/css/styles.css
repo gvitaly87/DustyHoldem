@@ -100,13 +100,19 @@ body,
   grid-area: 1 / 1 / 2 / 15;
 }
 
+/* Table chips */
+
+.chip-pic {
+  align-self: center;
+}
+
 .poker-table {
   grid-area: 3 / 2 / 10 / 14;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-image: url(../images/table.png);
+  background-image: url(../images/blue-table.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -291,18 +297,60 @@ body,
 /* User Information (next to cards) */
 
 .user-info {
+  z-index: 5000;
   display: flex;
   flex-wrap: wrap;
   font-size: 1rem;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 0.5rem;
+  width: 80%;
+  transform: translate(0px, 20px);
+  padding: 0.5rem;
 }
 .round-bet {
   color: yellow;
   padding: 0.5rem;
+  position: absolute;
+}
+.player-1 .round-bet {
+  transform: translate(0, 4.375rem);
+}
+.player-2 .round-bet {
+  transform: translate(0, 4.375rem);
+}
+.player-3 .round-bet {
+  transform: translate(0, 4.375rem);
+}
+.player-4 .round-bet {
+  transform: translate(0, -1.875rem);
+}
+.player-5 .round-bet {
+  transform: translate(0, -1.875rem);
+}
+.player-6 .round-bet {
+  transform: translate(0, -4.375rem);
+}
+
+.player-7 .round-bet {
+  transform: translate(0, -4.375rem);
+  margin: 0;
+}
+
+.player-8 .round-bet {
+  transform: translate(0, -4.375rem);
+}
+.player-9 .round-bet {
+  transform: translate(0, 1.875rem);
+}
+.player-10 .round-bet {
+  transform: translate(0, 1.875rem);
 }
 .hand-descr {
   width: 100%;
 }
 .user-name {
+  text-align: center;
   text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #fff, 0 0 20px #00aeff,
     0 0 30px #00aeff, 0 0 40px #00aeff, 0 0 50px #00aeff, 0 0 75px #00aeff;
   letter-spacing: 0.1rem;
@@ -311,17 +359,23 @@ body,
   width: 100%;
   font-weight: bold;
 }
+.chip-count {
+  text-align: center;
+}
 .chip-count-container {
   color: white;
   width: 100%;
+  text-align: center;
 }
 .position {
   color: yellow;
   width: 100%;
+  text-align: center;
 }
 .fold {
   color: red;
   width: 100%;
+  text-align: center;
 }
 
 .winner-msg {
@@ -330,6 +384,7 @@ body,
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
 
 .logo {
@@ -510,6 +565,14 @@ body,
   z-index: 1000;
 }
 
+.card-1 {
+  transform: translate(20px, 0px) rotate(-5deg);
+}
+
+.card-2 {
+  transform: translate(-20px, 0px) rotate(5deg);
+}
+
 .card::before,
 .card::after {
   position: absolute;
@@ -551,8 +614,8 @@ body,
   z-index: 1000;
   height: 7rem;
   width: 100%;
-  background-color: rgba(128, 128, 128, 0.336);
-  border-radius: 0.5rem;
+  /* background-color: rgba(128, 128, 128, 0.336);
+  border-radius: 0.5rem; */
 }
 
 .player.clear {
@@ -608,6 +671,7 @@ body,
   flex-grow: 0;
   align-items: center;
   justify-content: center;
+  position: absolute;
 }
 
 .log-winner {
@@ -671,8 +735,93 @@ body,
   .player-9 {
     grid-area: 7 / 3 / 8 / 5;
   }
-
-  .grid-container * {
-    position: relative;
-  }
 }
+
+/* @media screen and (max-width: 75rem) {
+  .grid-container {
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 0.5fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    gap: 0px 0px;
+  }
+
+  .fold-btn {
+    grid-area: 14 / 2 / 16 / 5;
+  }
+
+  .check-btn {
+    grid-area: 14 / 5 / 16 / 8;
+  }
+
+  .call-btn {
+    grid-area: 14 / 8 / 16 / 11;
+  }
+
+  .bet-btn {
+    grid-area: 14 / 11 / 16 / 14;
+  }
+
+  .bet-slider {
+    grid-area: 14 / 14 / 16 / 17;
+  }
+
+  .poker-table {
+    grid-area: 3 / 2 / 14 / 17;
+  }
+
+  .game-log-txt {
+    grid-area: 1 / 2 / 4 / 5;
+  }
+
+  .chat-icon {
+    grid-area: 12 / 2 / 14 / 4;
+  }
+
+  .player-1- {
+    grid-area: 3 / 4 / 5 / 7;
+  }
+
+  .player-2 {
+    grid-area: 3 / 8 / 5 / 11;
+  }
+
+  .player-3 {
+    grid-area: 3 / 12 / 5 / 15;
+  }
+
+  .player-4 {
+    grid-area: 6 / 14 / 8 / 17;
+  }
+
+  .player-5 {
+    grid-area: 9 / 14 / 11 / 17;
+  }
+
+  .player-6 {
+    grid-area: 12 / 12 / 14 / 15;
+  }
+
+  .player-7 {
+    grid-area: 12 / 8 / 14 / 11;
+  }
+
+  .player-8 {
+    grid-area: 12 / 4 / 14 / 7;
+  }
+
+  .player-9 {
+    grid-area: 9 / 2 / 11 / 5;
+  }
+
+  .player-10 {
+    grid-area: 6 / 2 / 8 / 5;
+  }
+
+  .play-now {
+    grid-area: 1 / 14 / 3 / 17;
+  }
+
+  .logo {
+    grid-area: 1 / 7 / 3 / 12;
+  }
+} */
