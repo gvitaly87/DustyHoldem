@@ -102,31 +102,32 @@ const updateGame = (table, playerSeat) => {
   updateSliders(table, player);
   resetOpponents();
   table.seats.forEach((seat) => {
-    if (!seat.empty && seat.seat !== playerSeat) {
-      const cssSelector = findOppSelector(playerSeat, seat.seat);
+    if (!seat.empty) {
+      if (seat.seat !== playerSeat) {
+        const cssSelector = findOppSelector(playerSeat, seat.seat);
 
-      const opponent = document.querySelector(cssSelector);
-      if (opponent.classList.contains("clear"))
-        opponent.classList.remove("clear");
+        const opponent = document.querySelector(cssSelector);
+        if (opponent.classList.contains("clear"))
+          opponent.classList.remove("clear");
 
-      let oppPos = "";
-      let oppFolded = "";
-      let oppCards = `<div class="card face-down card-1"></div><div class="card face-down card-2"></div>`;
+        let oppPos = "";
+        let oppFolded = "";
+        let oppCards = `<div class="card face-down card-1"></div><div class="card face-down card-2"></div>`;
 
-      if (!seat.newToTable) {
-        if (seat.folded) oppFolded += "Folded";
-      } else {
-        oppPos = " Just joined";
-      }
+        if (!seat.newToTable) {
+          if (seat.folded) oppFolded += "Folded";
+        } else {
+          oppPos = " Just joined";
+        }
 
-      if (seat.seat === table.smallBlind) oppPos += " SB";
-      if (seat.seat === table.bigBlind) oppPos += " BB";
-      if (seat.seat === table.dealer) oppPos += " DEALER";
-      // if (seat.folded && seat.newToTable) oppFolded += "Folded";
-      // if (seat.newToTable) oppPos = "Just joined";
-      if (seat.folded || seat.newToTable) oppCards = "";
+        if (seat.seat === table.smallBlind) oppPos += " SB";
+        if (seat.seat === table.bigBlind) oppPos += " BB";
+        if (seat.seat === table.dealer) oppPos += " DEALER";
+        // if (seat.folded && seat.newToTable) oppFolded += "Folded";
+        // if (seat.newToTable) oppPos = "Just joined";
+        if (seat.folded || seat.newToTable) oppCards = "";
 
-      opponent.innerHTML = `
+        opponent.innerHTML = `
         <div class="round-bet">${seat.bets[table.round]}</div>
         <div class="hand">
           ${oppCards}
@@ -142,6 +143,7 @@ const updateGame = (table, playerSeat) => {
           <span class="fold">${oppFolded}</span>
         </div>
       `;
+      }
     }
   });
 
